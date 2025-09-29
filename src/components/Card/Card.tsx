@@ -1,10 +1,14 @@
+import type { ReactNode } from "react";
 import "./Card.css";
-import LoginCard from "../LoginCard/LoginCard";
 
-function Card() {
+interface CardProps {
+  children: ReactNode;
+}
+
+function Card({ children }: CardProps) {
   return (
     <div className="card">
-      <LoginCard />
+      {children}
     </div>
   );
 }

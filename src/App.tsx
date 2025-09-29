@@ -1,16 +1,8 @@
 import "./App.css";
-import Header from "./components/Header/Header";
-import Body from "./components/Body/Body";
-import Footer from "./components/Footer/Footer";
+import Login from "./pages/Login";
 
 function App() {
-  return (
-    <>
-      <Header />
-      <Body />
-      <Footer />
-    </>
-  );
+  return <Login />;
 }
 
 export default App;
