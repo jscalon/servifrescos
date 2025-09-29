@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  justify-content: left;
+  padding: 0;
+  background-color: transparent;
+}
+
+img {
+  width: 300px;
+}

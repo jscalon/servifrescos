@@ -1,0 +1,13 @@
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+p {
+    font-weight: 600;
+  color: var(--gray-5);
+  font-size: 14px;
+  flex-grow: 1;
+  text-align: center;
+}
