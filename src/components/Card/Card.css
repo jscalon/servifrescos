@@ -2,14 +2,20 @@
   width: 280px;
   background-image: var(--gradiendt);
   border-radius: 20px;
-  box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--gray-B);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center;              
   box-sizing: border-box;
   padding: 30px;
   gap: 20px;
+  transition: all 0.3s ease;
+}
+
+.card:hover, .card:focus-within {
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
 
 .card > * {
