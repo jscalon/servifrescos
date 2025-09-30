@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LoginCard.css";
+import styles from "./LoginCard.module.css";
 import protinalLogo from "../../assets/protinal-logo.jpg";
 import proagroLogo from "../../assets/proagro-logo.jpg";
 
@@ -19,13 +19,13 @@ function LoginCard() {
 
   return (
     <>
-      <div className="logos">
-        <img src={protinalLogo} alt="protinalLogo" className="protinalLogo" />
-        <img src={proagroLogo} alt="proagroLogo" className="proagroLogo" />
+      <div className={styles.logos}>
+        <img src={protinalLogo} alt="protinalLogo" className={styles.protinalLogo} />
+        <img src={proagroLogo} alt="proagroLogo" className={styles.proagroLogo} />
       </div>
-      <h2 className="iniciar-sesion">Iniciar Sesión</h2>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <div className="fields">
+      <h2 className={styles.iniciarSesion}>Iniciar Sesión</h2>
+      <form className={styles.loginForm} onSubmit={handleSubmit}>
+        <div className={styles.fields}>
           <input
             type="text"
             id="username"
@@ -34,7 +34,7 @@ function LoginCard() {
             autoComplete="new-password"
             placeholder="Usuario"
           />
-          <div className="password-wrapper">
+          <div className={styles.passwordWrapper}>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -43,7 +43,7 @@ function LoginCard() {
               autoComplete="new-password"
               placeholder="Contraseña"
             />
-            <span className="toggle-password" onClick={togglePassword}>
+            <span className={styles.togglePassword} onClick={togglePassword}>
               {showPassword ? (
                 // Ojo abierto
                 <svg
@@ -84,7 +84,7 @@ function LoginCard() {
             </span>
           </div>
         </div>
-        <button type="submit" className="login-button">
+        <button type="submit" className={styles.loginButton}>
           Ingresar
         </button>
       </form>

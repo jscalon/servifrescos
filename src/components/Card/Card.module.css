@@ -14,7 +14,7 @@
   transition: all 0.3s ease;
 }
 
-.card:hover, .card:focus-within {
+.card:hover, .card:focusWithin {
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
 }
 

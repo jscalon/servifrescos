@@ -1,8 +1,8 @@
-import "./Footer.css";
+import styles from "./Footer.module.css";
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className={styles.footer}>
       <p>&copy; 2025 Protinal Proagro, C.A.</p>
     </footer>
   );
