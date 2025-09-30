@@ -1,13 +1,20 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginCard.css";
 import protinalLogo from "../../assets/protinal-logo.jpg";
 import proagroLogo from "../../assets/proagro-logo.jpg";
 
 function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const togglePassword = () => {
     setShowPassword((prev) => !prev);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/dashboard");
   };
 
   return (
@@ -17,7 +24,7 @@ function LoginCard() {
         <img src={proagroLogo} alt="proagroLogo" className="proagroLogo" />
       </div>
       <h2 className="iniciar-sesion">Iniciar Sesión</h2>
-      <form className="login-form">
+      <form className="login-form" onSubmit={handleSubmit}>
         <div className="fields">
           <input
             type="text"
