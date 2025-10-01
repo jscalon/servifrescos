@@ -3,16 +3,10 @@ import type { ReactNode } from "react";
 
 interface MainContentProps {
   children: ReactNode;
-  title: string;
 }
 
-function MainContent({ children, title }: MainContentProps) {
-  return (
-    <div className={styles.mainContent}>
-      <h1>{title}</h1>
-      {children}
-    </div>
-  );
+function MainContent({ children }: MainContentProps) {
+  return <div className={styles.mainContent}>{children}</div>;
 }
 
 export default MainContent;

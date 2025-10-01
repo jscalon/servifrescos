@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
-    <div className={styles.notFound}>
+    <>
       <h1>404 - Página no encontrada</h1>
       <p>La ruta que buscas no existe.</p>
       <div className={styles.logos}>
@@ -13,7 +13,7 @@ function NotFound() {
         <img src={proagroLogo} alt="" />
       </div>
       <Link to="/">Volver al inicio</Link>
-    </div>
+    </>
   );
 }
 
