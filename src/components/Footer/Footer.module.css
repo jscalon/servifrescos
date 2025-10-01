@@ -4,8 +4,8 @@
   margin-top: 5%;
 }
 
-p.footer {
-    font-weight: 600;
+.footer p {
+  font-weight: 600;
   color: var(--gray-5);
   font-size: 14px;
   flex-grow: 1;
