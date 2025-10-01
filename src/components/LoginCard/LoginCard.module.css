@@ -15,7 +15,7 @@
   font-weight: 700;
   font-size: 24px;
   font-weight: 600;
-  color: var(--gray-4);
+  color: var(--gray-5);
   text-align: center;
 }
 
@@ -96,7 +96,7 @@ input::placeholder {
 }
 
 .loginButton:active {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   scale: 0.99;
 }
