@@ -8,7 +8,7 @@
   --color-primary-white: rgb(230, 241, 235);
   --color-secondary: #f9cc00;
   --color-tertiary: #c30000;
-  --gradiendt: radial-gradient(at center, white 0%, var(--color-primary-white));
+  --gradiendt: radial-gradient(at center, white, var(--color-primary-white));
   --gray-0: #000;
   --gray-1: #111;
   --gray-2: #222;
@@ -40,11 +40,30 @@
   height: 100vh;
 }
 
-h1 {
-  color: var(--gray-F);
-  -webkit-text-stroke: 3px var(--gray-5);
+h1,
+h2,
+h3 {
   color: white;
+  -webkit-text-stroke: 3px var(--gray-5);
   paint-order: stroke fill;
+}
+
+.h-dark {
+  color: var(--gray-5);
+  -webkit-text-stroke: 3px white;
+  paint-order: stroke fill;
+}
+
+p {
+  font-weight: 500;
+  color: var(--gray-5);
+  text-align: center;
+}
+
+.p-light {
+  font-weight: 500;
+  color: white;
+  text-align: center;
 }
 
 body,

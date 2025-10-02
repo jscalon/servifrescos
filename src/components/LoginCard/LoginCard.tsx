@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./LoginCard.module.css";
 import protinalLogo from "../../assets/protinal-logo.jpg";
 import proagroLogo from "../../assets/proagro-logo.jpg";
+import Button from "../Button/Button";
 
 function LoginCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,10 +21,18 @@ function LoginCard() {
   return (
     <>
       <div className={styles.logos}>
-        <img src={protinalLogo} alt="protinalLogo" className={styles.protinalLogo} />
-        <img src={proagroLogo} alt="proagroLogo" className={styles.proagroLogo} />
+        <img
+          src={protinalLogo}
+          alt="protinalLogo"
+          className={styles.protinalLogo}
+        />
+        <img
+          src={proagroLogo}
+          alt="proagroLogo"
+          className={styles.proagroLogo}
+        />
       </div>
-      <h2 className={styles.iniciarSesion}>Iniciar Sesión</h2>
+      <h2 className={styles.iniciarSesion + " h-dark"}>Iniciar Sesión</h2>
       <form className={styles.loginForm} onSubmit={handleSubmit}>
         <div className={styles.fields}>
           <input
@@ -84,9 +93,7 @@ function LoginCard() {
             </span>
           </div>
         </div>
-        <button type="submit" className={styles.loginButton}>
-          Ingresar
-        </button>
+        <Button text="Ingresar" />
       </form>
     </>
   );
