@@ -46,6 +46,7 @@ h3 {
   color: white;
   -webkit-text-stroke: 3px var(--gray-5);
   paint-order: stroke fill;
+  text-align: center;
 }
 
 .h-dark {
