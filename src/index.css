@@ -50,6 +50,7 @@ h3 {
 }
 
 .h-dark {
+  font-weight: 600;
   color: var(--gray-5);
   -webkit-text-stroke: 3px white;
   paint-order: stroke fill;
@@ -68,6 +69,7 @@ p {
 }
 
 body,
+div,
 h1,
 h2,
 h3,

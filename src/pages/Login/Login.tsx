@@ -2,16 +2,12 @@ import Card from "../../components/Card/Card";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
-import protinalLogo from "../../assets/protinal-logo.jpg";
-import proagroLogo from "../../assets/proagro-logo.jpg";
+import logo from "../../assets/protinalproagro-logos.png";
 import Button from "../../components/Button/Button";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/dashboard");
@@ -21,21 +17,10 @@ function Login() {
     <>
       <h1>Ficha de Productos</h1>
       <Card>
-        <div className={styles.logos}>
-          <img
-            src={protinalLogo}
-            alt="protinalLogo"
-            className={styles.protinalLogo}
-          />
-          <img
-            src={proagroLogo}
-            alt="proagroLogo"
-            className={styles.proagroLogo}
-          />
-        </div>
-        <h2 className={styles.iniciarSesion + " h-dark"}>Iniciar Sesión</h2>
+        <img src={logo} alt="logo" className={styles.protinalLogo} />
+        <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
         <form className={styles.loginForm} onSubmit={handleSubmit}>
-          <div className={styles.fields}>
+          <div className={styles.inputs}>
             <input
               type="text"
               id="username"
@@ -53,7 +38,10 @@ function Login() {
                 autoComplete="new-password"
                 placeholder="Contraseña"
               />
-              <span className={styles.togglePassword} onClick={togglePassword}>
+              <span
+                className={styles.togglePassword}
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? (
                   // Ojo abierto
                   <svg
