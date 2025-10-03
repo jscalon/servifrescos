@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logo from "../../assets/protinalproagro-logos.png";
 import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
 
 function Login() {
-  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ function Login() {
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
         <form className={styles.loginForm} onSubmit={handleSubmit}>
           <div className={styles.inputs}>
-            <input
+            <Input
               type="text"
               id="username"
               name="username"
@@ -29,58 +29,14 @@ function Login() {
               autoComplete="new-password"
               placeholder="Usuario"
             />
-            <div className={styles.passwordWrapper}>
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                name="password"
-                required
-                autoComplete="new-password"
-                placeholder="Contraseña"
-              />
-              <span
-                className={styles.togglePassword}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  // Ojo abierto
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
-                ) : (
-                  // Ojo tachado (línea más gruesa)
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="22"
-                    height="22"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path
-                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
-                      strokeWidth="2"
-                    />
-                    <circle cx="12" cy="12" r="3" strokeWidth="2" />
-                    <line x1="3" y1="3" x2="21" y2="21" strokeWidth="3" />
-                  </svg>
-                )}
-              </span>
-            </div>
+            <Input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autoComplete="new-password"
+              placeholder="Contraseña"
+            />
           </div>
           <Button text="Ingresar" />
         </form>
