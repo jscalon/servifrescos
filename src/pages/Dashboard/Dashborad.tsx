@@ -7,9 +7,9 @@ function Dashboard() {
       <h1>Ficha de Productos</h1>
       <Card width={250}>
         <h3 className="h-dark">Módulo:</h3>
-        <Button text="Productos 🍗" width={180} />
-        <Button text="Precios 💲" width={180} />
-        <Button text="Permisos 👥" width={180} />
+        <Button text="Productos 🍗" width={180} height={45} />
+        <Button text="Precios 💲" width={180} height={45} />
+        <Button text="Permisos 👥" width={180} height={45} />
       </Card>
     </>
   );
