@@ -1,5 +1,4 @@
 import Card from "../../components/Card/Card";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logo from "../../assets/protinalproagro-logos.png";
@@ -25,16 +24,12 @@ function Login() {
               type="text"
               id="username"
               name="username"
-              required
-              autoComplete="new-password"
               placeholder="Usuario"
             />
             <Input
               type="password"
               id="password"
               name="password"
-              required
-              autoComplete="new-password"
               placeholder="Contraseña"
             />
           </div>
