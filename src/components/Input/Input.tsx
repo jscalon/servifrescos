@@ -8,6 +8,7 @@ interface InputProps {
   name: string;
   required?: boolean;
   autoComplete?: string;
+  defaultValue?: string;
 }
 
 function Input({
@@ -17,6 +18,7 @@ function Input({
   name,
   required = true,
   autoComplete = "new-password",
+  defaultValue = "",
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,6 +31,7 @@ function Input({
       name={name}
       required={required}
       autoComplete={autoComplete}
+			defaultValue={defaultValue}
     />
   );
 

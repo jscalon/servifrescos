@@ -26,7 +26,7 @@
   --gray-E: #eee;
   --gray-F: #fff;
   --font-family: Montserrat;
-  --font-size-base: 16px;
+  /* --font-size-base: 16px; */
 }
 
 #root {
@@ -38,6 +38,7 @@
   flex-direction: column;
   width: 100vw;
   height: 100vh;
+  /* font-size: var(--font-size-base); */
 }
 
 h1,

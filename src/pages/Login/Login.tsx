@@ -25,12 +25,14 @@ function Login() {
               id="username"
               name="username"
               placeholder="Usuario"
+							defaultValue="wfernandez@protinalproagro.com.ve"
             />
             <Input
               type="password"
               id="password"
               name="password"
               placeholder="Contraseña"
+							defaultValue="123456789123456789"
             />
           </div>
           <Button text="Ingresar" />
