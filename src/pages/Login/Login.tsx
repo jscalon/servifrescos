@@ -5,11 +5,16 @@ import logos from "../../assets/protinalproagro-logos.png";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Login() {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const userName = formData.get("username") as string;
+    login(userName); // Llama a login con el nombre
     navigate("/dashboard");
   };
 
@@ -36,8 +41,8 @@ function Login() {
           </div>
           <Button text="Ingresar" />
         </form>
-        <Link to="/">
-          <p className={styles.p}>¿Olvidaste la contraseña?</p>
+        <Link to="/" className={styles.forgot}>
+          ¿Olvidaste tu contraseña?
         </Link>
       </Card>
     </>

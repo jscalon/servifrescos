@@ -87,5 +87,10 @@ textarea {
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
+}
+
+a,
+span {
+  font-weight: 500;
 }

@@ -6,23 +6,24 @@ import Footer from "./components/Footer/Footer";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashborad";
 import NotFound from "./pages/NotFound/NotFound";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <>
-      <Header />
-      <MainContent>
-        <Router>
+    <AuthProvider>
+      <Router>
+        <Header />
+        <MainContent>
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </Router>
-      </MainContent>
+        </MainContent>
+      </Router>
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 
