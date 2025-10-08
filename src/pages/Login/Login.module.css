@@ -15,41 +15,18 @@
   gap: 10px;
 }
 
-.passwordWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
+.p {
+  font-size: 12px;
+  color: var(--color-primary);
+  transition: all 0.2s ease;
 }
 
-.passwordWrapper input {
-  width: 100%;
-  padding-right: 38px; /* espacio para el icono */
-  box-sizing: border-box;
+.p:hover {
+  color: var(--color-primary-light);
+  scale: 1.02;
 }
 
-.togglePassword {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: var(--gray-B);
-  height: 22px;
-}
-
-input {
-  background-color: white;
-  color: var(--gray-5);
-  height: 30px;
-  border: 1px solid var(--gray-B);
-  border-radius: 10px;
-  padding: 0 10px;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-input::placeholder {
-  color: var(--gray-B);
+.p:active {
+  color: var(--color-primary-dark);
+  scale: 0.98;
 }

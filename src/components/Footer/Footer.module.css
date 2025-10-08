@@ -5,8 +5,8 @@
 }
 
 .footer p {
+	font-size: 14px;
   font-weight: 600;
-  color: var(--gray-5);
+  color: var(--gray-7);
   flex-grow: 1;
-  text-align: center;
 }
