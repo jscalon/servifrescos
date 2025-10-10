@@ -13,13 +13,12 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const stored = localStorage.getItem("isLoggedIn");
     return stored === "true";
   });
   const [userName, setUserName] = useState(() => {
-    return localStorage.getItem("userName") || null;
+    return localStorage.getItem("userName");
   });
 
   const login = (name: string) => {

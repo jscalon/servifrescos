@@ -11,7 +11,8 @@ function Header() {
   const showUser =
     isLoggedIn && location.pathname !== "/" && location.pathname !== "/login";
   const door = (
-    <svg className={styles.door}
+    <svg
+      className={styles.door}
       width="20"
       height="20"
       viewBox="0 0 24 24"
@@ -50,12 +51,13 @@ function Header() {
           <span className={styles.username}>{userName}</span>
           <Button
             text="Salir"
-						children={door}
             onClick={() => {
               logout();
               navigate("/login");
             }}
-          />
+          >
+            {door}
+          </Button>
         </div>
       )}
     </header>
