@@ -6,7 +6,7 @@ interface MainContentProps {
 }
 
 function MainContent({ children }: MainContentProps) {
-  return <div className={styles.mainContent}>{children}</div>;
+  return <main className={styles.mainContent}>{children}</main>;
 }
 
 export default MainContent;

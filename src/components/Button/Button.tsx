@@ -3,25 +3,25 @@ import type { ReactNode } from "react";
 
 interface ButtonProps {
   text: string;
-  width?: number;
-  height?: number;
-  children?: ReactNode;
+  width?: string;
+  height?: string;
+  icon?: ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-function Button({ text, width, height, children, onClick }: ButtonProps) {
+function Button({ text, width, height, icon, onClick }: ButtonProps) {
   return (
     <button
       type="submit"
       className={styles.button}
       style={{
-        ...(width ? { width: width + "px" } : {}),
-        ...(height ? { height: height + "px" } : {}),
+        ...(width ? { width: width } : {}),
+        ...(height ? { height: height } : {}),
       }}
       onClick={onClick}
     >
       {text}
-			{children}
+      {icon}
     </button>
   );
 }

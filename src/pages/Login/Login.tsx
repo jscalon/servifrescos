@@ -39,7 +39,7 @@ function Login() {
               placeholder="Contraseña"
             />
           </div>
-          <Button text="Ingresar" />
+          <Button text="Ingresar" width="fit-content"/>
         </form>
         <Link to="/" className={styles.forgot}>
           ¿Olvidaste tu contraseña?

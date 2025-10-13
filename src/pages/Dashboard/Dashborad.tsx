@@ -7,17 +7,11 @@ function Dashboard() {
 
   return (
     <>
-      <h1>Ficha de Productos</h1>
-      <Card width={250}>
+      <Card width="260px">
         <h2 className="h-dark">Módulo:</h2>
-        <Button
-          text="Productos 🍗"
-          width={170}
-          height={45}
-          onClick={() => navigate("/products")}
-        />
-        <Button text="Precios 💲" width={170} height={45} />
-        <Button text="Permisos 👥" width={170} height={45} />
+        <Button text="Productos 🍗" onClick={() => navigate("/products")} />
+        <Button text="Precios 💲" />
+        <Button text="Permisos 👥" />
       </Card>
     </>
   );

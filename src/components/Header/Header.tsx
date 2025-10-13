@@ -65,13 +65,13 @@ function Header() {
           <span className={styles.username}>{userName}</span>
           <Button
             text="Salir"
+            icon={door}
+            width="fit-content"
             onClick={() => {
               logout();
               navigate("/login");
             }}
-          >
-            {door}
-          </Button>
+          />
         </div>
       )}
     </header>
