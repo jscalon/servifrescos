@@ -10,6 +10,11 @@ function Header() {
   const navigate = useNavigate();
   const showUser =
     isLoggedIn && location.pathname !== "/" && location.pathname !== "/login";
+  const clickableLogo =
+    location.pathname !== "/" &&
+    location.pathname !== "/login" &&
+    location.pathname !== "/dashboard";
+
   const door = (
     <svg
       className={styles.door}
@@ -45,7 +50,16 @@ function Header() {
 
   return (
     <header className={styles.header}>
-      <img src={logo} alt="servifresco-logo" />
+      {clickableLogo ? (
+        <img
+          src={logo}
+          alt="servifresco-logo"
+          className={styles.clickableLogo}
+          onClick={() => navigate("/dashboard")}
+        />
+      ) : (
+        <img src={logo} alt="servifresco-logo" className={styles.logo} />
+      )}
       {showUser && (
         <div className={styles.userSection}>
           <span className={styles.username}>{userName}</span>

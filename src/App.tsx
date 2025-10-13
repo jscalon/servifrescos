@@ -5,6 +5,7 @@ import MainContent from "./components/MainContent/MainContent";
 import Footer from "./components/Footer/Footer";
 import Login from "./pages/Login/Login";
 import Dashboard from "./pages/Dashboard/Dashborad";
+import Products from "./pages/Products/Products";
 import NotFound from "./pages/NotFound/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/products" element={<Products />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainContent>

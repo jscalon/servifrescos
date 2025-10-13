@@ -15,7 +15,7 @@
   background-color: white;
   color: red;
   border: red 1px solid;
-	gap: 5px;
+  gap: 5px;
   animation: all 0.2s ease;
 }
 
@@ -33,11 +33,15 @@
   border: red 1px solid;
 }
 
-.header img {
+.clickableLogo {
+  width: 300px;
+  cursor: pointer;
+}
+
+.logo {
   width: 300px;
 }
 
 .username {
   color: white;
 }
-

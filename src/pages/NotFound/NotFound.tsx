@@ -1,10 +1,12 @@
 import styles from "./NotFound.module.css";
 import protinalLogo from "../../assets/protinal-logo.jpg";
 import proagroLogo from "../../assets/proagro-logo.jpg";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 
 function NotFound() {
+  const navigate = useNavigate();
+
   return (
     <>
       <h1 className="h-light">404 - Error</h1>
@@ -14,7 +16,7 @@ function NotFound() {
         <img src={proagroLogo} alt="" />
       </div>
       <p className="p-light">Lo siento, la página que buscas no existe...</p>
-      <Link to="/"><Button text="Volver al inicio" /></Link>
+      <Button text="Volver al inicio" onClick={() => navigate("/")} />
     </>
   );
 }
