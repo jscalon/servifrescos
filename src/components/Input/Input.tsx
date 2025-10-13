@@ -11,7 +11,7 @@ interface InputProps {
   defaultValue?: string;
 }
 
-function Input({
+export default function Input({
   type = "text",
   placeholder = "",
   id,
@@ -31,7 +31,7 @@ function Input({
       name={name}
       required={required}
       autoComplete={autoComplete}
-			defaultValue={defaultValue}
+      defaultValue={defaultValue}
     />
   );
 
@@ -70,5 +70,3 @@ function Input({
     </div>
   );
 }
-
-export default Input;

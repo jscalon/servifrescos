@@ -7,7 +7,7 @@ import Input from "../../components/Input/Input";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
-function Login() {
+export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,5 +48,3 @@ function Login() {
     </>
   );
 }
-
-export default Login;

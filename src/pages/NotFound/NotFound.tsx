@@ -4,7 +4,7 @@ import proagroLogo from "../../assets/proagro-logo.jpg";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 
-function NotFound() {
+export default function NotFound() {
   const navigate = useNavigate();
 
   return (
@@ -20,5 +20,3 @@ function NotFound() {
     </>
   );
 }
-
-export default NotFound;

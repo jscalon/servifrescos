@@ -9,7 +9,13 @@ interface ButtonProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-function Button({ text, width, height, icon, onClick }: ButtonProps) {
+export default function Button({
+  text,
+  width,
+  height,
+  icon,
+  onClick,
+}: ButtonProps) {
   return (
     <button
       type="submit"
@@ -25,5 +31,3 @@ function Button({ text, width, height, icon, onClick }: ButtonProps) {
     </button>
   );
 }
-
-export default Button;

@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 
-function Header() {
+export default function Header() {
   const { isLoggedIn, userName, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -14,7 +14,6 @@ function Header() {
     location.pathname !== "/" &&
     location.pathname !== "/login" &&
     location.pathname !== "/dashboard";
-
   const door = (
     <svg
       className={styles.door}
@@ -77,5 +76,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

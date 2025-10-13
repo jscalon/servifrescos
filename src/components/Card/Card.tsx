@@ -6,12 +6,10 @@ interface CardProps {
   width?: string;
 }
 
-function Card({ children, width }: CardProps) {
+export default function Card({ children, width }: CardProps) {
   return (
     <div className={styles.card} style={width ? { width: width } : {}}>
       {children}
     </div>
   );
 }
-
-export default Card;

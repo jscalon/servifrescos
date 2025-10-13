@@ -1,7 +1,7 @@
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 
-function Products() {
+export default function Products() {
   return (
     <>
       <Card width="260px">
@@ -13,5 +13,3 @@ function Products() {
     </>
   );
 }
-
-export default Products;

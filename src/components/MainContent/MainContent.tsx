@@ -5,8 +5,6 @@ interface MainContentProps {
   children: ReactNode;
 }
 
-function MainContent({ children }: MainContentProps) {
+export default function MainContent({ children }: MainContentProps) {
   return <main className={styles.mainContent}>{children}</main>;
 }
-
-export default MainContent;

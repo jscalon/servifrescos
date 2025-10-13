@@ -2,7 +2,7 @@ import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 
-function Dashboard() {
+export default function Dashboard() {
   const navigate = useNavigate();
 
   return (
@@ -16,5 +16,3 @@ function Dashboard() {
     </>
   );
 }
-
-export default Dashboard;
