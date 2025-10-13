@@ -1,0 +1,28 @@
+.userSection {
+	color: white;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userSection button {
+  background-color: white;
+  color: red;
+  border: red 1px solid;
+  gap: 5px;
+  animation: all 0.2s ease;
+}
+
+.userSection button:hover {
+  scale: 1.02;
+  background-color: white;
+  color: red;
+  border: red 1px solid;
+}
+
+.userSection button:active {
+  scale: 0.98;
+  background-color: white;
+  color: red;
+  border: red 1px solid;
+}

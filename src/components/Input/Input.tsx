@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./Input.module.css";
+import { EyeIcon } from "../Icons/Icons";
 
 interface InputProps {
   type?: string;
@@ -37,24 +38,6 @@ export default function Input({
 
   if (type === "text") return inputElement;
 
-  const EyeIcon = ({ closed }: { closed: boolean }) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="22"
-      height="22"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M 1 12 s 4 -8 11 -8 11 8 11 8 -4 8 -11 8 -11 -8 -11 -8 z" />
-      <circle cx="12" cy="12" r="3" />
-      {closed && <line x1="3" y1="3" x2="21" y2="21" strokeWidth="3" />}
-    </svg>
-  );
-
   const closedEye = <EyeIcon closed={true} />;
   const openEye = <EyeIcon closed={false} />;
 
@@ -62,7 +45,7 @@ export default function Input({
     <div className={styles.passwordWrapper}>
       {inputElement}
       <span
-        className={styles.togglePassword}
+        className={styles.eye}
         onClick={() => setShowPassword(!showPassword)}
       >
         {showPassword ? openEye : closedEye}
