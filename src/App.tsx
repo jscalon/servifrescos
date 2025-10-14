@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Header from "./components/Header/Header";
 import MainContent from "./components/MainContent/MainContent";
 import Footer from "./components/Footer/Footer";
@@ -9,14 +14,14 @@ import Products from "./pages/Products/Products";
 import NotFound from "./pages/NotFound/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 
-function App() {
+export default function App() {
   return (
     <AuthProvider>
       <Router>
         <Header />
         <MainContent>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
@@ -28,5 +33,3 @@ function App() {
     </AuthProvider>
   );
 }
-
-export default App;

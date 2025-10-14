@@ -8,8 +8,8 @@ export default function UserSection() {
   const { isLoggedIn, userName, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const showUserSection =
-    isLoggedIn && location.pathname !== "/" && location.pathname !== "/login";
+  const showUserSection = isLoggedIn && location.pathname !== "/login";
+	
 
   const door = <DoorIcon />;
 

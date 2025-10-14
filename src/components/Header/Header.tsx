@@ -6,10 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
-  const clickableLogo =
-    location.pathname !== "/" &&
-    location.pathname !== "/login" &&
-    location.pathname !== "/dashboard";
+  const clickableLogo = !["/login", "/dashboard"].includes(location.pathname);
 
   return (
     <header className={styles.header}>
