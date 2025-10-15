@@ -9,7 +9,6 @@ export default function UserSection() {
   const location = useLocation();
   const navigate = useNavigate();
   const showUserSection = isLoggedIn && location.pathname !== "/login";
-	
 
   const door = <DoorIcon />;
 
@@ -21,11 +20,11 @@ export default function UserSection() {
           <Button
             text="Salir"
             icon={door}
-            width="fit-content"
             onClick={() => {
               logout();
               navigate("/login");
             }}
+						className={styles.button}
           />
         </div>
       )}

@@ -31,3 +31,7 @@
   color: var(--color-primary-dark);
   scale: 0.98;
 }
+
+.loginForm .button {
+	width: fit-content;
+}

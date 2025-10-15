@@ -1,10 +1,5 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header/Header";
 import MainContent from "./components/MainContent/MainContent";
 import Footer from "./components/Footer/Footer";
@@ -17,7 +12,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
+      <BrowserRouter>
         <Header />
         <MainContent>
           <Routes>
@@ -28,7 +23,7 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainContent>
-      </Router>
+      </BrowserRouter>
       <Footer />
     </AuthProvider>
   );

@@ -16,7 +16,7 @@ export default function NotFound() {
         <img src={proagroLogo} alt="" />
       </div>
       <p className="p-light">Lo siento, la página que buscas no existe...</p>
-      <Button text="Volver al inicio" onClick={() => navigate("/")} />
+      <Button text="Volver al inicio" className={styles.button} onClick={() => navigate("/")} />
     </>
   );
 }

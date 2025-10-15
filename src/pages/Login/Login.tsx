@@ -39,7 +39,7 @@ export default function Login() {
               placeholder="Contraseña"
             />
           </div>
-          <Button text="Ingresar" width="fit-content"/>
+          <Button text="Ingresar" className={styles.button}/>
         </form>
         <Link to="/" className={styles.forgot}>
           ¿Olvidaste tu contraseña?

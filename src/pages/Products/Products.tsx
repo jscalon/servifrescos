@@ -1,14 +1,15 @@
+import styles from "./Products.module.css"
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 
 export default function Products() {
   return (
     <>
-      <Card width="260px">
+      <Card className={styles.card}>
         <h2 className="h-dark">Productos:</h2>
-        <Button text="Creación 📝" width={"200"} height={"45"} />
-        <Button text="Modificación 🔄" width={"200"} height={"45"} />
-        <Button text="Consulta 🔍" width={"200"} height={"45"} />
+        <Button text="Creación 📝" />
+        <Button text="Modificación 🔄" />
+        <Button text="Consulta 🔍" />
       </Card>
     </>
   );

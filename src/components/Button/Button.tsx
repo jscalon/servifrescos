@@ -3,27 +3,21 @@ import type { ReactNode } from "react";
 
 interface ButtonProps {
   text: string;
-  width?: string;
-  height?: string;
   icon?: ReactNode;
+  className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function Button({
   text,
-  width,
-  height,
   icon,
   onClick,
+  className = "",
 }: ButtonProps) {
   return (
     <button
       type="submit"
-      className={styles.button}
-      style={{
-        ...(width ? { width: width } : {}),
-        ...(height ? { height: height } : {}),
-      }}
+      className={styles.button + " " + className}
       onClick={onClick}
     >
       {text}

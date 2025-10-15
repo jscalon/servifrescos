@@ -10,6 +10,7 @@ interface InputProps {
   required?: boolean;
   autoComplete?: string;
   defaultValue?: string;
+  className?: string;
 }
 
 export default function Input({
@@ -20,12 +21,13 @@ export default function Input({
   required = true,
   autoComplete = "new-password",
   defaultValue = "",
+  className = "",
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const inputElement = (
     <input
-      className={styles.input}
+      className={styles.input + " " + className}
       type={type === "password" && showPassword ? "text" : type}
       placeholder={placeholder}
       id={id}
