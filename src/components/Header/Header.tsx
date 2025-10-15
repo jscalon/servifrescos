@@ -1,5 +1,6 @@
 import styles from "./Header.module.css";
 import logo from "../../assets/servifresco-logo.png";
+import NavBar from "../NavBar/NavBar";
 import UserSection from "../UserSection/UserSection";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -20,6 +21,7 @@ export default function Header() {
       ) : (
         <img src={logo} alt="servifresco-logo" className={styles.logo} />
       )}
+			<NavBar></NavBar>
       <UserSection />
     </header>
   );
