@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logos from "../../assets/protinalproagro-logos.png";
 import Button from "../../components/Button/Button";
-import Input from "../../components/Input/Input";
+import InputText from "../../components/InputText/InputText";
+import InputPassword from "../../components/InputPassword/InputPassword";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -14,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const userName = formData.get("username") as string;
-    login(userName); // Llama a login con el nombre
+    login(userName);
     navigate("/dashboard");
   };
 
@@ -24,16 +25,14 @@ export default function Login() {
       <Card>
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
-        <form className={styles.loginForm} onSubmit={handleSubmit}>
-          <div className={styles.inputs}>
-            <Input
-              type="text"
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.inputsContainer}>
+            <InputText
               id="username"
               name="username"
               placeholder="Usuario"
             />
-            <Input
-              type="password"
+            <InputPassword
               id="password"
               name="password"
               placeholder="Contraseña"

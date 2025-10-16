@@ -10,9 +10,8 @@
 }
 
 .navList {
-  list-style: none;
   display: flex;
-  gap: 1rem;
+  gap: 1em;
 }
 
 .navLink {

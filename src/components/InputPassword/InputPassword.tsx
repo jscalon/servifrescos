@@ -1,53 +1,43 @@
+import styles from "./InputPassword.module.css";
 import { useState } from "react";
-import styles from "./Input.module.css";
 import { EyeIcon } from "../Icons/Icons";
 
 interface InputProps {
-  type?: string;
   placeholder?: string;
   id: string;
   name: string;
   required?: boolean;
-  autoComplete?: string;
-  defaultValue?: string;
   className?: string;
 }
 
 export default function Input({
-  type = "text",
   placeholder = "",
   id,
   name,
   required = true,
-  autoComplete = "new-password",
-  defaultValue = "",
   className = "",
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
-
   const inputElement = (
     <input
-      className={styles.input + " " + className}
-      type={type === "password" && showPassword ? "text" : type}
+      className={styles.inputPassword + " " + className}
+      type={showPassword ? "text" : "password"}
       placeholder={placeholder}
       id={id}
       name={name}
       required={required}
-      autoComplete={autoComplete}
-      defaultValue={defaultValue}
+      autoComplete="new-password"
     />
   );
-
-  if (type === "text") return inputElement;
 
   const closedEye = <EyeIcon closed={true} />;
   const openEye = <EyeIcon closed={false} />;
 
   return (
-    <div className={styles.passwordWrapper}>
+    <div className={styles.wrapper}>
       {inputElement}
       <span
-        className={styles.eye}
+        className={styles.eyeContainer}
         onClick={() => setShowPassword(!showPassword)}
       >
         {showPassword ? openEye : closedEye}
