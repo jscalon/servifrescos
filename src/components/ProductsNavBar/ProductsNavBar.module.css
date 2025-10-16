@@ -1,0 +1,26 @@
+.navBar {
+  background-color: white;
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  border-radius: 20px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--gray-5);
+  transition: all 0.2s ease;
+}
+
+.navLink:hover {
+  color: var(--color-primary-light);
+  scale: 1.02;
+}
+
+.navLink:active {
+  color: var(--color-primary-dark);
+  scale: 0.98;
+}
