@@ -1,0 +1,9 @@
+.inputField {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.label {
+  color: var(--gray-4);
+}

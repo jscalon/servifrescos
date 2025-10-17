@@ -56,13 +56,11 @@ h3 {
 }
 
 p {
-  font-weight: 500;
   color: var(--gray-5);
   text-align: center;
 }
 
 .p-light {
-  font-weight: 500;
   color: white;
 }
 
@@ -103,9 +101,14 @@ input {
   border-radius: 10px;
   padding: 0 10px;
   font-size: 16px;
-  font-weight: 500;
   width: 100%;
   box-sizing: border-box;
+}
+
+p,
+label,
+input {
+  font-weight: 500;
 }
 
 input::placeholder {
