@@ -1,0 +1,12 @@
+.form {
+	display: contents;
+}
+
+main > .card {
+	width: 600px;
+}
+
+.row {
+	display: flex;
+	gap: 20px;
+}

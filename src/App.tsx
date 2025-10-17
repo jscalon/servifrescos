@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard/Dashborad";
 import Products from "./pages/Products/Products";
 import NotFound from "./pages/NotFound/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
+import CreateProduct from "./pages/CreateProduct/CreateProduct";
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/createproduct" element={<CreateProduct />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </MainContent>
