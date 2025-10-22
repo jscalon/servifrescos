@@ -19,10 +19,11 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/modules" element={<Modules />} />
-            <Route path="/products" element={<Products />}>
-              <Route path="create" element={<CreateProduct />} />
-              <Route path="modify" element={<ModifyProduct />} />
+            <Route path="/modules" element={<Modules />}>
+              <Route path="products" element={<Products />}>
+                <Route path="create" element={<CreateProduct />} />
+                <Route path="modify" element={<ModifyProduct />} />
+              </Route>
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

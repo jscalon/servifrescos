@@ -6,10 +6,10 @@ import { useNavigate, useLocation, Outlet } from "react-router-dom";
 export default function Products() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isExactProducts = location.pathname === "/products";
+
   return (
     <>
-      {isExactProducts && (
+      {location.pathname === "/modules/products" && (
         <Card className={styles.card}>
           <h2 className="h-dark">Productos:</h2>
           <Button text="Creación 📝" onClick={() => navigate("create")} />
