@@ -1,7 +1,7 @@
 import styles from "./UserSection.module.css";
-import Button from "../Button/Button";
-import { DoorIcon } from "../Icons/Icons";
-import { useAuth } from "../../contexts/AuthContext";
+import Button from "../Button";
+import { DoorIcon } from "../Icons";
+import { useAuth } from "../../contexts";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function UserSection() {

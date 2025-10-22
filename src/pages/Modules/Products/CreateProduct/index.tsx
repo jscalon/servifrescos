@@ -1,7 +1,7 @@
 import styles from "./CreateProduct.module.css";
-import Card from "../../components/Card/Card";
-import Button from "../../components/Button/Button";
-import InputField from "../../components/InputField/InputField";
+import Card from "../../../../components/Card";
+import Button from "../../../../components/Button";
+import InputField from "../../../../components/InputField";
 
 export default function CreateProduct() {
   return (

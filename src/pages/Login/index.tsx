@@ -1,12 +1,12 @@
-import Card from "../../components/Card/Card";
+import Card from "../../components/Card";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logos from "../../assets/protinalproagro-logos.png";
-import Button from "../../components/Button/Button";
-import InputText from "../../components/InputText/InputText";
-import InputPassword from "../../components/InputPassword/InputPassword";
+import Button from "../../components/Button";
+import InputText from "../../components/InputText";
+import InputPassword from "../../components/InputPassword";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts";
 
 export default function Login() {
   const { login } = useAuth();

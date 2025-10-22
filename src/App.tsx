@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Header from "./components/Header/Header";
-import MainContent from "./components/MainContent/MainContent";
-import Footer from "./components/Footer/Footer";
-import Login from "./pages/Login/Login";
-import Modules from "./pages/Modules/Modules";
-import Products from "./pages/Products/Products";
-import NotFound from "./pages/NotFound/NotFound";
-import { AuthProvider } from "./contexts/AuthContext";
-import CreateProduct from "./pages/CreateProduct/CreateProduct";
-import ModifyProduct from "./pages/ModifyProduct/ModifyProduct";
+import Header from "./components/Header";
+import MainContent from "./components/MainContent";
+import Footer from "./components/Footer";
+import Login from "./pages/Login";
+import Modules from "./pages/Modules";
+import Products from "./pages/Modules/Products";
+import NotFound from "./pages/NotFound";
+import { AuthProvider } from "./contexts";
+import CreateProduct from "./pages/Modules/Products/CreateProduct";
+import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
 
 export default function App() {
   return (

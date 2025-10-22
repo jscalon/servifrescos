@@ -1,6 +1,6 @@
 import styles from "./Products.module.css";
-import Card from "../../components/Card/Card";
-import Button from "../../components/Button/Button";
+import Card from "../../../components/Card";
+import Button from "../../../components/Button";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
 export default function Products() {

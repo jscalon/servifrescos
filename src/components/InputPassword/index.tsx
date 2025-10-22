@@ -1,6 +1,6 @@
 import styles from "./InputPassword.module.css";
 import { useState } from "react";
-import { EyeIcon } from "../Icons/Icons";
+import { EyeIcon } from "../Icons";
 
 interface InputProps {
   placeholder?: string;

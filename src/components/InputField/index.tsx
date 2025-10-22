@@ -1,4 +1,4 @@
-import InputText from "../InputText/InputText";
+import InputText from "../InputText";
 import styles from "./InputField.module.css";
 
 interface InputFieldProps {

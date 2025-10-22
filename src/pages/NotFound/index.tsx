@@ -2,7 +2,7 @@ import styles from "./NotFound.module.css";
 import protinalLogo from "../../assets/protinal-logo.jpg";
 import proagroLogo from "../../assets/proagro-logo.jpg";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button/Button";
+import Button from "../../components/Button";
 
 export default function NotFound() {
   const navigate = useNavigate();
