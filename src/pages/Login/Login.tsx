@@ -16,7 +16,7 @@ export default function Login() {
     const formData = new FormData(e.target as HTMLFormElement);
     const userName = formData.get("username") as string;
     login(userName);
-    navigate("/dashboard");
+    navigate("/modules");
   };
 
   return (

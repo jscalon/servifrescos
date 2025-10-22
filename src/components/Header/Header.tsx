@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
-  const clickableLogo = !["/login", "/dashboard"].includes(location.pathname);
+  const clickableLogo = !["/login", "/modules"].includes(location.pathname);
   const showNavBar = ["/products"].includes(location.pathname);
 
   return (
@@ -17,7 +17,7 @@ export default function Header() {
           src={logo}
           alt="servifresco-logo"
           className={styles.clickableLogo}
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/modules")}
         />
       ) : (
         <img src={logo} alt="servifresco-logo" className={styles.logo} />

@@ -1,9 +1,9 @@
-import styles from "./Dashboard.module.css";
+import styles from "./Modules.module.css";
 import Card from "../../components/Card/Card";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 
-export default function Dashboard() {
+export default function Modules() {
   const navigate = useNavigate();
 
   return (
