@@ -10,7 +10,7 @@ export default function Modules() {
   return (
     <>
       {location.pathname === "/modules" && (
-        <Card className={styles.card}>
+        <Card className={styles.card} showBackButton={false}>
           <h2 className="h-dark">Módulo:</h2>
           <Button text="Productos 🍗" onClick={() => navigate("products")} />
           <Button text="Precios 💲" />

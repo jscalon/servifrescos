@@ -7,7 +7,7 @@ export default function CreateProduct() {
   return (
     <>
       <h1>Crear Producto</h1>
-      <Card className={styles.card}>
+      <Card className={styles.card} showBackButton={true}>
         <form className={styles.form}>
           <div className={styles.row}>
             <InputField label="Código" id="code" name="code" />
