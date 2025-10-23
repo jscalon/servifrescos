@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts";
 import CreateProduct from "./pages/Modules/Products/CreateProduct";
 import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
+import QueryProduct from "./pages/Modules/Products/QueryProduct";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
               <Route path="products" element={<Products />}>
                 <Route path="create" element={<CreateProduct />} />
                 <Route path="modify" element={<ModifyProduct />} />
+                <Route path="query" element={<QueryProduct />} />
               </Route>
             </Route>
             <Route path="*" element={<NotFound />} />

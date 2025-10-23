@@ -7,7 +7,7 @@ export default function ModifyProduct() {
   return (
     <>
       <h1>Modificar Producto</h1>
-      <Card className={styles.card} showBackButton={true}>
+      <Card className={styles.card}>
         <form className={styles.form}>
           <div className={styles.row}>
             <InputField label="Código" id="code" name="code" />

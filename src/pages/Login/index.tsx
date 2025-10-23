@@ -22,7 +22,7 @@ export default function Login() {
   return (
     <>
       <h1>Ficha de Productos</h1>
-      <Card showBackButton={false}>
+      <Card>
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
         <form className={styles.form} onSubmit={handleSubmit}>

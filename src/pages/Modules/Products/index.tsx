@@ -14,7 +14,7 @@ export default function Products() {
           <h2 className="h-dark">Productos:</h2>
           <Button text="Creación 📝" onClick={() => navigate("create")} />
           <Button text="Modificación 🔄" onClick={() => navigate("modify")} />
-          <Button text="Consulta 🔍" />
+          <Button text="Consulta 🔍" onClick={() => navigate("query")}/>
         </Card>
       )}
       <Outlet />

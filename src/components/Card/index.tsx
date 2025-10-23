@@ -5,13 +5,12 @@ import BackButton from "../BackButton";
 interface CardProps {
   children: ReactNode;
 	className?: string;
-	showBackButton?: boolean;
 }
 
-export default function Card({ children, className = "", showBackButton = true }: CardProps) {
+export default function Card({ children, className = "" }: CardProps) {
   return (
     <div className={styles.card + " " + className}>
-      {showBackButton && <BackButton />}
+      <BackButton />
       {children}
     </div>
   );

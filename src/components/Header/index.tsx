@@ -8,7 +8,11 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const clickableLogo = !["/login", "/modules"].includes(location.pathname);
-  const showNavBar = ["/products"].includes(location.pathname);
+  const showProductsNavBar = [
+    "/modules/products/create",
+    "/modules/products/modify",
+    "/modules/products/query",
+  ].includes(location.pathname);
 
   return (
     <header className={styles.header}>
@@ -22,7 +26,7 @@ export default function Header() {
       ) : (
         <img src={logo} alt="servifresco-logo" className={styles.logo} />
       )}
-      {showNavBar && <NavBar/>}
+      {showProductsNavBar && <NavBar />}
       <UserSection />
     </header>
   );
