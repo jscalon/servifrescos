@@ -69,3 +69,29 @@ export function EyeIcon({
     </svg>
   );
 }
+
+export function BackArrowIcon({
+  size = 20,
+  color = "currentColor",
+  className,
+}: IconProps) {
+  return (
+    <svg
+      className={className}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{ color }}
+    >
+      <path
+        d="M15 4 L5 12 L15 20"
+        stroke="currentColor"
+        strokeWidth="5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
