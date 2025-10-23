@@ -1,27 +1,23 @@
 .form {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 main > .card {
-	width: 600px;
+  width: 600px;
 }
 
 .row {
-	display: flex;
-	justify-content: center;
-	gap: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 .row > * {
-	width: 100%;
+  width: 100%;
 }
 
-.buttonLimpiar, .buttonGuardar {
+.row > .buttonLimpiar, .row > .buttonGuardar {
 	width: fit-content;
-}
-
-.row > .buttonLimpiar {
-	background-color: var(--color-secondary);
 }

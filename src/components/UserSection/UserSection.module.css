@@ -5,10 +5,7 @@
   gap: 15px;
 }
 
-.userSection .button,
-.userSection .button:hover,
-.userSection .button:active {
-	width: fit-content;
+.userSection .button {
   background-color: white;
   color: red;
   border: red 1px solid;

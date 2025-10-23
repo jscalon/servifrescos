@@ -1,15 +1,16 @@
 .button {
-  background-color: var(--color-primary);
   color: white;
+	background-color: black;
   border: none;
   border-radius: 10px;
-	display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  width: 100%;
+  /* width: fit-content; */
+	box-sizing: border-box;
   padding: 10px 15px;
-	gap: 7px;
+  gap: 7px;
   font-size: 20px;
   font-weight: 600;
   cursor: pointer;
@@ -18,13 +19,35 @@
 }
 
 .button:hover {
-  background-color: var(--color-primary-light);
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   scale: 1.02;
 }
 
 .button:active {
-  background-color: var(--color-primary-dark);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   scale: 0.98;
+}
+
+.primary {
+  background-color: var(--color-primary);
+}
+
+.primary:hover {
+  background-color: var(--color-primary-light);
+}
+
+.primary:active {
+  background-color: var(--color-primary-dark);
+}
+
+.secondary {
+  background-color: var(--color-secondary);
+}
+
+.secondary:hover {
+  background-color: var(--color-secondary-light);
+}
+
+.secondary:active {
+  background-color: var(--color-secondary-dark);
 }

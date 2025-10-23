@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 interface ButtonProps {
   text: string;
   icon?: ReactNode;
+	style?: "primary" | "secondary" | "other";
   className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -11,13 +12,14 @@ interface ButtonProps {
 export default function Button({
   text,
   icon,
-  onClick,
+	style = "primary",
   className = "",
+  onClick,
 }: ButtonProps) {
   return (
     <button
       type="submit"
-      className={styles.button + " " + className}
+      className={`${styles.button} ${styles[style]} ${className}`}
       onClick={onClick}
     >
       {text}

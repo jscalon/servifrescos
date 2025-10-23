@@ -13,7 +13,7 @@
 
 .forgot {
   font-size: 12px;
-  color: var(--gray-6);
+  color: var(--gray-7);
 	text-align: center;
   transition: all 0.2s ease;
 }
@@ -26,8 +26,4 @@
 .forgot:active {
   color: var(--color-primary-dark);
   scale: 0.98;
-}
-
-.form .button {
-	width: fit-content;
 }

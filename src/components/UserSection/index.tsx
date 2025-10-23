@@ -20,11 +20,12 @@ export default function UserSection() {
           <Button
             text="Salir"
             icon={door}
+						style="other"
+						className={styles.button}
             onClick={() => {
               logout();
               navigate("/login");
             }}
-						className={styles.button}
           />
         </div>
       )}

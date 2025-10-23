@@ -27,7 +27,7 @@ export default function CreateProduct() {
             <InputField label="Subgrupo" id="subgroup" name="subgroup" />
           </div>
           <div className={styles.row}>
-            <Button text="Limpiar" className={styles.buttonLimpiar}/>
+            <Button text="Limpiar" style="secondary" className={styles.buttonLimpiar}/>
             <Button text="Guardar" className={styles.buttonGuardar}/>
           </div>
         </form>

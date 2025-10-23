@@ -5,9 +5,7 @@ import { BackArrowIcon } from "../Icons";
 export default function BackButton() {
   const navigate = useNavigate();
   const location = useLocation();
-  const show = !["/login", "/modules", "/notfound"].includes(
-    location.pathname
-  );
+  const show = !["/login", "/modules"].includes(location.pathname);
 
   if (!show) return null;
 
