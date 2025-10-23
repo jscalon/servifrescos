@@ -6,10 +6,14 @@
   --color-primary-semi-white: rgb(206, 226, 214);
   --color-primary-white: rgb(230, 241, 235);
   --color-secondary: #f9cc00;
-  --color-secondary-light: color-mix(in oklab, var(--color-secondary), white 10%);
+  --color-secondary-light: color-mix(
+    in oklab,
+    var(--color-secondary),
+    white 10%
+  );
   --color-secondary-dark: color-mix(in oklab, var(--color-secondary), black 5%);
   --color-tertiary: #c30000;
-  --gradiendt: radial-gradient(at center, white, var(--color-primary-white));
+  --gradient: radial-gradient(at center, white, var(--color-primary-white));
   --gray-0: #000;
   --gray-1: #111;
   --gray-2: #222;
@@ -33,7 +37,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 25px;
-  background-image: linear-gradient(to bottom, var(--color-primary), white);
+  background: linear-gradient(to bottom, var(--color-primary), white);
   display: flex;
   flex-direction: column;
   width: 100vw;
@@ -92,6 +96,7 @@ a {
 a,
 span {
   font-weight: 600;
+	text-align: center;
 }
 
 input {

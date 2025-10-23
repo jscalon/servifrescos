@@ -18,6 +18,7 @@ main > .card {
   width: 100%;
 }
 
-.row > .buttonLimpiar, .row > .buttonGuardar {
-	width: fit-content;
+.row > .buttonLimpiar,
+.row > .buttonGuardar {
+  width: fit-content;
 }

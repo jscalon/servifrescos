@@ -1,0 +1,27 @@
+.queryBar {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 30px;
+  width: 100%;
+	border-radius: 20px;
+  height: 10px;
+  background: var(--gray-D);
+}
+
+.queryBar > * {
+	flex: 1;
+}
+
+.input {
+	flex: 2;
+}
+
+
+
+.span {
+	font-weight: 500;
+	color: var(--gray-4);
+}

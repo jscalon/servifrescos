@@ -1,9 +1,9 @@
 .navBar {
-  background-color: white;
+  background: var(--gradient);
   display: flex;
-  gap: 15px;
-  padding: 20px;
-  border-radius: 20px;
+  gap: 20px;
+  padding: 17px 30px;
+  border-radius: 50px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
