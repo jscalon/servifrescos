@@ -26,7 +26,6 @@ export default function Login() {
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.inputsContainer}>
             <InputText
               id="username"
               name="username"
@@ -37,7 +36,6 @@ export default function Login() {
               name="password"
               placeholder="Contraseña"
             />
-          </div>
           <Button text="Ingresar" className={styles.button}/>
         </form>
         <Link to="/" className={styles.forgot}>

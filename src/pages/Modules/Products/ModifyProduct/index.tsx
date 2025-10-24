@@ -30,7 +30,7 @@ export default function ModifyProduct() {
             <InputField label="Grupo" id="group" name="group" />
             <InputField label="Subgrupo" id="subgroup" name="subgroup" />
           </div>
-          <div className={styles.row}>
+          <div className={styles.rowButtons}>
             <Button text="Limpiar" style="secondary" className={styles.buttonLimpiar} />
             <Button text="Guardar" className={styles.buttonGuardar} />
           </div>

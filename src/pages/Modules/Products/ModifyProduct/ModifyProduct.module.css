@@ -8,17 +8,15 @@ main > .card {
   width: 600px;
 }
 
-.row {
+.row, .rowButtons {
   display: flex;
-  justify-content: center;
   gap: 20px;
 }
 
 .row > * {
-  width: 100%;
+	flex: 1;
 }
 
-.row > .buttonLimpiar,
-.row > .buttonGuardar {
-  width: fit-content;
+.rowButtons {
+	align-self: center;
 }
