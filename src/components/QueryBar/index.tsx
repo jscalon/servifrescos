@@ -8,7 +8,7 @@ export default function QueryBar() {
     <div className={styles.queryBar}>
       <BackButton />
       <span className={styles.span}>Criterio de búsqueda:</span>
-      <select name="a" id="">
+      <select name="a" id="" className={styles.select}>
         <option value="">Código</option>
         <option value="">Descripción</option>
         <option value="">Marca</option>
@@ -18,7 +18,7 @@ export default function QueryBar() {
         <option value="">Subgrupo</option>
       </select>
       <InputText id="1" name="1" className={styles.input} />
-      <Button text="Buscar" />
+      <Button text="Buscar" className={styles.button}/>
     </div>
   );
 }

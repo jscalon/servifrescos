@@ -2,18 +2,19 @@ main > .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-	width: 600px;
+  width: 600px;
 }
 
-.row, .rowButtons {
+.row,
+.rowButtons {
   display: flex;
   gap: 20px;
 }
 
 .row > * {
-	flex: 1;
+  flex: 1;
 }
 
 .rowButtons {
-	align-self: center;
+  align-self: center;
 }

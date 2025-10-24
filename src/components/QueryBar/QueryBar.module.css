@@ -1,28 +1,30 @@
 .queryBar {
 	display: flex;
-	justify-content: space-between;
-	gap: 20px;
+	justify-content: space-evenly;
 	align-items: center;
 	box-sizing: border-box;
 	position: relative;
-	padding: 30px;
+	padding: 10px 30px;
   width: 100%;
+	gap: 30px;
 	border-radius: 20px;
-  height: 10px;
   background: var(--gray-D);
 }
-
-.queryBar > * {
-	flex: 1;
-}
-
-.input {
-	flex: 2;
-}
-
-
 
 .span {
 	font-weight: 500;
 	color: var(--gray-4);
+	width: 200px;
+}
+
+.select {
+	flex: 2;
+}
+
+.input {
+	flex: 3
+}
+
+.button {
+	flex: 1
 }
