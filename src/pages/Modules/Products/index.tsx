@@ -1,6 +1,6 @@
 import styles from "./Products.module.css";
-import Card from "../../../components/Card";
 import Button from "../../../components/Button";
+import BackButton from "../../../components/BackButton";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
 export default function Products() {
@@ -10,12 +10,15 @@ export default function Products() {
   return (
     <>
       {location.pathname === "/modules/products" && (
-        <Card className={styles.card}>
-          <h2 className="h-dark">Productos:</h2>
-          <Button text="Creación 📝" onClick={() => navigate("create")} />
-          <Button text="Modificación 🔄" onClick={() => navigate("modify")} />
-          <Button text="Consulta 🔍" onClick={() => navigate("query")}/>
-        </Card>
+        <main className={styles.main}>
+          <div className={`card ${styles.card}`}>
+						<BackButton/>
+            <h2 className="h-dark">Productos:</h2>
+            <Button text="Creación 📝" onClick={() => navigate("create")} />
+            <Button text="Modificación 🔄" onClick={() => navigate("modify")} />
+            <Button text="Consulta 🔍" onClick={() => navigate("query")} />
+          </div>
+        </main>
       )}
       <Outlet />
     </>

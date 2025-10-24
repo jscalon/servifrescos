@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/Header";
-import MainContent from "./components/MainContent";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Modules from "./pages/Modules";
@@ -16,7 +15,6 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Header />
-        <MainContent>
           <Routes>
             <Route path="/" element={<Navigate to="/login" replace />} />
             <Route path="/login" element={<Login />} />
@@ -29,7 +27,6 @@ export default function App() {
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </MainContent>
       </BrowserRouter>
       <Footer />
     </AuthProvider>

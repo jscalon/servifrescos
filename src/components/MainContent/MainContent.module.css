@@ -1,9 +1,0 @@
-.mainContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  background-color: transparent;
-  gap: 20px;
-}

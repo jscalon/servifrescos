@@ -1,12 +1,9 @@
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.inputText {
+  margin-bottom: -10px;
 }
 
 .button {
-	margin-top: 10px;
-	align-self: center;
+  align-self: center;
 }
 
 .forgot {

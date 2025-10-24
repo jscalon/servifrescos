@@ -1,4 +1,3 @@
-import Card from "../../components/Card";
 import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import logos from "../../assets/protinalproagro-logos.png";
@@ -20,28 +19,18 @@ export default function Login() {
   };
 
   return (
-    <>
+    <main className={styles.main}>
       <h1>Ficha de Productos</h1>
-      <Card>
+      <form className={`card`} onSubmit={handleSubmit}>
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
-        <form className={styles.form} onSubmit={handleSubmit}>
-            <InputText
-              id="username"
-              name="username"
-              placeholder="Usuario"
-            />
-            <InputPassword
-              id="password"
-              name="password"
-              placeholder="Contraseña"
-            />
-          <Button text="Ingresar" className={styles.button}/>
-        </form>
+        <InputText id="username" name="username" placeholder="Usuario" className={styles.inputText}/>
+        <InputPassword id="password" name="password" placeholder="Contraseña" />
+        <Button text="Ingresar" className={styles.button} />
         <Link to="/" className={styles.forgot}>
           ¿Olvidaste tu contraseña?
         </Link>
-      </Card>
-    </>
+      </form>
+    </main>
   );
 }

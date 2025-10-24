@@ -1,5 +1,4 @@
 import styles from "./Modules.module.css";
-import Card from "../../components/Card";
 import Button from "../../components/Button";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
 
@@ -10,12 +9,14 @@ export default function Modules() {
   return (
     <>
       {location.pathname === "/modules" && (
-        <Card className={styles.card}>
-          <h2 className="h-dark">Módulo:</h2>
-          <Button text="Productos 🍗" onClick={() => navigate("products")} />
-          <Button text="Precios 💲" />
-          <Button text="Permisos 👥" />
-        </Card>
+        <main className={styles.main}>
+          <div className={`card ${styles.card}`}>
+            <h2 className="h-dark">Módulo:</h2>
+            <Button text="Productos 🍗" onClick={() => navigate("products")} />
+            <Button text="Precios 💲" />
+            <Button text="Permisos 👥" />
+          </div>
+        </main>
       )}
       <Outlet />
     </>
