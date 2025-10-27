@@ -1,0 +1,12 @@
+.storeName {
+  background: var(--gradient);
+  padding: 17px 30px;
+  border-radius: 50px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--color-primary-light);
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 20px;
+}

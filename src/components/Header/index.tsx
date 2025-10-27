@@ -1,6 +1,7 @@
 import styles from "./Header.module.css";
 import logo from "../../assets/servifresco-logo.png";
 import ProductsNavBar from "../ProductsNavBar";
+import StoreName from "../StoreName";
 import UserSection from "../UserSection";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -12,6 +13,10 @@ export default function Header() {
     "/modules/products/create",
     "/modules/products/modify",
     "/modules/products/query",
+  ].includes(location.pathname);
+  const showStoreName = [
+    "/modules/prices/history",
+    "/modules/prices/new",
   ].includes(location.pathname);
 
   return (
@@ -27,6 +32,7 @@ export default function Header() {
         <img src={logo} alt="servifresco-logo" className={styles.logo} />
       )}
       {showProductsNavBar && <ProductsNavBar />}
+      {showStoreName && <StoreName />}
       <UserSection />
     </header>
   );

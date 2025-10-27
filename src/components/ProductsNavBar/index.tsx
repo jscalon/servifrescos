@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function ProductsNavBar() {
   const location = useLocation();
-
   const links = [
     { to: "create", label: "Creación" },
     { to: "modify", label: "Modificación" },

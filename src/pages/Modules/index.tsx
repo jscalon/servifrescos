@@ -13,7 +13,7 @@ export default function Modules() {
           <div className={`card ${styles.card}`}>
             <h2 className="h-dark">Módulo:</h2>
             <Button text="Productos 🍗" onClick={() => navigate("products")} />
-            <Button text="Precios 💲" />
+            <Button text="Precios 💲" onClick={() => navigate("prices")}/>
             <Button text="Permisos 👥" />
           </div>
         </main>

@@ -1,7 +1,7 @@
-import styles from "./QueryProduct.module.css";
-import QueryBar from "../../../../components/QueryBar";
+import styles from "./History.module.css";
+import PriceBar from "../../../../components/PriceBar";
 
-export default function QueryProduct() {
+export default function History() {
   function arr(n: number) {
     const arr = [];
     for (let i = 0; i < n; i++) {
@@ -11,18 +11,18 @@ export default function QueryProduct() {
   }
   return (
     <main className={styles.main}>
-      <h1>Consultar Productos</h1>
-      <QueryBar></QueryBar>
+      <h1>Historial de Precios</h1>
+      <PriceBar></PriceBar>
       <table className={styles.table}>
         <thead>
           <tr>
             <th>Código</th>
             <th>Descripción</th>
-            <th>Marca</th>
             <th>Tipo</th>
-            <th>Departamento</th>
-            <th>Grupo</th>
-            <th>Subgrupo</th>
+            <th>Fecha de Efectividad</th>
+            <th>Fecha de Vencimiento</th>
+            <th>Precio ($)</th>
+            <th>Fecha de Registro</th>
           </tr>
         </thead>
         <tbody>
