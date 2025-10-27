@@ -11,6 +11,7 @@ import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
 import QueryProduct from "./pages/Modules/Products/QueryProduct";
 import Prices from "./pages/Modules/Prices";
 import History from "./pages/Modules/Prices/History";
+import NewPrice from "./pages/Modules/Prices/NewPrice";
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
             </Route>
             <Route path="prices" element={<Prices />}>
               <Route path="history" element={<History />} />
+              <Route path="new" element={<NewPrice />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

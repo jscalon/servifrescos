@@ -8,6 +8,7 @@ interface InputFieldProps {
   id: string;
   name: string;
   required?: boolean;
+  readOnly?: boolean;
   className?: string;
 }
 

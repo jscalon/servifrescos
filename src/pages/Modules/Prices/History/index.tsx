@@ -1,5 +1,5 @@
 import styles from "./History.module.css";
-import PriceBar from "../../../../components/PriceBar";
+import PriceBar from "../../../../components/HistoryBar";
 
 export default function History() {
   function arr(n: number) {

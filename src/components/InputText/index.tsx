@@ -5,6 +5,7 @@ interface InputTextProps {
   id: string;
   name: string;
   required?: boolean;
+  readOnly?: boolean;
   className?: string;
 }
 
@@ -13,6 +14,7 @@ export default function InputText({
   id,
   name,
   required = true,
+	readOnly = false,
   className = "",
 }: InputTextProps) {
   return (
@@ -23,6 +25,7 @@ export default function InputText({
       id={id}
       name={name}
       required={required}
+			readOnly={readOnly}
     />
   );
 }
