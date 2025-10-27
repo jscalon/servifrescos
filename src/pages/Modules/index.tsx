@@ -14,7 +14,7 @@ export default function Modules() {
             <h2 className="h-dark">Módulo:</h2>
             <Button text="Productos 🍗" onClick={() => navigate("products")} />
             <Button text="Precios 💲" onClick={() => navigate("prices")}/>
-            <Button text="Permisos 👥" />
+            <Button text="Permisos 👥" onClick={() => navigate("users")} />
           </div>
         </main>
       )}

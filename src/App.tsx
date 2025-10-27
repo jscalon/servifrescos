@@ -12,6 +12,8 @@ import QueryProduct from "./pages/Modules/Products/QueryProduct";
 import Prices from "./pages/Modules/Prices";
 import History from "./pages/Modules/Prices/History";
 import NewPrice from "./pages/Modules/Prices/NewPrice";
+import UserManagement from "./pages/Modules/UserManagement";
+import NewUser from "./pages/Modules/UserManagement/NewUser";
 
 export default function App() {
   return (
@@ -30,6 +32,9 @@ export default function App() {
             <Route path="prices" element={<Prices />}>
               <Route path="history" element={<History />} />
               <Route path="new" element={<NewPrice />} />
+            </Route>
+            <Route path="users" element={<UserManagement />}>
+              <Route path="new" element={<NewUser />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

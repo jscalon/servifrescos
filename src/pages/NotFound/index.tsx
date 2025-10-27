@@ -8,7 +8,7 @@ export default function NotFound() {
   const navigate = useNavigate();
 
   return (
-    <>
+    <main>
       <h1 className="h-light">404 - Error</h1>
       <h3 className="h-light">Página no encontrada</h3>
       <div className={styles.logos}>
@@ -17,10 +17,10 @@ export default function NotFound() {
       </div>
       <p className="p-light">Lo siento, la página que buscas no existe...</p>
       <Button
-        text="Volver al inicio"
+        text="Volver atrás..."
         className={styles.button}
-        onClick={() => navigate("/")}
+        onClick={() => navigate(-1)}
       />
-    </>
+    </main>
   );
 }
