@@ -1,18 +1,29 @@
 import styles from "./ProductsNavBar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-export default function NavBar() {
+export default function ProductsNavBar() {
+  const location = useLocation();
+
+  const links = [
+    { to: "create", label: "Creación" },
+    { to: "modify", label: "Modificación" },
+    { to: "query", label: "Consulta" },
+  ];
+
   return (
     <nav className={styles.navBar}>
-      <Link to="modules/products/create" className={styles.navLink}>
-        Creación
-      </Link>
-      <Link to="modules/products/modify" className={styles.navLink}>
-        Modificación
-      </Link>
-      <Link to="modules/products/query" className={styles.navLink}>
-        Consulta
-      </Link>
+      {links.map(({ to, label }) => {
+        const isActive = location.pathname === `/modules/products/${to}`;
+        return (
+          <Link
+            key={to}
+            to={`modules/products/${to}`}
+            className={`${styles.navLink} ${isActive ? styles.currentLink : ""}`}
+          >
+            {label}
+          </Link>
+        );
+      })}
     </nav>
   );
 }

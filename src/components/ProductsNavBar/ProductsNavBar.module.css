@@ -12,7 +12,15 @@
 .navLink {
   text-decoration: none;
   color: var(--gray-5);
-  transition: all 0.2s ease;
+  transition: all 0.2s linear;
+}
+
+.currentLink {
+  color: var(--color-primary);
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 18px;
+  line-height: 1;
 }
 
 .navLink:hover {
