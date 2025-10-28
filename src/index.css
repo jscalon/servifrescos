@@ -158,5 +158,6 @@ main {
   justify-content: center;
   align-items: center;
   flex: 1;
-  gap: 30px;
+  gap: 20px;
+	margin-bottom: 60px;
 }
