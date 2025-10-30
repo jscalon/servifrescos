@@ -77,10 +77,18 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'mssql',
+        'NAME': 'tu_base_de_datos',  # Nombre de tu base de datos
+        'USER': 'tu_usuario',  # Usuario de SQL Server
+        'PASSWORD': 'tu_contraseña',  # Contraseña
+        'HOST': 'localhost',  # O la IP/dominio de tu servidor SQL Server
+        'PORT': '1433',  # Puerto por defecto de SQL Server
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',  # Ajusta según tu driver instalado
+        },
     }
 }
+
 
 
 # Password validation
