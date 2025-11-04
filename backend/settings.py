@@ -37,13 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-		'corsheaders',
-		'rest_framework'
+    'corsheaders',
+    'rest_framework',
+    'backend.apps.products',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-		'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,9 +79,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'tu_base_de_datos',  # Nombre de tu base de datos
-        'USER': 'tu_usuario',  # Usuario de SQL Server
-        'PASSWORD': 'tu_contraseña',  # Contraseña
+        'NAME': 'Servifrescos',  # Nombre de tu base de datos
         'HOST': 'localhost',  # O la IP/dominio de tu servidor SQL Server
         'PORT': '1433',  # Puerto por defecto de SQL Server
         'OPTIONS': {
@@ -88,7 +87,6 @@ DATABASES = {
         },
     }
 }
-
 
 
 # Password validation
@@ -134,6 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configuración de CORS
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Ajusta al puerto de tu frontend
-    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
 ]
