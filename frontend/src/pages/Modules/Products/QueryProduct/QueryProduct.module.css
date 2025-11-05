@@ -8,6 +8,8 @@
   border-collapse: collapse;
   text-align: center;
   background-color: white;
+  color: var(--gray-5);
+  font-weight: 500;
 }
 
 tr {
@@ -20,7 +22,7 @@ td {
   padding: 8px;
 }
 
-thead {
-  color: var(--gray-3);
+.thead {
+  color: var(--gray-4);
   background: var(--gray-E);
 }
