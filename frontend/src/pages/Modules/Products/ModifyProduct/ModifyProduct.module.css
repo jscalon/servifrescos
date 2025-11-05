@@ -5,6 +5,15 @@ main > .form {
 	width: 600px;
 }
 
+.currentCode {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 20px;
+  width: 500px;
+  align-self: center;
+}
+
 .row, .rowButtons {
   display: flex;
   gap: 20px;

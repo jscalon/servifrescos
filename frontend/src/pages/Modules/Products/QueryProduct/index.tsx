@@ -5,6 +5,7 @@ import { productsAPI, type Product } from "../../../../services/api";
 
 export default function QueryProduct() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
@@ -17,12 +18,25 @@ export default function QueryProduct() {
       setLoading(true);
       const response = await productsAPI.getAll();
       setProducts(response.data);
+      setFilteredProducts(response.data);
     } catch (error) {
       console.error("Error loading products:", error);
       setError("Error al cargar los productos");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = (field: string, value: string) => {
+    const filtered = products.filter((product) => {
+      const fieldValue = (product as any)[field]?.toLowerCase() || "";
+      return fieldValue.includes(value.toLowerCase());
+    });
+    setFilteredProducts(filtered);
+  };
+
+  const handleClear = () => {
+    setFilteredProducts(products);
   };
 
   if (loading) {
@@ -38,7 +52,7 @@ export default function QueryProduct() {
     return (
       <main className={styles.main}>
         <h1>Consultar Productos</h1>
-        <div style={{color: 'red'}}>{error}</div>
+        <div style={{ color: "red" }}>{error}</div>
       </main>
     );
   }
@@ -46,7 +60,7 @@ export default function QueryProduct() {
   return (
     <main className={styles.main}>
       <h1>Consultar Productos</h1>
-      <QueryBar />
+      <QueryBar onSearch={handleSearch} onClear={handleClear} />
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>
@@ -60,7 +74,7 @@ export default function QueryProduct() {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <tr key={product.id}>
               <td>{product.code}</td>
               <td>{product.description}</td>
@@ -73,8 +87,8 @@ export default function QueryProduct() {
           ))}
         </tbody>
       </table>
-      {products.length === 0 && (
-        <div style={{textAlign: 'center', marginTop: '20px'}}>
+      {filteredProducts.length === 0 && (
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
           No hay productos registrados
         </div>
       )}

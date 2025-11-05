@@ -6,7 +6,7 @@
 	position: relative;
 	padding: 10px 30px;
   width: 100%;
-	gap: 30px;
+	gap: 20px;
 	border-radius: 20px;
   background: var(--gray-D);
 }
@@ -22,7 +22,7 @@
 }
 
 .input {
-	flex: 3
+	flex: 4
 }
 
 .button {

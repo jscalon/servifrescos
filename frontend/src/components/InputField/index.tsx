@@ -3,7 +3,6 @@ import styles from "./InputField.module.css";
 
 interface InputFieldProps {
   label: string;
-  labelClassName?: string;
   placeholder?: string;
   id: string;
   name: string;
@@ -11,19 +10,20 @@ interface InputFieldProps {
   required?: boolean;
   readOnly?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
 }
 
 export default function InputField({
   label,
-  labelClassName = "",
+  className = "",
   ...inputProps
 }: InputFieldProps) {
   return (
-    <div className={styles.inputField}>
+    <div className={styles.inputField + " " + className}>
       <label
         htmlFor={inputProps.id}
-        className={styles.label + " " + labelClassName}
+        className={styles.label}
       >
         {label}
       </label>

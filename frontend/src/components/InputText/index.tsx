@@ -8,6 +8,7 @@ interface InputTextProps {
   required?: boolean;
   readOnly?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;  // Añade esta línea
   className?: string;
 }
 
@@ -17,8 +18,9 @@ export default function InputText({
   name,
   value = "",
   required = true,
-	readOnly = false,
+  readOnly = false,
   onChange,
+  onKeyDown,  // Añade este parámetro
   className = "",
 }: InputTextProps) {
   return (
@@ -30,8 +32,9 @@ export default function InputText({
       name={name}
       value={value}
       required={required}
-			readOnly={readOnly}
+      readOnly={readOnly}
       onChange={onChange}
+      onKeyDown={onKeyDown}  // Añade esta prop
     />
   );
 }

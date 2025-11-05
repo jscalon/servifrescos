@@ -6,16 +6,20 @@ interface InputProps {
   placeholder?: string;
   id: string;
   name: string;
+  value?: string; // Añade value
   required?: boolean;
   className?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // Añade onChange
 }
 
 export default function Input({
   placeholder = "",
   id,
   name,
+  value = "", // Añade valor por defecto
   required = true,
   className = "",
+  onChange, // Añade parámetro
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const inputElement = (
@@ -25,8 +29,10 @@ export default function Input({
       placeholder={placeholder}
       id={id}
       name={name}
+      value={value} // Añade value
       required={required}
       autoComplete="new-password"
+      onChange={onChange} // Añade onChange
     />
   );
 
