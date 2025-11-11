@@ -2,6 +2,21 @@
   margin-top: 10px;
 }
 
+.loading {
+  color: white;
+  font-weight: 500;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
+}
+
+.noProducts {
+  text-align: center;
+  color: var(--gray-5);
+}
+
 .table {
   width: 100%;
   border: 2px solid var(--gray-A);

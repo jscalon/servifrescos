@@ -43,7 +43,7 @@ export default function QueryProduct() {
     return (
       <main className={styles.main}>
         <h1>Consultar Productos</h1>
-        <div>Cargando productos...</div>
+        <span className={styles.loading}>Cargando productos...</span>
       </main>
     );
   }
@@ -52,7 +52,7 @@ export default function QueryProduct() {
     return (
       <main className={styles.main}>
         <h1>Consultar Productos</h1>
-        <div style={{ color: "red" }}>{error}</div>
+        <span className={styles.error}>{error}</span>
       </main>
     );
   }
@@ -88,9 +88,9 @@ export default function QueryProduct() {
         </tbody>
       </table>
       {filteredProducts.length === 0 && (
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          No hay productos registrados
-        </div>
+        <span className={styles.noProducts}>
+          Sin coincidencias...
+        </span>
       )}
     </main>
   );

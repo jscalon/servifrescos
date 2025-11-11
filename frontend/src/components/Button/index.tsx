@@ -4,17 +4,17 @@ import type { ReactNode } from "react";
 interface ButtonProps {
   text: string;
   icon?: ReactNode;
-	style?: "primary" | "secondary" | "other";
+  style?: "primary" | "secondary" | "other";
   type?: "submit" | "button" | "reset" | undefined;
   disabled?: boolean;
   className?: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default function Button({
   text,
   icon,
-	style = "primary",
+  style = "primary",
   type = "submit",
   disabled = false,
   className = "",

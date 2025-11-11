@@ -8,18 +8,22 @@ interface InputProps {
   name: string;
   value?: string; // Añade value
   required?: boolean;
+  readOnly?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // Añade onChange
 }
 
-export default function Input({
+export default function InputPassword({
   placeholder = "",
   id,
   name,
   value = "", // Añade valor por defecto
   required = true,
+  readOnly = false,
   className = "",
-  onChange, // Añade parámetro
+  onChange,
+  onKeyDown,
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const inputElement = (
@@ -31,8 +35,10 @@ export default function Input({
       name={name}
       value={value} // Añade value
       required={required}
+      readOnly={readOnly}
       autoComplete="new-password"
-      onChange={onChange} // Añade onChange
+      onChange={onChange}
+      onKeyDown={onKeyDown}
     />
   );
 

@@ -5,6 +5,11 @@ main > .form {
 	width: 600px;
 }
 
+.error {
+  color: red;
+  text-align: center;
+}
+
 .currentCode {
   display: flex;
   justify-content: center;

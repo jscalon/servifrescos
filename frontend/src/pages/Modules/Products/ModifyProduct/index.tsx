@@ -1,6 +1,7 @@
 import styles from "./ModifyProduct.module.css";
 import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
+import FieldWrapper from "../../../../components/FieldWrapper";
+import InputText from "../../../../components/InputText";
 import BackButton from "../../../../components/BackButton";
 import { useState } from "react";
 import { productsAPI, type Product } from "../../../../services/api";
@@ -17,6 +18,7 @@ interface ProductFormData {
 
 export default function ModifyProduct() {
   const [currentCode, setCurrentCode] = useState<string>("");
+  const [productId, setProductId] = useState<number | null>(null);
   const [formData, setFormData] = useState<ProductFormData>({
     code: "",
     description: "",
@@ -70,6 +72,7 @@ export default function ModifyProduct() {
           group: product.group,
           subgroup: product.subgroup,
         });
+        setProductId(product.id!);
         setProductFound(true);
         setError("");
       } else {
@@ -87,7 +90,7 @@ export default function ModifyProduct() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!productFound) {
+    if (!productId) {
       setError("Primero busque un producto para modificar");
       return;
     }
@@ -96,29 +99,21 @@ export default function ModifyProduct() {
     setError("");
 
     try {
-      // Encontrar el ID del producto original
-      const response = await productsAPI.getAll();
-      const products: Product[] = response.data;
-      const originalProduct = products.find(
-        (p) => p.code.toLowerCase() === currentCode.trim().toLowerCase()
-      );
-
-      if (originalProduct) {
-        await productsAPI.update(originalProduct.id!, formData);
-        alert("Producto modificado exitosamente!");
-        // Limpiar formulario
-        setCurrentCode("");
-        setFormData({
-          code: "",
-          description: "",
-          brand: "",
-          type: "",
-          department: "",
-          group: "",
-          subgroup: "",
-        });
-        setProductFound(false);
-      }
+      await productsAPI.update(productId, formData);
+      alert("Producto modificado exitosamente!");
+      // Reiniciar formulario
+      setCurrentCode("");
+      setProductId(null);
+      setFormData({
+        code: "",
+        description: "",
+        brand: "",
+        type: "",
+        department: "",
+        group: "",
+        subgroup: "",
+      });
+      setProductFound(false);
     } catch (error) {
       console.error("Error modificando producto:", error);
       setError("Error al modificar el producto. Inténtalo de nuevo.");
@@ -129,6 +124,7 @@ export default function ModifyProduct() {
 
   const handleClear = () => {
     setCurrentCode("");
+    setProductId(null);
     setFormData({
       code: "",
       description: "",
@@ -154,19 +150,17 @@ export default function ModifyProduct() {
       <h1>Modificar Producto</h1>
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
         <BackButton />
-        {error && (
-          <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
-        )}
-
+        {error && <div className={styles.error}>{error}</div>}
         <div className={styles.currentCode}>
-          <InputField
-            label="Código Actual"
-            id="current_code"
-            name="current_code"
-            value={currentCode}
-            onChange={handleCurrentCodeChange}
-            onKeyDown={handleKeyDown}
-          />
+          <FieldWrapper label="Código Actual" id="current_code">
+            <InputText
+              id="current_code"
+              name="current_code"
+              value={currentCode}
+              onChange={handleCurrentCodeChange}
+              onKeyDown={handleKeyDown}
+            />
+          </FieldWrapper>
           <Button
             text={searching ? "Buscando..." : "Buscar"}
             onClick={searchProduct}
@@ -178,65 +172,72 @@ export default function ModifyProduct() {
         {productFound && (
           <>
             <div className={styles.row}>
-              <InputField
-                label="Código"
-                id="code"
-                name="code"
-                value={formData.code}
-                onChange={handleInputChange}
-              />
-              <InputField
-                label="Descripción"
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-              />
+              <FieldWrapper label="Código" id="code">
+                <InputText
+                  id="code"
+                  name="code"
+                  value={formData.code}
+                  onChange={handleInputChange}
+                />
+              </FieldWrapper>
+              <FieldWrapper label="Descripción" id="description">
+                <InputText
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                />
+              </FieldWrapper>
             </div>
             <div className={styles.row}>
-              <InputField
-                label="Marca"
-                id="brand"
-                name="brand"
-                value={formData.brand}
-                onChange={handleInputChange}
-              />
-              <InputField
-                label="Tipo"
-                id="type"
-                name="type"
-                value={formData.type}
-                onChange={handleInputChange}
-              />
+              <FieldWrapper label="Marca" id="brand">
+                <InputText
+                  id="brand"
+                  name="brand"
+                  value={formData.brand}
+                  onChange={handleInputChange}
+                />
+              </FieldWrapper>
+              <FieldWrapper label="Tipo" id="type">
+                <InputText
+                  id="type"
+                  name="type"
+                  value={formData.type}
+                  onChange={handleInputChange}
+                />
+              </FieldWrapper>
             </div>
             <div className={styles.row}>
-              <InputField
-                label="Departamento"
-                id="department"
-                name="department"
-                value={formData.department}
-                onChange={handleInputChange}
-              />
-              <InputField
-                label="Grupo"
-                id="group"
-                name="group"
-                value={formData.group}
-                onChange={handleInputChange}
-              />
-              <InputField
-                label="Subgrupo"
-                id="subgroup"
-                name="subgroup"
-                value={formData.subgroup}
-                onChange={handleInputChange}
-              />
+              <FieldWrapper label="Departamento" id="department">
+                <InputText
+                  id="department"
+                  name="department"
+                  value={formData.department}
+                  onChange={handleInputChange}
+                />
+              </FieldWrapper>
+              <FieldWrapper label="Grupo" id="group">
+                <InputText
+                  id="group"
+                  name="group"
+                  value={formData.group}
+                  onChange={handleInputChange}
+                />
+              </FieldWrapper>
+              <FieldWrapper label="Subgrupo" id="subgroup">
+                <InputText
+                  id="subgroup"
+                  name="subgroup"
+                  value={formData.subgroup}
+                  onChange={handleInputChange}
+                />
+              </FieldWrapper>
             </div>
             <div className={styles.rowButtons}>
               <Button
-                text="Limpiar"
+                text="Reiniciar"
                 style="secondary"
-                className={styles.buttonLimpiar}
+                className={styles.buttonReiniciar}
                 type="button"
                 onClick={handleClear}
               />

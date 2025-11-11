@@ -68,11 +68,11 @@ export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
         value={searchValue}
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
-        placeholder="Ingrese el valor a buscar..."
+        placeholder="Ingrese el producto a buscar..."
       />
       <Button text="Buscar" className={styles.button} onClick={handleSearch} />
       <Button
-        text="Limpiar"
+        text="Reiniciar"
         className={styles.button}
         onClick={handleClear}
         style="secondary"

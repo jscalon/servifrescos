@@ -1,6 +1,7 @@
 import styles from "./CreateProduct.module.css";
 import Button from "../../../../components/Button";
-import InputField from "../../../../components/InputField";
+import FieldWrapper from "../../../../components/FieldWrapper";
+import InputText from "../../../../components/InputText";
 import BackButton from "../../../../components/BackButton";
 import { useState } from "react";
 import { productsAPI } from "../../../../services/api";
@@ -43,7 +44,7 @@ export default function CreateProduct() {
 
     try {
       await productsAPI.create(formData);
-      // Limpiar formulario después de guardar exitosamente
+      // Reiniciar formulario después de guardar exitosamente
       setFormData({
         code: "",
         description: "",
@@ -80,69 +81,74 @@ export default function CreateProduct() {
       <h1>Crear Producto</h1>
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
         <BackButton />
-        {error && (
-          <div style={{ color: "red", marginBottom: "10px" }}>{error}</div>
-        )}
+        {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>
-          <InputField
-            label="Código"
-            id="code"
-            name="code"
-            value={formData.code}
-            onChange={handleInputChange}
-          />
-          <InputField
-            label="Descripción"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-          />
+          <FieldWrapper label="Código" id="code">
+            <InputText
+              id="code"
+              name="code"
+              value={formData.code}
+              onChange={handleInputChange}
+            />
+          </FieldWrapper>
+          <FieldWrapper label="Descripción" id="description">
+            <InputText
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+            />
+          </FieldWrapper>
         </div>
         <div className={styles.row}>
-          <InputField
-            label="Marca"
-            id="brand"
-            name="brand"
-            value={formData.brand}
-            onChange={handleInputChange}
-          />
-          <InputField
-            label="Tipo"
-            id="type"
-            name="type"
-            value={formData.type}
-            onChange={handleInputChange}
-          />
+          <FieldWrapper label="Marca" id="brand">
+            <InputText
+              id="brand"
+              name="brand"
+              value={formData.brand}
+              onChange={handleInputChange}
+            />
+          </FieldWrapper>
+          <FieldWrapper label="Tipo" id="type">
+            <InputText
+              id="type"
+              name="type"
+              value={formData.type}
+              onChange={handleInputChange}
+            />
+          </FieldWrapper>
         </div>
         <div className={styles.row}>
-          <InputField
-            label="Departamento"
-            id="department"
-            name="department"
-            value={formData.department}
-            onChange={handleInputChange}
-          />
-          <InputField
-            label="Grupo"
-            id="group"
-            name="group"
-            value={formData.group}
-            onChange={handleInputChange}
-          />
-          <InputField
-            label="Subgrupo"
-            id="subgroup"
-            name="subgroup"
-            value={formData.subgroup}
-            onChange={handleInputChange}
-          />
+          <FieldWrapper label="Departamento" id="department">
+            <InputText
+              id="department"
+              name="department"
+              value={formData.department}
+              onChange={handleInputChange}
+            />
+          </FieldWrapper>
+          <FieldWrapper label="Grupo" id="group">
+            <InputText
+              id="group"
+              name="group"
+              value={formData.group}
+              onChange={handleInputChange}
+            />
+          </FieldWrapper>
+          <FieldWrapper label="Subgrupo" id="subgroup">
+            <InputText
+              id="subgroup"
+              name="subgroup"
+              value={formData.subgroup}
+              onChange={handleInputChange}
+            />
+          </FieldWrapper>
         </div>
         <div className={styles.rowButtons}>
           <Button
-            text="Limpiar"
+            text="Reiniciar"
             style="secondary"
-            className={styles.buttonLimpiar}
+            className={styles.buttonReiniciar}
             type="button"
             onClick={handleClear}
           />
