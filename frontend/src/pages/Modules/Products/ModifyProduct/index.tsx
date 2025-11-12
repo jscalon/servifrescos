@@ -2,6 +2,7 @@ import styles from "./ModifyProduct.module.css";
 import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
+import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
 import { useState } from "react";
 import { productsAPI, type Product } from "../../../../services/api";
@@ -37,11 +38,13 @@ export default function ModifyProduct() {
     setCurrentCode(e.target.value);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    // Convertir code y description a mayúsculas
+    const processedValue = (name === 'code' || name === 'description') ? value.toUpperCase() : value;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: processedValue,
     }));
   };
 
@@ -203,20 +206,36 @@ export default function ModifyProduct() {
             </div>
             <div className={styles.row}>
               <FieldWrapper label="Marca" id="brand">
-                <InputText
+                <Select
                   id="brand"
                   name="brand"
                   value={formData.brand}
                   onChange={handleInputChange}
-                />
+                >
+                  <option value="">Seleccionar marca</option>
+                  <option value="CENTENARIO">CENTENARIO</option>
+                  <option value="COCA COLA">COCA COLA</option>
+                  <option value="DEL CORRAL">DEL CORRAL</option>
+                  <option value="DON MIGUEL">DON MIGUEL</option>
+                  <option value="KEMPIS">KEMPIS</option>
+                  <option value="NEVADA">NEVADA</option>
+                  <option value="PALMIZULIA">PALMIZULIA</option>
+                  <option value="PASTOR">PASTOR</option>
+                  <option value="SUR DEL LAGO">SUR DEL LAGO</option>
+                  <option value="UPACA">UPACA</option>
+                </Select>
               </FieldWrapper>
               <FieldWrapper label="Tipo" id="type">
-                <InputText
+                <Select
                   id="type"
                   name="type"
                   value={formData.type}
                   onChange={handleInputChange}
-                />
+                >
+                  <option value="">Seleccionar tipo</option>
+                  <option value="PESABLE">PESABLE</option>
+                  <option value="UNIDADES">UNIDADES</option>
+                </Select>
               </FieldWrapper>
             </div>
             <div className={styles.row}>
