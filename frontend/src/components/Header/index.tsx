@@ -1,14 +1,13 @@
 import styles from "./Header.module.css";
 import logo from "../../assets/servifresco-logo.png";
+import logos from "../../assets/protinalproagro-logos.png";
 import ProductsNavBar from "../ProductsNavBar";
 import StoreName from "../StoreName";
 import UserSection from "../UserSection";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function Header() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const clickableLogo = !["/login", "/modules"].includes(location.pathname);
   const showProductsNavBar = [
     "/modules/products/create",
     "/modules/products/modify",
@@ -21,16 +20,7 @@ export default function Header() {
 
   return (
     <header className={styles.header}>
-      {clickableLogo ? (
-        <img
-          src={logo}
-          alt="servifresco-logo"
-          className={styles.clickableLogo}
-          onClick={() => navigate("/modules")}
-        />
-      ) : (
-        <img src={logo} alt="servifresco-logo" className={styles.logo} />
-      )}
+      <img src={logo} alt="servifresco-logo" className={styles.logo} />
       {showProductsNavBar && <ProductsNavBar />}
       {showStoreName && <StoreName />}
       <UserSection />
