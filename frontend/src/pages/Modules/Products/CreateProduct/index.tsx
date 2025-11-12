@@ -47,17 +47,39 @@ export default function CreateProduct() {
   const getSubgroupOptions = (group: string) => {
     switch (group) {
       case "CONGELADOS":
-        return ["NUGGETS", "MILANESAS", "TENDERS", "PALITOS", "HAMBURGUESAS", "ALAS"];
+        return [
+          "NUGGETS",
+          "MILANESAS",
+          "TENDERS",
+          "PALITOS",
+          "HAMBURGUESAS",
+          "ALAS",
+        ];
       case "HELADOS":
         return ["HELADOS"];
       case "AVES BENEFICIADAS":
-        return ["ENTEROS", "DESPRESADOS", "DESHUESADOS", "MENUDOS", "RESIDUALES"];
+        return [
+          "ENTEROS",
+          "DESPRESADOS",
+          "DESHUESADOS",
+          "MENUDOS",
+          "RESIDUALES",
+        ];
       case "EMBUTIDOS":
         return ["SALCHICHAS", "JAMONES", "MORTADELAS"];
       case "CARNE":
         return ["CARNE BOVINA"];
       case "LACTEOS":
-        return ["LECHE", "QUESOS", "YOGURT", "MANTEQUILLA", "JUGOS", "CHICHA", "CHOCO", "LACTOVISOY"];
+        return [
+          "LECHE",
+          "QUESOS",
+          "YOGURT",
+          "MANTEQUILLA",
+          "JUGOS",
+          "CHICHA",
+          "CHOCO",
+          "LACTOVISOY",
+        ];
       case "ALIMENTOS PARA MASCOTAS":
         return ["PROTICAN", "PROTICAT"];
       default:
@@ -65,10 +87,13 @@ export default function CreateProduct() {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     // Convertir code y description a mayúsculas
-    const processedValue = (name === 'code' || name === 'description') ? value.toUpperCase() : value;
+    const processedValue =
+      name === "code" || name === "description" ? value.toUpperCase() : value;
 
     setFormData((prev) => {
       const newData = {
@@ -77,14 +102,14 @@ export default function CreateProduct() {
       };
 
       // Resetear campos dependientes cuando cambie el departamento
-      if (name === 'department') {
-        newData.group = '';
-        newData.subgroup = '';
+      if (name === "department") {
+        newData.group = "";
+        newData.subgroup = "";
       }
 
       // Resetear subgrupo cuando cambie el grupo
-      if (name === 'group') {
-        newData.subgroup = '';
+      if (name === "group") {
+        newData.subgroup = "";
       }
 
       return newData;
@@ -109,9 +134,17 @@ export default function CreateProduct() {
         subgroup: "",
       });
       alert("Producto creado exitosamente!");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creando producto:", error);
-      setError("Error al crear el producto. Inténtalo de nuevo.");
+
+      // Verificar si es un error de código duplicado
+      if (error.response?.status === 400 && error.response?.data?.code) {
+        setError(
+          "Error creando producto: Ya existe un producto con ese código."
+        );
+      } else {
+        setError("Error al crear el producto. Inténtalo de nuevo.");
+      }
     } finally {
       setLoading(false);
     }
