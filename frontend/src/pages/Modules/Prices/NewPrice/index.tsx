@@ -111,8 +111,6 @@ export default function NewPrice() {
       // });
 
       alert("Precio creado exitosamente!");
-
-      // Limpiar formulario
       setFormData({
         productCode: "",
         productDescription: "",
@@ -174,13 +172,13 @@ export default function NewPrice() {
                 onKeyDown={handleKeyDown}
               />
             </FieldWrapper>
-            <Button
+            {/* <Button
               text={searching ? "Buscando..." : "Buscar"}
               onClick={searchProduct}
               disabled={searching}
               style="primary"
               type="button"
-            />
+            /> */}
           </div>
           <FieldWrapper
             label="Descripción del Producto"

@@ -69,8 +69,6 @@ export default function NewUser() {
       // await usersAPI.create(formData);
 
       alert("Usuario creado exitosamente!");
-
-      // Limpiar formulario
       setFormData({
         username: "",
         role: "",

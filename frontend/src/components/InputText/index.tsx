@@ -7,6 +7,7 @@ interface InputTextProps {
   value?: string;
   required?: boolean;
   readOnly?: boolean;
+  disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
@@ -19,6 +20,7 @@ export default function InputText({
   value = "",
   required = true,
   readOnly = false,
+  disabled = false,
   onChange,
   onKeyDown,
   className = "",
@@ -33,6 +35,7 @@ export default function InputText({
       value={value}
       required={required}
       readOnly={readOnly}
+      disabled={disabled}
       onChange={onChange}
       onKeyDown={onKeyDown}
     />

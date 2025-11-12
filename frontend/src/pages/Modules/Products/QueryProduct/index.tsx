@@ -75,7 +75,7 @@ export default function QueryProduct() {
         </thead>
         <tbody>
           {filteredProducts.map((product) => (
-            <tr key={product.id}>
+            <tr key={product.code}>
               <td>{product.code}</td>
               <td>{product.description}</td>
               <td>{product.brand}</td>

@@ -18,7 +18,7 @@ interface ProductFormData {
 
 export default function ModifyProduct() {
   const [currentCode, setCurrentCode] = useState<string>("");
-  const [productId, setProductId] = useState<number | null>(null);
+  const [productCode, setProductCode] = useState<string>("");
   const [formData, setFormData] = useState<ProductFormData>({
     code: "",
     description: "",
@@ -72,7 +72,7 @@ export default function ModifyProduct() {
           group: product.group,
           subgroup: product.subgroup,
         });
-        setProductId(product.id!);
+        setProductCode(product.code);
         setProductFound(true);
         setError("");
       } else {
@@ -90,7 +90,7 @@ export default function ModifyProduct() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!productId) {
+    if (!productCode) {
       setError("Primero busque un producto para modificar");
       return;
     }
@@ -99,11 +99,22 @@ export default function ModifyProduct() {
     setError("");
 
     try {
-      await productsAPI.update(productId, formData);
-      alert("Producto modificado exitosamente!");
+      // Si el código cambió, necesitamos crear un nuevo producto y eliminar el antiguo
+      if (formData.code !== productCode) {
+        // Crear nuevo producto con el código actualizado
+        await productsAPI.create(formData);
+        // Eliminar el producto antiguo
+        await productsAPI.delete(productCode);
+        alert("Producto modificado exitosamente! (Código actualizado)");
+      } else {
+        // Actualización normal sin cambiar código
+        await productsAPI.update(productCode, formData);
+        alert("Producto modificado exitosamente!");
+      }
+
       // Reiniciar formulario
       setCurrentCode("");
-      setProductId(null);
+      setProductCode("");
       setFormData({
         code: "",
         description: "",
@@ -124,7 +135,7 @@ export default function ModifyProduct() {
 
   const handleClear = () => {
     setCurrentCode("");
-    setProductId(null);
+    setProductCode("");
     setFormData({
       code: "",
       description: "",
@@ -159,6 +170,7 @@ export default function ModifyProduct() {
               value={currentCode}
               onChange={handleCurrentCodeChange}
               onKeyDown={handleKeyDown}
+              disabled={productFound} // Bloquear después de buscar
             />
           </FieldWrapper>
           <Button

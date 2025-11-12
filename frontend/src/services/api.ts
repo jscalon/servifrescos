@@ -11,11 +11,10 @@ const api = axios.create({
 
 // Interface para el modelo Product (basado en tu modelo Django)
 export interface Product {
-  id?: number;  // Opcional porque no existe al crear
-  code: string;
+  code: string; // Ahora es la primary key, siempre presente
   description: string;
   brand: string;
-  type: string;  // Mantengo como en tu código
+  type: string; // Mantengo como en tu código
   department: string;
   group: string;
   subgroup: string;
@@ -26,10 +25,16 @@ export interface ApiResponse<T> extends AxiosResponse<T> {}
 
 export const productsAPI = {
   getAll: (): Promise<ApiResponse<Product[]>> => api.get("/products/"),
-  getById: (id: number): Promise<ApiResponse<Product>> => api.get(`/products/${id}/`),
-  create: (data: Omit<Product, 'id'>): Promise<ApiResponse<Product>> => api.post("/products/", data),
-  update: (id: number, data: Partial<Product>): Promise<ApiResponse<Product>> => api.put(`/products/${id}/`, data),
-  delete: (id: number): Promise<ApiResponse<void>> => api.delete(`/products/${id}/`),
+  getByCode: (code: string): Promise<ApiResponse<Product>> =>
+    api.get(`/products/${code}/`),
+  create: (data: Product): Promise<ApiResponse<Product>> =>
+    api.post("/products/", data),
+  update: (
+    code: string,
+    data: Partial<Product>
+  ): Promise<ApiResponse<Product>> => api.put(`/products/${code}/`, data),
+  delete: (code: string): Promise<ApiResponse<void>> =>
+    api.delete(`/products/${code}/`),
 };
 
 export default api;
