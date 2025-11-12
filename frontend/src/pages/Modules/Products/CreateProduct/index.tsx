@@ -30,14 +30,65 @@ export default function CreateProduct() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
+  // Opciones dinámicas basadas en selecciones
+  const getGroupOptions = (department: string) => {
+    switch (department) {
+      case "CONGELADOS":
+        return ["CONGELADOS", "HELADOS"];
+      case "REFRIGERADOS":
+        return ["AVES BENEFICIADAS", "EMBUTIDOS", "CARNE", "LACTEOS"];
+      case "SECOS":
+        return ["ALIMENTOS PARA MASCOTAS"];
+      default:
+        return [];
+    }
+  };
+
+  const getSubgroupOptions = (group: string) => {
+    switch (group) {
+      case "CONGELADOS":
+        return ["NUGGETS", "MILANESAS", "TENDERS", "PALITOS", "HAMBURGUESAS", "ALAS"];
+      case "HELADOS":
+        return ["HELADOS"];
+      case "AVES BENEFICIADAS":
+        return ["ENTEROS", "DESPRESADOS", "DESHUESADOS", "MENUDOS", "RESIDUALES"];
+      case "EMBUTIDOS":
+        return ["SALCHICHAS", "JAMONES", "MORTADELAS"];
+      case "CARNE":
+        return ["CARNE BOVINA"];
+      case "LACTEOS":
+        return ["LECHE", "QUESOS", "YOGURT", "MANTEQUILLA", "JUGOS", "CHICHA", "CHOCO", "LACTOVISOY"];
+      case "ALIMENTOS PARA MASCOTAS":
+        return ["PROTICAN", "PROTICAT"];
+      default:
+        return [];
+    }
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     // Convertir code y description a mayúsculas
     const processedValue = (name === 'code' || name === 'description') ? value.toUpperCase() : value;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: processedValue,
-    }));
+
+    setFormData((prev) => {
+      const newData = {
+        ...prev,
+        [name]: processedValue,
+      };
+
+      // Resetear campos dependientes cuando cambie el departamento
+      if (name === 'department') {
+        newData.group = '';
+        newData.subgroup = '';
+      }
+
+      // Resetear subgrupo cuando cambie el grupo
+      if (name === 'group') {
+        newData.subgroup = '';
+      }
+
+      return newData;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -139,28 +190,49 @@ export default function CreateProduct() {
         </div>
         <div className={styles.row}>
           <FieldWrapper label="Departamento" id="department">
-            <InputText
+            <Select
               id="department"
               name="department"
               value={formData.department}
               onChange={handleInputChange}
-            />
+            >
+              <option value="">Seleccionar departamento</option>
+              <option value="CONGELADOS">CONGELADOS</option>
+              <option value="REFRIGERADOS">REFRIGERADOS</option>
+              <option value="SECOS">SECOS</option>
+            </Select>
           </FieldWrapper>
           <FieldWrapper label="Grupo" id="group">
-            <InputText
+            <Select
               id="group"
               name="group"
               value={formData.group}
               onChange={handleInputChange}
-            />
+              disabled={!formData.department}
+            >
+              <option value="">Seleccionar grupo</option>
+              {getGroupOptions(formData.department).map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Select>
           </FieldWrapper>
           <FieldWrapper label="Subgrupo" id="subgroup">
-            <InputText
+            <Select
               id="subgroup"
               name="subgroup"
               value={formData.subgroup}
               onChange={handleInputChange}
-            />
+              disabled={!formData.group}
+            >
+              <option value="">Seleccionar subgrupo</option>
+              {getSubgroupOptions(formData.group).map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Select>
           </FieldWrapper>
         </div>
         <div className={styles.rowButtons}>
