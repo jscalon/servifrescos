@@ -202,7 +202,11 @@ export default function CreateProduct() {
   return (
     <main>
       <h1>Crear Producto</h1>
-      <form className={`card ${styles.form}`} onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
+      <form
+        className={`card ${styles.form}`}
+        onSubmit={handleSubmit}
+        onKeyDown={handleKeyDown}
+      >
         <BackButton />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>

@@ -55,17 +55,39 @@ export default function ModifyProduct() {
   const getSubgroupOptions = (group: string) => {
     switch (group) {
       case "CONGELADOS":
-        return ["NUGGETS", "MILANESAS", "TENDERS", "PALITOS", "HAMBURGUESAS", "ALAS"];
+        return [
+          "NUGGETS",
+          "MILANESAS",
+          "TENDERS",
+          "PALITOS",
+          "HAMBURGUESAS",
+          "ALAS",
+        ];
       case "HELADOS":
         return ["HELADOS"];
       case "AVES BENEFICIADAS":
-        return ["ENTEROS", "DESPRESADOS", "DESHUESADOS", "MENUDOS", "RESIDUALES"];
+        return [
+          "ENTEROS",
+          "DESPRESADOS",
+          "DESHUESADOS",
+          "MENUDOS",
+          "RESIDUALES",
+        ];
       case "EMBUTIDOS":
         return ["SALCHICHAS", "JAMONES", "MORTADELAS"];
       case "CARNE":
         return ["CARNE BOVINA"];
       case "LACTEOS":
-        return ["LECHE", "QUESOS", "YOGURT", "MANTEQUILLA", "JUGOS", "CHICHA", "CHOCO", "LACTOVISOY"];
+        return [
+          "LECHE",
+          "QUESOS",
+          "YOGURT",
+          "MANTEQUILLA",
+          "JUGOS",
+          "CHICHA",
+          "CHOCO",
+          "LACTOVISOY",
+        ];
       case "ALIMENTOS PARA MASCOTAS":
         return ["PROTICAN", "PROTICAT"];
       default:
@@ -77,10 +99,13 @@ export default function ModifyProduct() {
     setCurrentCode(e.target.value);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     // Convertir code y description a mayúsculas
-    const processedValue = (name === 'code' || name === 'description') ? value.toUpperCase() : value;
+    const processedValue =
+      name === "code" || name === "description" ? value.toUpperCase() : value;
 
     setFormData((prev) => {
       const newData = {
@@ -89,14 +114,14 @@ export default function ModifyProduct() {
       };
 
       // Resetear campos dependientes cuando cambie el departamento
-      if (name === 'department') {
-        newData.group = '';
-        newData.subgroup = '';
+      if (name === "department") {
+        newData.group = "";
+        newData.subgroup = "";
       }
 
       // Resetear subgrupo cuando cambie el grupo
-      if (name === 'group') {
-        newData.subgroup = '';
+      if (name === "group") {
+        newData.subgroup = "";
       }
 
       return newData;
@@ -168,14 +193,11 @@ export default function ModifyProduct() {
         await productsAPI.create(formData);
         // Eliminar el producto antiguo
         await productsAPI.delete(productCode);
-        // Mostrar modal de éxito
-        setShowSuccessDialog(true);
       } else {
         // Actualización normal sin cambiar código
         await productsAPI.update(productCode, formData);
-        // Mostrar modal de éxito
-        setShowSuccessDialog(true);
       }
+      setShowSuccessDialog(true);
 
       // Reiniciar formulario
       setCurrentCode("");
@@ -250,7 +272,11 @@ export default function ModifyProduct() {
   return (
     <main>
       <h1>Modificar Producto</h1>
-      <form className={`card ${styles.form}`} onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
+      <form
+        className={`card ${styles.form}`}
+        onSubmit={handleSubmit}
+        onKeyDown={handleFormKeyDown}
+      >
         <BackButton />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.currentCode}>
