@@ -4,6 +4,7 @@ import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
 import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
+import ConfirmationModal from "../../../../components/ConfirmationModal";
 import { useState } from "react";
 import { productsAPI } from "../../../../services/api";
 
@@ -29,6 +30,7 @@ export default function CreateProduct() {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
 
   // Opciones dinámicas basadas en selecciones
   const getGroupOptions = (department: string) => {
@@ -118,6 +120,11 @@ export default function CreateProduct() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmSave = async () => {
+    setShowConfirmDialog(false);
     setLoading(true);
     setError("");
 
@@ -148,6 +155,10 @@ export default function CreateProduct() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancelSave = () => {
+    setShowConfirmDialog(false);
   };
 
   const handleClear = () => {
@@ -283,6 +294,16 @@ export default function CreateProduct() {
             disabled={loading}
           />
         </div>
+
+        {/* Modal de confirmación reutilizable */}
+        {showConfirmDialog && (
+          <ConfirmationModal
+            title="Confirmar Guardado"
+            message="¿Está seguro de que desea guardar este producto?"
+            onConfirm={handleConfirmSave}
+            onCancel={handleCancelSave}
+          />
+        )}
       </form>
     </main>
   );
