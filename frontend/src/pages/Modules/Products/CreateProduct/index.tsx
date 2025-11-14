@@ -181,10 +181,28 @@ export default function CreateProduct() {
     setError("");
   };
 
+  // Manejador de teclas para atajos de teclado
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === "Enter" && !loading) {
+      e.preventDefault();
+      // Verificar que el formulario sea válido antes de enviar
+      const form = e.currentTarget;
+      if (form.checkValidity()) {
+        handleSubmit(e);
+      } else {
+        // Si no es válido, mostrar errores de validación del navegador
+        form.reportValidity();
+      }
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      handleClear();
+    }
+  };
+
   return (
     <main>
       <h1>Crear Producto</h1>
-      <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
+      <form className={`card ${styles.form}`} onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
         <BackButton />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>

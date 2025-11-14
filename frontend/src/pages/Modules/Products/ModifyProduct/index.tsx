@@ -222,6 +222,24 @@ export default function ModifyProduct() {
     setProductFound(false);
   };
 
+  // Manejador de teclas para atajos de teclado en el formulario de modificación
+  const handleFormKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === "Enter" && !loading && productFound) {
+      e.preventDefault();
+      // Verificar que el formulario sea válido antes de enviar
+      const form = e.currentTarget;
+      if (form.checkValidity()) {
+        handleSubmit(e);
+      } else {
+        // Si no es válido, mostrar errores de validación del navegador
+        form.reportValidity();
+      }
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      handleClear();
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -232,7 +250,7 @@ export default function ModifyProduct() {
   return (
     <main>
       <h1>Modificar Producto</h1>
-      <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
+      <form className={`card ${styles.form}`} onSubmit={handleSubmit} onKeyDown={handleFormKeyDown}>
         <BackButton />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.currentCode}>
