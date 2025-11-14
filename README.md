@@ -1,4 +1,4 @@
-# ServiFresco
+# ServiFrescos
 
 Aplicación web full-stack para la gestión de productos y precios en las tiendas Servifresco de Protinal Proagro.
 
