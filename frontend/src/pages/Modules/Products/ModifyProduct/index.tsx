@@ -5,6 +5,7 @@ import InputText from "../../../../components/InputText";
 import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
+import SuccessModal from "../../../../components/SuccessModal";
 import { useState } from "react";
 import { productsAPI, type Product } from "../../../../services/api";
 
@@ -35,6 +36,7 @@ export default function ModifyProduct() {
   const [error, setError] = useState<string>("");
   const [productFound, setProductFound] = useState<boolean>(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
   // Opciones dinámicas basadas en selecciones
   const getGroupOptions = (department: string) => {
@@ -166,11 +168,13 @@ export default function ModifyProduct() {
         await productsAPI.create(formData);
         // Eliminar el producto antiguo
         await productsAPI.delete(productCode);
-        alert("Producto modificado exitosamente! (Código actualizado)");
+        // Mostrar modal de éxito
+        setShowSuccessDialog(true);
       } else {
         // Actualización normal sin cambiar código
         await productsAPI.update(productCode, formData);
-        alert("Producto modificado exitosamente!");
+        // Mostrar modal de éxito
+        setShowSuccessDialog(true);
       }
 
       // Reiniciar formulario
@@ -196,6 +200,10 @@ export default function ModifyProduct() {
 
   const handleCancelSave = () => {
     setShowConfirmDialog(false);
+  };
+
+  const handleAcceptSuccess = () => {
+    setShowSuccessDialog(false);
   };
 
   const handleClear = () => {
@@ -373,6 +381,15 @@ export default function ModifyProduct() {
               />
             )}
           </>
+        )}
+
+        {/* Modal de éxito reutilizable - Fuera del bloque productFound */}
+        {showSuccessDialog && (
+          <SuccessModal
+            title="¡Operación Exitosa!"
+            message="El producto ha sido modificado exitosamente."
+            onAccept={handleAcceptSuccess}
+          />
         )}
       </form>
     </main>

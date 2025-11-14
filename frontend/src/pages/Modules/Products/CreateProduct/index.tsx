@@ -5,6 +5,7 @@ import InputText from "../../../../components/InputText";
 import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
+import SuccessModal from "../../../../components/SuccessModal";
 import { useState } from "react";
 import { productsAPI } from "../../../../services/api";
 
@@ -31,6 +32,7 @@ export default function CreateProduct() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
   // Opciones dinámicas basadas en selecciones
   const getGroupOptions = (department: string) => {
@@ -130,6 +132,8 @@ export default function CreateProduct() {
 
     try {
       await productsAPI.create(formData);
+      // Mostrar modal de éxito en lugar de alert
+      setShowSuccessDialog(true);
       // Reiniciar formulario después de guardar exitosamente
       setFormData({
         code: "",
@@ -140,7 +144,6 @@ export default function CreateProduct() {
         group: "",
         subgroup: "",
       });
-      alert("Producto creado exitosamente!");
     } catch (error: any) {
       console.error("Error creando producto:", error);
 
@@ -159,6 +162,10 @@ export default function CreateProduct() {
 
   const handleCancelSave = () => {
     setShowConfirmDialog(false);
+  };
+
+  const handleAcceptSuccess = () => {
+    setShowSuccessDialog(false);
   };
 
   const handleClear = () => {
@@ -302,6 +309,15 @@ export default function CreateProduct() {
             message="¿Está seguro de que desea guardar este producto?"
             onConfirm={handleConfirmSave}
             onCancel={handleCancelSave}
+          />
+        )}
+
+        {/* Modal de éxito reutilizable */}
+        {showSuccessDialog && (
+          <SuccessModal
+            title="¡Operación Exitosa!"
+            message="El producto ha sido creado exitosamente."
+            onAccept={handleAcceptSuccess}
           />
         )}
       </form>

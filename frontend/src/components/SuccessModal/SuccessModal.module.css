@@ -1,4 +1,4 @@
-/* Estilos para el modal de confirmación */
+/* Estilos para el modal de éxito */
 .blurOverlay {
   position: fixed;
   top: 0;
@@ -10,7 +10,7 @@
   z-index: 1000;
 }
 
-.confirmationCard {
+.successCard {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +36,5 @@
 .cardButtons {
   margin-top: 10px;
   display: flex;
-  gap: 15px;
   justify-content: center;
 }
