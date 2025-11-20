@@ -10,36 +10,6 @@ Este proyecto utiliza una arquitectura de microservicios con separación clara e
 - **Backend**: Django REST Framework
 - **Base de datos**: SQL Server
 
-## Estructura del Proyecto
-
-```
-servifresco/
-├── frontend/           # React + TypeScript + Vite
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   ├── vite.config.ts
-│   ├── tsconfig*.json
-│   ├── eslint.config.js
-│   └── index.html
-├── backend/            # Django REST API
-│   ├── backend/        # Configuración principal de Django
-│   ├── apps/           # Aplicaciones Django (prices, products, users)
-│   ├── manage.py
-│   ├── requirements.txt
-│   └── db.sqlite3 (o configuración para SQL Server)
-├── database/           # Archivos de base de datos
-│   └── Servifrescos_DB/
-├── docker/             # Configuraciones Docker
-│   ├── Dockerfile.frontend
-│   ├── Dockerfile.backend
-│   └── docker-compose.yml
-├── docs/               # Documentación
-├── .gitignore
-├── README.md
-└── .env.example        # Variables de entorno
-```
-
 ## Instalación y Configuración
 
 ### Prerrequisitos
@@ -53,7 +23,7 @@ servifresco/
 1. **Clonar el repositorio**
    ```bash
    git clone <repository-url>
-   cd servifresco
+   cd servifrescos
    ```
 
 2. **Configurar variables de entorno**
