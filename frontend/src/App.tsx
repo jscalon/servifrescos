@@ -10,7 +10,6 @@ import CreateProduct from "./pages/Modules/Products/CreateProduct";
 import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
 import QueryProduct from "./pages/Modules/Products/QueryProduct";
 import Prices from "./pages/Modules/Prices";
-import History from "./pages/Modules/Prices/History";
 import NewPrice from "./pages/Modules/Prices/NewPrice";
 import UserManagement from "./pages/Modules/UserManagement";
 import NewUser from "./pages/Modules/UserManagement/NewUser";
@@ -30,7 +29,6 @@ export default function App() {
               <Route path="query" element={<QueryProduct />} />
             </Route>
             <Route path="prices" element={<Prices />}>
-              <Route path="history" element={<History />} />
               <Route path="new" element={<NewPrice />} />
             </Route>
             <Route path="users" element={<UserManagement />}>
