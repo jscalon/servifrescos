@@ -1,6 +1,6 @@
-import styles from "./InputDate.module.css";
+import styles from "./InputDateTime.module.css";
 
-interface InputDateProps {
+interface InputDateTimeProps {
   placeholder?: string;
   id: string;
   name: string;
@@ -14,7 +14,7 @@ interface InputDateProps {
   className?: string;
 }
 
-export default function InputDate({
+export default function InputDateTime({
   placeholder = "",
   id,
   name,
@@ -26,11 +26,11 @@ export default function InputDate({
   onChange,
   onKeyDown,
   className = "",
-}: InputDateProps) {
+}: InputDateTimeProps) {
   return (
     <input
-      className={styles.inputDate + " " + className}
-      type="date"
+      className={styles.InputDateTime + " " + className}
+      type="datetime-local"
       placeholder={placeholder}
       id={id}
       name={name}

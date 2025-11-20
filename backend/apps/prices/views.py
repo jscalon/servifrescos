@@ -46,4 +46,4 @@ class PriceViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # Asignar el usuario que crea el precio
         # serializer.save(created_by=self.request.user)
-        pass
+        serializer.save()
