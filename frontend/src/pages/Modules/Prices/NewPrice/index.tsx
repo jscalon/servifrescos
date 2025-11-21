@@ -190,17 +190,29 @@ export default function NewPrice() {
     setProductFound(false);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+    if (e.key === "Enter" && !loading) {
       e.preventDefault();
-      searchProduct();
+      if (!productFound) {
+        searchProduct();
+      } else {
+        const form = e.currentTarget;
+        if (form.checkValidity()) {
+          handleSubmit(e);
+        } else {
+          form.reportValidity();
+        }
+      }
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      handleReset();
     }
   };
 
   return (
     <main>
       <h1>Nuevo Precio</h1>
-      <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
+      <form className={`card ${styles.form}`} onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
         <BackButton />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.firstRow}>
@@ -214,7 +226,6 @@ export default function NewPrice() {
               name="productCode"
               value={productCode}
               onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
               disabled={productFound}
             />
           </FieldWrapper>
@@ -314,8 +325,6 @@ export default function NewPrice() {
             </div>
           </>
         )}
-
-        {/* Modal de confirmación reutilizable */}
         {showConfirmDialog && (
           <ConfirmationModal
             title="Confirmar Guardado"
@@ -324,8 +333,6 @@ export default function NewPrice() {
             onCancel={handleCancelSave}
           />
         )}
-
-        {/* Modal de éxito reutilizable */}
         {showSuccessDialog && (
           <SuccessModal
             title="¡Operación Exitosa!"
