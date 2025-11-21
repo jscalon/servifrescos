@@ -6,6 +6,8 @@ import InputNumber from "../../../../components/InputNumber";
 import Select from "../../../../components/Select";
 import InputDateTime from "../../../../components/InputDateTime";
 import BackButton from "../../../../components/BackButton";
+import ConfirmationModal from "../../../../components/ConfirmationModal";
+import SuccessModal from "../../../../components/SuccessModal";
 import { useState, useEffect } from "react";
 import {
   productsAPI,
@@ -42,6 +44,8 @@ export default function NewPrice() {
   const [searching, setSearching] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [productFound, setProductFound] = useState<boolean>(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchStores = async () => {
@@ -122,6 +126,11 @@ export default function NewPrice() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmSave = async () => {
+    setShowConfirmDialog(false);
     setLoading(true);
     setError("");
 
@@ -147,12 +156,21 @@ export default function NewPrice() {
         comment: formData.comment,
       };
       await pricesAPI.create(dataToSend);
+      setShowSuccessDialog(true);
       handleReset();
     } catch (error: any) {
       setError("Error al crear el precio");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancelSave = () => {
+    setShowConfirmDialog(false);
+  };
+
+  const handleAcceptSuccess = () => {
+    setShowSuccessDialog(false);
   };
 
   const handleReset = () => {
@@ -295,6 +313,25 @@ export default function NewPrice() {
               />
             </div>
           </>
+        )}
+
+        {/* Modal de confirmación reutilizable */}
+        {showConfirmDialog && (
+          <ConfirmationModal
+            title="Confirmar Guardado"
+            message="¿Está seguro de que desea guardar este precio?"
+            onConfirm={handleConfirmSave}
+            onCancel={handleCancelSave}
+          />
+        )}
+
+        {/* Modal de éxito reutilizable */}
+        {showSuccessDialog && (
+          <SuccessModal
+            title="¡Operación Exitosa!"
+            message="El precio ha sido creado exitosamente."
+            onAccept={handleAcceptSuccess}
+          />
         )}
       </form>
     </main>
