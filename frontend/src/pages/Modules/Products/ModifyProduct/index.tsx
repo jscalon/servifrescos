@@ -290,12 +290,14 @@ export default function ModifyProduct() {
               disabled={productFound} // Bloquear después de buscar
             />
           </FieldWrapper>
-          <Button
-            text={searching ? "Buscando..." : "Buscar"}
-            onClick={searchProduct}
-            disabled={searching}
-            style="primary"
-          />
+          {!productFound && (
+            <Button
+              text={searching ? "Buscando..." : "Buscar"}
+              onClick={searchProduct}
+              disabled={searching}
+              style="primary"
+            />
+          )}
         </div>
 
         {productFound && (

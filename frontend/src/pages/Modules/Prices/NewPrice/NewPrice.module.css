@@ -2,7 +2,16 @@ main > .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 600px;
+  width: 700px;
+}
+
+.firstRow {
+  display: flex;
+  gap: 20px;
+}
+
+.code {
+  flex: 1;
 }
 
 .row,
@@ -17,4 +26,8 @@ main > .form {
 
 .rowButtons {
   align-self: center;
+}
+
+.error {
+  color: red;
 }

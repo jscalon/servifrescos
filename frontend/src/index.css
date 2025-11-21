@@ -133,8 +133,11 @@ input::placeholder {
   color: var(--gray-B);
 }
 
-input:read-only {
+input:disabled,
+select:disabled {
+  color: var(--gray-5);
   background: var(--gray-D);
+  opacity: 0.9;
 }
 
 .card {

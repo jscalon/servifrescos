@@ -26,7 +26,7 @@ class Price(models.Model):
     #     null=True,
     #     related_name='created_prices'
     # )
-    comment = models.CharField(max_length=200, blank=True)
+    comment = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         db_table = "Prices"

@@ -18,7 +18,7 @@ class PriceSerializer(serializers.ModelSerializer):
             'id', 'product', 'product_code', 'product_description',
             'store', 'store_number', 'store_name', 'price',
             'registration_date', 'effective_date', 'expiration_date',
-            'is_active', 'status', # 'created_by', 'created_by_username',
+            'is_active', 'status', 'comment', # 'created_by', 'created_by_username',
         ]
         read_only_fields = ['registration_date'
                             # 'created_by_username'

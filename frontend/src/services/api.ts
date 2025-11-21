@@ -11,11 +11,10 @@ const api = axios.create({
 
 // Interface para el modelo Product (basado en tu modelo Django)
 export interface Product {
-  id: number;
-  code: string; // Ahora es la primary key, siempre presente
+  code: string; // Primary key
   description: string;
   brand: string;
-  type: string; // Mantengo como en tu código
+  type: string;
   department: string;
   group: string;
   subgroup: string;
@@ -42,7 +41,7 @@ export interface Price {
   expiration_date: string | null;
   is_active: boolean;
   status: string;
-  comentary: string;
+  comment: string;
 }
 
 // Interface para crear un Price
@@ -51,7 +50,7 @@ export interface PriceCreate {
   store: string;
   price: string;
   effective_date: string;
-  comentary: string;
+  comment: string;
 }
 
 // Tipos para las respuestas de la API
@@ -79,7 +78,10 @@ export const pricesAPI = {
   getAll: (): Promise<ApiResponse<Price[]>> => api.get("/prices/"),
   activePrices: (store?: string): Promise<ApiResponse<Price[]>> =>
     api.get(`/prices/active_prices/${store ? `?store=${store}` : ""}`),
-  priceHistory: (product: string, store: string): Promise<ApiResponse<Price[]>> =>
+  priceHistory: (
+    product: string,
+    store: string
+  ): Promise<ApiResponse<Price[]>> =>
     api.get(`/prices/price_history/?product=${product}&store=${store}`),
   create: (data: PriceCreate): Promise<ApiResponse<Price>> =>
     api.post("/prices/", data),

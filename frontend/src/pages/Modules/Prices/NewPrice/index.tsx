@@ -19,7 +19,7 @@ interface PriceFormData {
   store: string;
   price: string;
   effective_date: string;
-  comentary: string;
+  comment: string;
   product_description: string;
   type: string;
 }
@@ -34,7 +34,7 @@ export default function NewPrice() {
     store: "",
     price: "",
     effective_date: "",
-    comentary: "",
+    comment: "",
     product_description: "",
     type: "",
   });
@@ -49,7 +49,7 @@ export default function NewPrice() {
         const res = await storesAPI.getAll();
         setStores(res.data);
       } catch (error) {
-        console.error("Error fetching stores:", error);
+        // Error al cargar las tiendas
       }
     };
     fetchStores();
@@ -107,13 +107,12 @@ export default function NewPrice() {
         store: selectedStore.number,
         price: lastPrice ? lastPrice.price : "",
         effective_date: lastPrice ? lastPrice.effective_date : "",
-        comentary: "",
+        comment: "",
         product_description: product.description,
         type: product.type,
       });
       setProductFound(true);
     } catch (error) {
-      console.error("Error buscando producto:", error);
       setError("Error al buscar el producto");
       setProductFound(false);
     } finally {
@@ -145,17 +144,12 @@ export default function NewPrice() {
         effective_date: formData.effective_date.includes(":")
           ? formData.effective_date + ":00"
           : formData.effective_date,
-        comentary: formData.comentary,
+        comment: formData.comment,
       };
       await pricesAPI.create(dataToSend);
       handleReset();
     } catch (error: any) {
-      console.error("Error creando precio:", error);
-      console.error("Detalles del error:", error.response?.data);
-      setError(
-        "Error al crear el precio: " +
-          (error.response?.data?.detail || "Ver consola para detalles")
-      );
+      setError("Error al crear el precio");
     } finally {
       setLoading(false);
     }
@@ -170,7 +164,7 @@ export default function NewPrice() {
       store: "",
       price: "",
       effective_date: "",
-      comentary: "",
+      comment: "",
       product_description: "",
       type: "",
     });
@@ -191,8 +185,12 @@ export default function NewPrice() {
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
         <BackButton />
         {error && <div className={styles.error}>{error}</div>}
-        <div className={styles.row}>
-          <FieldWrapper label="Código del producto" id="productCode">
+        <div className={styles.firstRow}>
+          <FieldWrapper
+            label="Código del producto"
+            id="productCode"
+            className={styles.code}
+          >
             <InputText
               id="productCode"
               name="productCode"
@@ -202,7 +200,7 @@ export default function NewPrice() {
               disabled={productFound}
             />
           </FieldWrapper>
-          <FieldWrapper label="Tienda" id="store">
+          <FieldWrapper label="Tienda" id="store" className={styles.code}>
             <Select
               id="store"
               name="store"
@@ -218,13 +216,15 @@ export default function NewPrice() {
               ))}
             </Select>
           </FieldWrapper>
-          <Button
-            text={searching ? "Buscando..." : "Buscar"}
-            onClick={searchProduct}
-            disabled={searching || productFound}
-            style="primary"
-            type="button"
-          />
+          {!productFound && (
+            <Button
+              text={searching ? "Buscando..." : "Buscar"}
+              onClick={searchProduct}
+              disabled={searching}
+              style="primary"
+              type="button"
+            />
+          )}
         </div>
 
         {productFound && (
@@ -238,7 +238,7 @@ export default function NewPrice() {
                   id="productDescription"
                   name="productDescription"
                   value={formData.product_description}
-                  readOnly
+                  disabled
                 />
               </FieldWrapper>
               <FieldWrapper label="Tipo de producto" id="type">
@@ -246,7 +246,7 @@ export default function NewPrice() {
                   id="type"
                   name="type"
                   value={formData.type}
-                  readOnly
+                  disabled
                 />
               </FieldWrapper>
             </div>
@@ -270,12 +270,13 @@ export default function NewPrice() {
                 />
               </FieldWrapper>
             </div>
-            <FieldWrapper label="Comentario" id="comentary">
+            <FieldWrapper label="Comentario" id="comment">
               <InputText
-                id="comentary"
-                name="comentary"
-                value={formData.comentary}
+                id="comment"
+                name="comment"
+                value={formData.comment}
                 onChange={handleInputChange}
+                required={false}
               />
             </FieldWrapper>
             <div className={styles.rowButtons}>
