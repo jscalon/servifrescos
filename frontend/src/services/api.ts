@@ -32,6 +32,7 @@ export interface Price {
   product: string;
   product_code: string;
   product_description: string;
+  product_type: string;
   store: string;
   store_number: string;
   store_name: string;

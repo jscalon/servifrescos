@@ -6,6 +6,7 @@ class PriceSerializer(serializers.ModelSerializer):
     product_code = serializers.CharField(source='product.code', read_only=True)
     product_description = serializers.CharField(
         source='product.description', read_only=True)
+    product_type = serializers.CharField(source='product.type', read_only=True)
     store_number = serializers.CharField(source='store.number', read_only=True)
     store_name = serializers.CharField(source='store.name', read_only=True)
     status = serializers.CharField(read_only=True)
@@ -15,7 +16,7 @@ class PriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Price
         fields = [
-            'id', 'product', 'product_code', 'product_description',
+            'id', 'product', 'product_code', 'product_description', 'product_type',
             'store', 'store_number', 'store_name', 'price',
             'registration_date', 'effective_date', 'expiration_date',
             'is_active', 'status', 'comment', # 'created_by', 'created_by_username',

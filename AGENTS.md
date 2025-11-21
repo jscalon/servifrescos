@@ -2,7 +2,7 @@
 
 Idioma Preferido: Español (Castellano).
 
-Instrucción: El agente debe responder todas las consultas, explicaciones, resúmenes y mensajes de commit en Español para asegurar la coherencia en la documentación y comunicación del proyecto.
+Instrucción: El agente siempre debe responder en español (a menos que se indique lo contrario) todas las consultas, explicaciones, resúmenes y mensajes de commit en Español para asegurar la coherencia en la documentación y comunicación del proyecto.
 
 ## 1. Visión General del Proyecto: Sincronización Remota de Precios y Productos
 
