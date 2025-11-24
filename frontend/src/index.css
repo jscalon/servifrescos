@@ -169,3 +169,27 @@ main {
   gap: 20px;
   margin-bottom: 10px;
 }
+
+table {
+  width: 100%;
+  border: 2px solid var(--gray-A);
+  border-collapse: collapse;
+  text-align: center;
+  background-color: white;
+  color: var(--gray-5);
+  font-weight: 500;
+}
+
+tr {
+  height: 40px;
+}
+
+th,
+td {
+  border: 1px solid var(--gray-C);
+  padding: 8px;
+}
+
+th {
+  color: var(--gray-4);
+}

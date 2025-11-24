@@ -61,7 +61,7 @@ export default function QueryProduct() {
     <main className={styles.main}>
       <h1>Consultar Productos</h1>
       <QueryBar onSearch={handleSearch} onClear={handleClear} />
-      <table className={styles.table}>
+      <table>
         <thead className={styles.thead}>
           <tr>
             <th>Código</th>

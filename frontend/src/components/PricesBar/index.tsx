@@ -134,8 +134,8 @@ export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
         onChange={handleActiveChange}
       >
         <option>Todos</option>
-        <option>Sí</option>
-        <option>No</option>
+        <option>✅</option>
+        <option>❌</option>
       </Select>
       <Button
         text="Nuevo 💲"

@@ -2,25 +2,17 @@
   margin-top: 10px;
 }
 
-.table {
-  width: 100%;
-  border: 2px solid var(--gray-A);
-  border-collapse: collapse;
+.loading {
+  color: white;
+  font-weight: 600;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
+}
+
+.noResults {
   text-align: center;
-  background-color: white;
-}
-
-tr {
-  height: 40px;
-}
-
-th,
-td {
-  border: 1px solid var(--gray-C);
-  padding: 8px;
-}
-
-thead {
-  color: var(--gray-3);
-  background: var(--gray-E);
+  color: var(--gray-5);
 }
