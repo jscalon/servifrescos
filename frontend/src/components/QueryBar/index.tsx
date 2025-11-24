@@ -44,7 +44,7 @@ export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
 
   return (
     <div className={styles.queryBar}>
-      <BackButton />
+      <BackButton to="/modules/products" />
       <span className={styles.span}>Criterio de búsqueda:</span>
       <select
         name="searchField"

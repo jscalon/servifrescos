@@ -8,7 +8,7 @@ export default function PriceBar() {
   const navigate = useNavigate();
   return (
     <div className={styles.PriceBar}>
-      <BackButton />
+      <BackButton to="/modules" />
       <div className={styles.searchSection}>
         <span className={styles.span}>Buscar: &nbsp;</span>
         <InputText id="1" name="1" className={styles.input} />

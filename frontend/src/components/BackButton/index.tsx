@@ -2,7 +2,11 @@ import styles from "./BackButton.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BackArrowIcon } from "../Icons";
 
-export default function BackButton() {
+interface BackButtonProps {
+  to?: string;
+}
+
+export default function BackButton({ to }: BackButtonProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const show = !["/login", "/modules"].includes(location.pathname);
@@ -10,7 +14,10 @@ export default function BackButton() {
   if (!show) return null;
 
   return (
-    <button className={styles.backButton} onClick={() => navigate(-1)}>
+    <button
+      className={styles.backButton}
+      onClick={() => (to ? navigate(to) : navigate(-1))}
+    >
       <BackArrowIcon />
     </button>
   );

@@ -12,7 +12,7 @@ export default function Products() {
       {location.pathname === "/modules/products" && (
         <main className={styles.main}>
           <div className={`card ${styles.card}`}>
-						<BackButton/>
+						<BackButton to="/modules"/>
             <h2 className="h-dark">Productos:</h2>
             <Button text="Creación 📝" onClick={() => navigate("create")} />
             <Button text="Modificación 🔄" onClick={() => navigate("modify")} />

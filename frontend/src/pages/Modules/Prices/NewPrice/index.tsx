@@ -212,8 +212,12 @@ export default function NewPrice() {
   return (
     <main>
       <h1>Nuevo Precio</h1>
-      <form className={`card ${styles.form}`} onSubmit={handleSubmit} onKeyDown={handleKeyDown}>
-        <BackButton />
+      <form
+        className={`card ${styles.form}`}
+        onSubmit={handleSubmit}
+        onKeyDown={handleKeyDown}
+      >
+        <BackButton to="/modules/prices" />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.firstRow}>
           <FieldWrapper

@@ -105,7 +105,7 @@ export default function NewUser() {
     <main>
       <h1>Nuevo Usuario</h1>
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
-        <BackButton />
+        <BackButton to="/modules/users"/>
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>
           <FieldWrapper label="Nombre de Usuario" id="username">

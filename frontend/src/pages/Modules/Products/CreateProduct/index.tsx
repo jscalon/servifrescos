@@ -207,7 +207,7 @@ export default function CreateProduct() {
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
       >
-        <BackButton />
+        <BackButton to="/modules/products" />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>
           <FieldWrapper label="Código" id="code">

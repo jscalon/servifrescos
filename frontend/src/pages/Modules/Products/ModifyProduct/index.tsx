@@ -277,7 +277,7 @@ export default function ModifyProduct() {
         onSubmit={handleSubmit}
         onKeyDown={handleFormKeyDown}
       >
-        <BackButton />
+        <BackButton to="/modules/products" />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.currentCode}>
           <FieldWrapper label="Código Actual" id="current_code">
