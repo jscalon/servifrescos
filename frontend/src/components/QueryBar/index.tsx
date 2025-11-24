@@ -3,6 +3,7 @@ import Button from "../Button";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import Select from "../Select";
 
 interface QueryBarProps {
   onSearch: (field: string, value: string) => void;
@@ -18,7 +19,7 @@ export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    setSearchValue(e.target.value.toUpperCase());
   };
 
   const handleSearch = () => {
@@ -46,7 +47,7 @@ export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
     <div className={styles.queryBar}>
       <BackButton to="/modules/products" />
       <span className={styles.span}>Criterio de búsqueda:</span>
-      <select
+      <Select
         name="searchField"
         id="searchField"
         className={styles.select}
@@ -60,7 +61,7 @@ export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
         <option value="department">Departamento</option>
         <option value="group">Grupo</option>
         <option value="subgroup">Subgrupo</option>
-      </select>
+      </Select>
       <InputText
         id="searchValue"
         name="searchValue"

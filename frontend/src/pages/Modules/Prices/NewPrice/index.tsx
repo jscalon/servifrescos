@@ -64,7 +64,7 @@ export default function NewPrice() {
   ) => {
     const { name, value } = e.target;
     if (name === "productCode") {
-      setProductCode(value);
+      setProductCode(value.toUpperCase());
     } else if (name === "store") {
       setStore(value);
       const storeObj = stores.find((s) => s.name === value);
