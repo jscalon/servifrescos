@@ -31,6 +31,9 @@ DATABASES = {
 }
 
 
+# Configuración de zona horaria para desarrollo
+TIME_ZONE = 'America/Caracas'
+
 # Configuración de CORS para desarrollo
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",

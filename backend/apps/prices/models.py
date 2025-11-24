@@ -35,20 +35,35 @@ class Price(models.Model):
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
+            # Si es una creación nueva, actualizar el precio anterior
+            if self.pk is None:
+                # Buscar el precio anterior más reciente sin fecha de vencimiento
+                previous_price = Price.objects.filter(
+                    product=self.product,
+                    store=self.store,
+                    effective_date__lt=self.effective_date,
+                    expiration_date__isnull=True
+                ).order_by('-effective_date').first()
+
+                if previous_price:
+                    # Actualizar expiration_date del precio anterior
+                    previous_price.expiration_date = self.effective_date
+                    previous_price.save(update_fields=['expiration_date'])
+
             # Si este precio se está activando
             if self.is_active:
                 # Buscar precio activo anterior para este producto/tienda
-                previous_price = Price.objects.filter(
+                previous_active_price = Price.objects.filter(
                     product=self.product,
                     store=self.store,
                     is_active=True
                 ).exclude(pk=self.pk).first()
 
-                if previous_price:
-                    # Actualizar expiration_date del precio anterior
-                    previous_price.expiration_date = self.effective_date
-                    previous_price.is_active = False
-                    previous_price.save()
+                if previous_active_price:
+                    # Actualizar expiration_date del precio activo anterior
+                    previous_active_price.expiration_date = self.effective_date
+                    previous_active_price.is_active = False
+                    previous_active_price.save()
 
             super().save(*args, **kwargs)
 

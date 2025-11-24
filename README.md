@@ -83,6 +83,7 @@ Este proyecto utiliza una arquitectura de microservicios con separación clara e
 - `python manage.py runserver` - Inicia servidor de desarrollo
 - `python manage.py migrate` - Aplica migraciones de base de datos
 - `python manage.py makemigrations` - Crea nuevas migraciones
+- `python manage.py activate_prices` - Activa automáticamente los precios cuya fecha efectiva ha llegado (ejecutar periódicamente, ej. cada hora)
 
 ## Contribución
 
