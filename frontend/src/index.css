@@ -180,16 +180,13 @@ table {
   font-weight: 500;
 }
 
-tr {
-  height: 40px;
+thead {
+  color: var(--gray-4);
+  background: var(--gray-E);
 }
 
 th,
 td {
   border: 1px solid var(--gray-C);
   padding: 8px;
-}
-
-th {
-  color: var(--gray-4);
 }

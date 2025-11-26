@@ -105,7 +105,7 @@ export default function Prices() {
         <main className={styles.main}>
           <h1>Precios</h1>
           <PricesBar onSearch={handleSearch} onClear={handleClear} />
-          <table>
+          <table className={styles.table}>
             <thead>
               <tr>
                 <th>Código</th>

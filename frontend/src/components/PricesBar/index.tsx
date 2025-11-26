@@ -88,28 +88,6 @@ export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
   return (
     <div className={styles.pricesBar}>
       <BackButton to="/modules" />
-      <span className={styles.span}>Columna:</span>
-      <Select
-        name="searchField"
-        id="searchField"
-        className={styles.select}
-        value={searchField}
-        onChange={handleFieldChange}
-      >
-        <option value="code">Código</option>
-        <option value="description">Descripción</option>
-        <option value="type">Tipo</option>
-        <option value="price">Precio</option>
-        <option value="comment">Comentario</option>
-      </Select>
-      <InputText
-        id="searchValue"
-        name="searchValue"
-        className={styles.input}
-        value={searchValue}
-        onChange={handleValueChange}
-        onKeyDown={handleKeyDown}
-      />
       <span className={styles.span}>Servifresco:</span>
       <Select
         id="searchStore"
@@ -125,6 +103,15 @@ export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
           </option>
         ))}
       </Select>
+        <span className={styles.span}>Artículo:</span>
+        <InputText
+          id="searchValue"
+          name="searchValue"
+          className={styles.input}
+          value={searchValue}
+          onChange={handleValueChange}
+          onKeyDown={handleKeyDown}
+        />
       <span className={styles.span}>Vigente:</span>
       <Select
         id="active"

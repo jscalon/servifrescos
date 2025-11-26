@@ -220,19 +220,6 @@ export default function NewPrice() {
         <BackButton to="/modules/prices" />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.firstRow}>
-          <FieldWrapper
-            label="Código del producto"
-            id="productCode"
-            className={styles.code}
-          >
-            <InputText
-              id="productCode"
-              name="productCode"
-              value={productCode}
-              onChange={handleInputChange}
-              disabled={productFound}
-            />
-          </FieldWrapper>
           <FieldWrapper label="Tienda" id="store" className={styles.code}>
             <Select
               id="store"
@@ -249,9 +236,22 @@ export default function NewPrice() {
               ))}
             </Select>
           </FieldWrapper>
+          <FieldWrapper
+            label="Código del producto"
+            id="productCode"
+            className={styles.code}
+          >
+            <InputText
+              id="productCode"
+              name="productCode"
+              value={productCode}
+              onChange={handleInputChange}
+              disabled={productFound}
+            />
+          </FieldWrapper>
           {!productFound && (
             <Button
-              text={searching ? "Buscando..." : "Buscar"}
+              text={searching ? "Cargando..." : "Aceptar"}
               onClick={searchProduct}
               disabled={searching}
               style="primary"
