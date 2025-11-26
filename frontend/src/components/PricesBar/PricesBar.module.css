@@ -1,23 +1,24 @@
 .pricesBar {
-	display: flex;
-	justify-content: space-evenly;
-	align-items: center;
-	box-sizing: border-box;
-	position: relative;
-	padding: 10px 30px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+  padding: 10px 30px;
   width: 100%;
-	gap: 20px;
-	border-radius: 20px;
+  gap: 20px;
+  border-radius: 20px;
   background: var(--gray-D);
 }
 
-.pricesBar > .select {
+.pricesBar > .select,
+.pricesBar > .input {
   min-width: 0;
   flex: 1;
 }
 
 .span {
-	font-weight: 500;
-	color: var(--gray-4);
-	width: fit-content;
+  font-weight: 500;
+  color: var(--gray-4);
+  width: fit-content;
 }

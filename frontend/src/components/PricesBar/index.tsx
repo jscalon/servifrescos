@@ -9,8 +9,7 @@ import { storesAPI, type Store } from "../../services/api";
 
 interface PricesBarProps {
   onSearch: (filters: {
-    field: string;
-    value: string;
+    article: string;
     store: string;
     active: string;
   }) => void;
@@ -19,9 +18,8 @@ interface PricesBarProps {
 
 export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
   const navigate = useNavigate();
-  const [searchField, setSearchField] = useState<string>("code");
-  const [searchValue, setSearchValue] = useState<string>("");
   const [selectedStore, setSelectedStore] = useState<string>("Todos");
+  const [searchArticle, setsearchArticle] = useState<string>("");
   const [selectedActive, setSelectedActive] = useState<string>("Todos");
   const [stores, setStores] = useState<Store[]>([]);
 
@@ -37,41 +35,34 @@ export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
     fetchStores();
   }, []);
 
-  const handleFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const field = e.target.value;
-    setSearchField(field);
-    triggerSearch(field, searchValue, selectedStore, selectedActive);
-  };
-
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.toUpperCase();
-    setSearchValue(value);
-    triggerSearch(searchField, value, selectedStore, selectedActive);
+  const handleArticleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const article = e.target.value.toUpperCase();
+    setsearchArticle(article);
+    triggerSearch(article, selectedStore, selectedActive);
   };
 
   const handleStoreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const store = e.target.value;
     setSelectedStore(store);
-    triggerSearch(searchField, searchValue, store, selectedActive);
+    triggerSearch(searchArticle, store, selectedActive);
   };
 
   const handleActiveChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const active = e.target.value;
     setSelectedActive(active);
-    triggerSearch(searchField, searchValue, selectedStore, active);
+    triggerSearch(searchArticle, selectedStore, active);
   };
 
-  const triggerSearch = (field: string, value: string, store: string, active: string) => {
+  const triggerSearch = (article: string, store: string, active: string) => {
     onSearch({
-      field,
-      value: value.trim(),
+      article: article.trim(),
       store,
       active,
     });
   };
 
   const handleClear = () => {
-    setSearchValue("");
+    setsearchArticle("");
     setSelectedStore("Todos");
     setSelectedActive("Todos");
     onClear();
@@ -79,7 +70,7 @@ export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      triggerSearch(searchField, searchValue, selectedStore, selectedActive);
+      triggerSearch(searchArticle, selectedStore, selectedActive);
     } else if (e.key === "Escape") {
       handleClear();
     }
@@ -103,15 +94,16 @@ export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
           </option>
         ))}
       </Select>
-        <span className={styles.span}>Artículo:</span>
-        <InputText
-          id="searchValue"
-          name="searchValue"
-          className={styles.input}
-          value={searchValue}
-          onChange={handleValueChange}
-          onKeyDown={handleKeyDown}
-        />
+      <span className={styles.span}>Artículo:</span>
+      <InputText
+        id="searchArticle"
+        name="searchArticle"
+        className={styles.input}
+        value={searchArticle}
+        onChange={handleArticleChange}
+        onKeyDown={handleKeyDown}
+        placeholder="Código o Descripción..."
+      />
       <span className={styles.span}>Vigente:</span>
       <Select
         id="active"

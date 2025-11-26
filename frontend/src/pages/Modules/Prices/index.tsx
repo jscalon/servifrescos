@@ -29,40 +29,17 @@ export default function Prices() {
   }, []);
 
   const handleSearch = (filters: {
-    field: string;
-    value: string;
+    article: string;
     store: string;
     active: string;
   }) => {
     let filtered = prices;
 
-    if (filters.value) {
-      filtered = filtered.filter((price) => {
-        let fieldValue: string | number | boolean | null = "";
-        switch (filters.field) {
-          case "code":
-            fieldValue = price.product_code;
-            break;
-          case "description":
-            fieldValue = price.product_description;
-            break;
-          case "type":
-            fieldValue = price.product_type;
-            break;
-          case "price":
-            fieldValue = price.price;
-            break;
-          case "comment":
-            fieldValue = price.comment;
-            break;
-          default:
-            fieldValue = "";
-        }
-        return fieldValue
-          ?.toString()
-          .toLowerCase()
-          .includes(filters.value.toLowerCase());
-      });
+    if (filters.article.trim()) {
+      filtered = filtered.filter((price) =>
+        price.product_code.toUpperCase().includes(filters.article) ||
+        price.product_description.toUpperCase().includes(filters.article)
+      );
     }
 
     if (filters.store !== "Todos") {
