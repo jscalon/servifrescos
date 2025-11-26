@@ -3,11 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 7px;
+  gap: 10px;
 }
 
 .logos {
-  width: 180px;
+  width: 170px;
 }
 
 .span {

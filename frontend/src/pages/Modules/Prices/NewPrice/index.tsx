@@ -75,12 +75,12 @@ export default function NewPrice() {
   };
 
   const searchProduct = async () => {
-    if (!productCode.trim()) {
-      setError("Por favor ingrese el código del producto");
-      return;
-    }
     if (!selectedStore) {
       setError("Por favor seleccione una tienda");
+      return;
+    }
+    if (!productCode.trim()) {
+      setError("Por favor ingrese el código del producto");
       return;
     }
 
@@ -99,18 +99,11 @@ export default function NewPrice() {
         return;
       }
 
-      const pricesRes = await pricesAPI.priceHistory(
-        product.code,
-        selectedStore.number
-      );
-      const prices = pricesRes.data;
-      const lastPrice = prices.length > 0 ? prices[0] : null;
-
       setFormData({
         product: product.code,
         store: selectedStore.number,
-        price: lastPrice ? lastPrice.price : "",
-        effective_date: lastPrice ? lastPrice.effective_date : "",
+        price: "",
+        effective_date: "",
         comment: "",
         product_description: product.description,
         type: product.type,
