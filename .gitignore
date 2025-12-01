@@ -27,3 +27,7 @@ __pycache__
 .vs
 
 venv/
+
+# Ignore database files and Docker DB data directory
+/docker/db_data/
+/database/

@@ -5,6 +5,7 @@ This file contains settings specific to the development environment.
 """
 
 from .base import *
+import os
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w&l#kxm@+h3vqi)t$4!-65o3pqn(=kv-q!$3*$2q@lz&x#8z@7'
@@ -12,7 +13,7 @@ SECRET_KEY = 'django-insecure-w&l#kxm@+h3vqi)t$4!-65o3pqn(=kv-q!$3*$2q@lz&x#8z@7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Database
@@ -22,13 +23,17 @@ DATABASES = {
     'default': {
         'ENGINE': 'mssql',
         'NAME': 'Servifrescos',  # Nombre de tu base de datos
-        'HOST': 'localhost',  # O la IP/dominio de tu servidor SQL Server
+        'HOST': 'db',  # Nombre del servicio en docker-compose
         'PORT': '1433',  # Puerto por defecto de SQL Server
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',  # Ajusta según tu driver instalado
         },
     }
 }
+
+# Read DB credentials from environment (use SQL Server auth inside Docker)
+DATABASES['default']['USER'] = os.environ.get('DB_USER', 'sa')
+DATABASES['default']['PASSWORD'] = os.environ.get('DB_PASSWORD', 'YourStrong!Passw0rd')
 
 
 # Configuración de zona horaria para desarrollo
