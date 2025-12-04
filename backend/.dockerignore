@@ -1,0 +1,32 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtualenv
+venv/
+.env
+
+# Django static / local build
+staticfiles/
+media/
+
+# Editor / OS
+.vscode
+.idea
+.DS_Store
+
+# Logs
+*.log
+
+# Pip cache
+pip-wheel-metadata/
+
+# Dist
+dist/
+build/
+
+# Database files (ensure host DB files not sent)
+*.sqlite3
+*.db

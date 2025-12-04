@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-w&l#kxm@+h3vqi)t$4!-65o3pqn(=kv-q!$3*$2q@lz&x#8z@7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '172.20.12.33']
 
 
 # Database
@@ -33,7 +33,8 @@ DATABASES = {
 
 # Read DB credentials from environment (use SQL Server auth inside Docker)
 DATABASES['default']['USER'] = os.environ.get('DB_USER', 'sa')
-DATABASES['default']['PASSWORD'] = os.environ.get('DB_PASSWORD', 'YourStrong!Passw0rd')
+DATABASES['default']['PASSWORD'] = os.environ.get(
+    'DB_PASSWORD', 'YourStrong!Passw0rd')
 
 
 # Configuración de zona horaria para desarrollo
@@ -43,6 +44,7 @@ TIME_ZONE = 'America/Caracas'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://172.20.12.33:5173"
 ]
 
 # Permitir todas las origins en desarrollo (opcional, menos seguro)

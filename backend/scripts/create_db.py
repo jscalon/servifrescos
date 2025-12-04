@@ -98,7 +98,8 @@ def connect_with_fallback(host, port, user, password, database=None):
 
 def create_database_if_not_exists(host, port, user, password, db_name='Servifrescos'):
     try:
-        conn = connect_with_fallback(host, port, user, password, database='master')
+        conn = connect_with_fallback(
+            host, port, user, password, database='master')
         cursor = conn.cursor()
         cursor.execute("SELECT db_id(?)", (db_name,))
         row = cursor.fetchone()

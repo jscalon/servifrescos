@@ -1,27 +1,30 @@
 services:
   frontend:
     build:
-      context: ../frontend
-      dockerfile: ../docker/Dockerfile.frontend
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "5173:5173"
     volumes:
-      - ../frontend:/app
+      - ./frontend:/app
       - frontend_node_modules:/app/node_modules
     environment:
       - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=100
+      - VITE_HOST=0.0.0.0
     depends_on:
       - backend
     command: sh -c "npm run dev -- --host 0.0.0.0"
 
   backend:
     build:
-      context: ../backend
-      dockerfile: ../docker/Dockerfile.backend
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - ../backend:/app
+      - ./backend:/app
     environment:
       - DEBUG=1
       - DJANGO_SETTINGS_MODULE=config.settings.development
@@ -33,7 +36,7 @@ services:
     command: sh -c "until nc -z db 1433; do echo 'Waiting for db...'; sleep 1; done; python scripts/create_db.py && python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
 
   db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=YourStrong!Passw0rd
@@ -41,10 +44,15 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ./db_data:/var/opt/mssql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/opt/mssql/data
     healthcheck:
-      test: ["CMD", "bash", "-c", "if timeout 1 bash -c '</dev/tcp/localhost/1433' >/dev/null 2>&1; then exit 0; else exit 1; fi"]
+      test:
+        [
+          "CMD",
+          "bash",
+          "-c",
+          "if timeout 1 bash -c '</dev/tcp/localhost/1433' >/dev/null 2>&1; then exit 0; else exit 1; fi",
+        ]
       interval: 10s
       timeout: 2s
       retries: 5
@@ -52,3 +60,4 @@ services:
 
 volumes:
   frontend_node_modules:
+  db_data:
