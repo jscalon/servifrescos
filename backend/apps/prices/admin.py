@@ -9,7 +9,7 @@ class PriceAdmin(admin.ModelAdmin):
     list_filter = ['is_active', 'store', 'effective_date']
     search_fields = ['product__code', 'product__description', 'store__number']
     readonly_fields = ['registration_date']
-    ordering = ['-effective_date']
+    ordering = ['-registration_date']
 
     def status(self, obj):
         return obj.status.title()
