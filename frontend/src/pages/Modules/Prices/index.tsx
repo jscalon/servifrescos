@@ -25,8 +25,10 @@ export default function Prices() {
         setLoading(false);
       }
     };
-    fetchPrices();
-  }, []);
+    if (!prices.length || location.state?.refresh) {
+      fetchPrices();
+    }
+  }, [location.state]);
 
   const handleSearch = (filters: {
     article: string;
@@ -36,9 +38,10 @@ export default function Prices() {
     let filtered = prices;
 
     if (filters.article.trim()) {
-      filtered = filtered.filter((price) =>
-        price.product_code.toUpperCase().includes(filters.article) ||
-        price.product_description.toUpperCase().includes(filters.article)
+      filtered = filtered.filter(
+        (price) =>
+          price.product_code.toUpperCase().includes(filters.article) ||
+          price.product_description.toUpperCase().includes(filters.article)
       );
     }
 

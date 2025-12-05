@@ -210,7 +210,7 @@ export default function NewPrice() {
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
       >
-        <BackButton to="/modules/prices" />
+        <BackButton to="/modules/prices" refresh={true}/>
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.firstRow}>
           <FieldWrapper label="Tienda" id="store" className={styles.code}>
