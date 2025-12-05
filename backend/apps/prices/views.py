@@ -13,7 +13,7 @@ class PriceViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ['product', 'store', 'is_active', 'effective_date']
     ordering_fields = ['effective_date', 'price', 'registration_date']
-    ordering = ['-effective_date']
+    ordering = ['-registration_date']
 
     @action(detail=False, methods=['get'])
     def active_prices(self, request):
