@@ -31,7 +31,7 @@ class Price(models.Model):
     class Meta:
         db_table = "Prices"
         unique_together = ['product', 'store', 'effective_date']
-        ordering = ['-effective_date']
+        ordering = ['-registration_date']
 
     def save(self, *args, **kwargs):
         with transaction.atomic():
