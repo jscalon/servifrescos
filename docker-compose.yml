@@ -7,7 +7,7 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend:/app
-      - frontend_node_modules:/app/node_modules
+      - node_modules:/app/node_modules
     environment:
       - NODE_ENV=development
       - CHOKIDAR_USEPOLLING=true
@@ -45,19 +45,7 @@ services:
       - "1433:1433"
     volumes:
       - db_data:/var/opt/mssql/data
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "bash",
-          "-c",
-          "if timeout 1 bash -c '</dev/tcp/localhost/1433' >/dev/null 2>&1; then exit 0; else exit 1; fi",
-        ]
-      interval: 10s
-      timeout: 2s
-      retries: 5
-      start_period: 30s
 
 volumes:
-  frontend_node_modules:
+  node_modules:
   db_data:
