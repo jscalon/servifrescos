@@ -33,10 +33,11 @@ services:
       - DB_PASSWORD=YourStrong!Passw0rd
     depends_on:
       - db
-    command: sh -c "until nc -z db 1433; do echo 'Waiting for db...'; sleep 1; done; python scripts/create_db.py && python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "until nc -z db 1433; do echo 'Waiting for db...'; sleep 1; done; python scripts/create_db.py && python manage.py makemigrations && python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:8000"
 
   db:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    user: root
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=YourStrong!Passw0rd

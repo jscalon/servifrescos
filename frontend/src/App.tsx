@@ -11,8 +11,8 @@ import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
 import QueryProduct from "./pages/Modules/Products/QueryProduct";
 import Prices from "./pages/Modules/Prices";
 import NewPrice from "./pages/Modules/Prices/NewPrice";
-import UserManagement from "./pages/Modules/UserManagement";
-import NewUser from "./pages/Modules/UserManagement/NewUser";
+import UserManagement from "./pages/Modules/Users";
+import NewUser from "./pages/Modules/Users/NewUser";
 
 export default function App() {
   return (

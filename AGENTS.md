@@ -72,7 +72,7 @@ El sistema a desarrollar debe resolver esta ineficiencia, centralizando el contr
 
 ### Seguridad y Entorno
 
-- La aplicación se ejecutará **dentro de la red y dominio privado de la empresa**. Se debe priorizar la autenticación y autorización de usuarios basada en el dominio o la red interna. Para logearse como usuario, será en base al usuario de windows.
+- La aplicación se ejecutará **dentro de la red y dominio privado de la empresa**. Se debe priorizar la autenticación y autorización de usuarios.
 
 ### Módulos principales de la apliación
 

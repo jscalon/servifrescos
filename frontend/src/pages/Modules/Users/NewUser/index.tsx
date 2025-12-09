@@ -25,9 +25,7 @@ export default function NewUser() {
     password: "",
     confirmPassword: "",
     firstName: "",
-    middleName: "",
     lastName: "",
-    secondLastName: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -75,9 +73,7 @@ export default function NewUser() {
         password: "",
         confirmPassword: "",
         firstName: "",
-        middleName: "",
         lastName: "",
-        secondLastName: "",
       });
     } catch (error) {
       console.error("Error creando usuario:", error);
@@ -94,9 +90,7 @@ export default function NewUser() {
       password: "",
       confirmPassword: "",
       firstName: "",
-      middleName: "",
       lastName: "",
-      secondLastName: "",
     });
     setError("");
   };
@@ -105,31 +99,20 @@ export default function NewUser() {
     <main>
       <h1>Nuevo Usuario</h1>
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
-        <BackButton to="/modules/users"/>
+        <BackButton to="/modules/users" />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>
-          <FieldWrapper label="Nombre de Usuario" id="username">
+          <FieldWrapper label="Email" id="email">
             <InputText
-              id="username"
-              name="username"
-              value={formData.username}
+              id="email"
+              name="email"
+              value={formData.email}
               onChange={handleInputChange}
               required
             />
           </FieldWrapper>
-          <FieldWrapper label="Rol" id="role">
-            <Select
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Seleccionar rol</option>
-              <option value="admin">Administrador</option>
-              <option value="user">Usuario</option>
-              <option value="viewer">Visualizador</option>
-            </Select>
+          <FieldWrapper label="Permisos" id="role">
+            <input type="checkbox"></input>
           </FieldWrapper>
         </div>
         <div className={styles.row}>
@@ -153,7 +136,7 @@ export default function NewUser() {
           </FieldWrapper>
         </div>
         <div className={styles.row}>
-          <FieldWrapper label="Primer Nombre" id="firstName">
+          <FieldWrapper label="Nombre" id="firstName">
             <InputText
               id="firstName"
               name="firstName"
@@ -162,31 +145,13 @@ export default function NewUser() {
               required
             />
           </FieldWrapper>
-          <FieldWrapper label="Segundo Nombre" id="middleName">
-            <InputText
-              id="middleName"
-              name="middleName"
-              value={formData.middleName}
-              onChange={handleInputChange}
-            />
-          </FieldWrapper>
-        </div>
-        <div className={styles.row}>
-          <FieldWrapper label="Primer Apellido" id="lastName">
+          <FieldWrapper label="Apellido" id="lastName">
             <InputText
               id="lastName"
               name="lastName"
               value={formData.lastName}
               onChange={handleInputChange}
               required
-            />
-          </FieldWrapper>
-          <FieldWrapper label="Segundo Apellido" id="secondLastName">
-            <InputText
-              id="secondLastName"
-              name="secondLastName"
-              value={formData.secondLastName}
-              onChange={handleInputChange}
             />
           </FieldWrapper>
         </div>

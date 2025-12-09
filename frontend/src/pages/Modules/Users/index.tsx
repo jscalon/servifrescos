@@ -1,8 +1,8 @@
-import styles from "./UserManagement.module.css";
+import styles from "./Users.module.css";
 import UsersBar from "../../../components/UsersBar";
 import { Outlet, useLocation } from "react-router-dom";
 
-export default function UserManagement() {
+export default function Users() {
   const location = useLocation();
 
   function arr(n: number) {
@@ -22,18 +22,16 @@ export default function UserManagement() {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Primer Nombre</th>
-                <th>Primer Apellido</th>
-                <th>Nombre de Usuario</th>
-                <th>Roles</th>
+                <th>Nombre de Completo</th>
+                <th>Email</th>
+                <th>Permisos</th>
                 <th>Activo</th>
-                <th>Operaciones</th>
               </tr>
             </thead>
             <tbody>
               {arr(4).map(() => (
                 <tr>
-                  {arr(6).map(() => (
+                  {arr(4).map(() => (
                     <td></td>
                   ))}
                 </tr>

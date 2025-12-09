@@ -23,8 +23,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'apps.products',
     'apps.prices',
-    'apps.stores'
+    'apps.stores',
+    'apps.users'
 ]
+
+# Custom user model
+AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
