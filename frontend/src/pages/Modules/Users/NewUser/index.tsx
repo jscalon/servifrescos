@@ -6,21 +6,23 @@ import InputPassword from "../../../../components/InputPassword";
 import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
 import { useState } from "react";
+import { usersAPI } from "../../../../services/api";
+import type { UserCreate } from "../../../../services/api";
 
 interface NewUserFormData {
-  username: string;
+  email: string;
+  isActive: boolean;
   permissions: string[];
   password: string;
   confirmPassword: string;
   firstName: string;
-  middleName: string;
   lastName: string;
-  secondLastName: string;
 }
 
 export default function NewUser() {
   const [formData, setFormData] = useState<NewUserFormData>({
-    username: "",
+    email: "",
+    isActive: true,
     permissions: [],
     password: "",
     confirmPassword: "",
@@ -30,6 +32,17 @@ export default function NewUser() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
+  const permissionOptions = [
+    { value: "view_product", label: "Consultar productos" },
+    { value: "add_product", label: "Crear productos" },
+    { value: "change_product", label: "Modificar productos" },
+    { value: "view_price", label: "Listar precios" },
+    { value: "add_price", label: "Crear Precios" },
+    { value: "view_user", label: "Listar usuarios" },
+    { value: "add_user", label: "Crear usuarios" },
+    { value: "change_user", label: "Modificar usuarios" },
+  ];
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -37,6 +50,24 @@ export default function NewUser() {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  };
+
+  const handlePermissionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      permissions: checked
+        ? [...prev.permissions, name]
+        : prev.permissions.filter((p) => p !== name),
+    }));
+  };
+
+  const handleIsActiveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      isActive: checked,
     }));
   };
 
@@ -50,7 +81,7 @@ export default function NewUser() {
     }
 
     if (
-      !formData.username ||
+      !formData.email ||
       !formData.password ||
       !formData.firstName ||
       !formData.lastName
@@ -63,12 +94,20 @@ export default function NewUser() {
     setError("");
 
     try {
-      // Aquí irá la llamada a la API cuando esté lista
-      // await usersAPI.create(formData);
+      const dataToSend: UserCreate = {
+        email: formData.email,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        password: formData.password,
+        permissions: formData.permissions,
+        is_active: formData.isActive,
+      };
+      await usersAPI.create(dataToSend);
 
       alert("Usuario creado exitosamente!");
       setFormData({
-        username: "",
+        email: "",
+        isActive: true,
         permissions: [],
         password: "",
         confirmPassword: "",
@@ -85,7 +124,8 @@ export default function NewUser() {
 
   const handleReset = () => {
     setFormData({
-      username: "",
+      email: "",
+      isActive: true,
       permissions: [],
       password: "",
       confirmPassword: "",
@@ -110,11 +150,6 @@ export default function NewUser() {
               onChange={handleInputChange}
               required
             />
-          </FieldWrapper>
-          <FieldWrapper label="Permisos" id="permissions">
-            <input type="checkbox"></input>
-            <input type="checkbox"></input>
-            <input type="checkbox"></input>
           </FieldWrapper>
         </div>
         <div className={styles.row}>
@@ -157,6 +192,50 @@ export default function NewUser() {
             />
           </FieldWrapper>
         </div>
+        <FieldWrapper
+          label="Usuario Activo"
+          id="isActive"
+          className={styles.active}
+        >
+          <input
+            type="checkbox"
+            id="isActive"
+            name="isActive"
+            checked={formData.isActive}
+            onChange={handleIsActiveChange}
+          />
+        </FieldWrapper>
+        <FieldWrapper label="Permisos" id="permissions">
+          <div className={styles.permissions}>
+            <div className={styles.permissionsColumn}>
+              {permissionOptions.slice(0, 4).map((option) => (
+                <label key={option.value} className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    name={option.value}
+                    checked={formData.permissions.includes(option.value)}
+                    onChange={handlePermissionChange}
+                  />
+                  {option.label}
+                </label>
+              ))}
+            </div>
+            <div className={styles.permissionsColumn}>
+              {permissionOptions.slice(4, 8).map((option) => (
+                <label key={option.value} className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    name={option.value}
+                    checked={formData.permissions.includes(option.value)}
+                    onChange={handlePermissionChange}
+                  />
+                  {option.label}
+                </label>
+              ))}
+            </div>
+          </div>
+        </FieldWrapper>
+
         <div className={styles.rowButtons}>
           <Button
             text="Reiniciar"

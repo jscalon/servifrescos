@@ -196,4 +196,5 @@ th,
 td {
   border: 1px solid var(--gray-C);
   padding: 8px;
+  max-width: 100px;
 }

@@ -72,6 +72,7 @@ export interface UserCreate {
   email: string;
   password: string;
   permissions: string[];
+  is_active: boolean;
 }
 
 // Tipos para las respuestas de la API

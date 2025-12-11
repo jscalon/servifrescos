@@ -4,6 +4,17 @@ import { Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { usersAPI, type User } from "../../../services/api";
 
+const permissionOptions = [
+  { value: "view_product", label: "Consultar productos" },
+  { value: "add_product", label: "Crear productos" },
+  { value: "change_product", label: "Modificar productos" },
+  { value: "view_price", label: "Listar precios" },
+  { value: "add_price", label: "Crear Precios" },
+  { value: "view_user", label: "Listar usuarios" },
+  { value: "add_user", label: "Crear usuarios" },
+  { value: "change_user", label: "Modificar usuarios" },
+];
+
 export default function Users() {
   const location = useLocation();
   const [users, setUsers] = useState<User[]>([]);
@@ -49,9 +60,11 @@ export default function Users() {
     if (filters.permissions.trim()) {
       const permissionsLower = filters.permissions.toLowerCase();
       filtered = filtered.filter((user) =>
-        user.permissions.some((perm) =>
-          perm.toLowerCase().includes(permissionsLower)
-        )
+        user.permissions.some((perm) => {
+          const label =
+            permissionOptions.find((opt) => opt.value === perm)?.label || perm;
+          return label.toLowerCase().includes(permissionsLower);
+        })
       );
     }
 
@@ -105,7 +118,15 @@ export default function Users() {
                 <tr key={user.id}>
                   <td>{`${user.first_name} ${user.last_name}`}</td>
                   <td>{user.email}</td>
-                  <td>{user.permissions.join(", ")}</td>
+                  <td>
+                    {user.permissions
+                      .map(
+                        (perm) =>
+                          permissionOptions.find((opt) => opt.value === perm)
+                            ?.label || perm
+                      )
+                      .join(", ")}
+                  </td>
                   <td>{user.is_active ? "✅" : "❌"}</td>
                 </tr>
               ))}
