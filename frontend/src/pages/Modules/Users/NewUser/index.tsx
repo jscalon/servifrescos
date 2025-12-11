@@ -9,7 +9,7 @@ import { useState } from "react";
 
 interface NewUserFormData {
   username: string;
-  role: string;
+  permissions: string[];
   password: string;
   confirmPassword: string;
   firstName: string;
@@ -21,7 +21,7 @@ interface NewUserFormData {
 export default function NewUser() {
   const [formData, setFormData] = useState<NewUserFormData>({
     username: "",
-    role: "",
+    permissions: [],
     password: "",
     confirmPassword: "",
     firstName: "",
@@ -69,7 +69,7 @@ export default function NewUser() {
       alert("Usuario creado exitosamente!");
       setFormData({
         username: "",
-        role: "",
+        permissions: [],
         password: "",
         confirmPassword: "",
         firstName: "",
@@ -86,7 +86,7 @@ export default function NewUser() {
   const handleReset = () => {
     setFormData({
       username: "",
-      role: "",
+      permissions: [],
       password: "",
       confirmPassword: "",
       firstName: "",
@@ -111,7 +111,9 @@ export default function NewUser() {
               required
             />
           </FieldWrapper>
-          <FieldWrapper label="Permisos" id="role">
+          <FieldWrapper label="Permisos" id="permissions">
+            <input type="checkbox"></input>
+            <input type="checkbox"></input>
             <input type="checkbox"></input>
           </FieldWrapper>
         </div>

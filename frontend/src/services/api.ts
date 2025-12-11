@@ -54,6 +54,26 @@ export interface PriceCreate {
   comment: string;
 }
 
+// Interface para el modelo User
+export interface User {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  permissions: string[];
+  is_active: boolean;
+  date_joined: string;
+}
+
+// Interface para crear un User
+export interface UserCreate {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  permissions: string[];
+}
+
 // Tipos para las respuestas de la API
 export interface ApiResponse<T> extends AxiosResponse<T> {}
 
@@ -86,6 +106,17 @@ export const pricesAPI = {
     api.get(`/prices/price_history/?product=${product}&store=${store}`),
   create: (data: PriceCreate): Promise<ApiResponse<Price>> =>
     api.post("/prices/", data),
+};
+
+export const usersAPI = {
+  getAll: (): Promise<ApiResponse<User[]>> => api.get("/users/"),
+  getById: (id: number): Promise<ApiResponse<User>> => api.get(`/users/${id}/`),
+  create: (data: UserCreate): Promise<ApiResponse<User>> =>
+    api.post("/users/", data),
+  update: (id: number, data: Partial<UserCreate>): Promise<ApiResponse<User>> =>
+    api.put(`/users/${id}/`, data),
+  delete: (id: number): Promise<ApiResponse<void>> =>
+    api.delete(`/users/${id}/`),
 };
 
 export default api;

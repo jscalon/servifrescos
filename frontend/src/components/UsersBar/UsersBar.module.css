@@ -1,18 +1,24 @@
 .usersBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   box-sizing: border-box;
   position: relative;
   padding: 10px 30px;
   width: 100%;
-  gap: 30px;
+  gap: 20px;
   border-radius: 20px;
   background: var(--gray-D);
+}
+
+.usersBar > .select,
+.usersBar > .input {
+  min-width: 0;
+  flex: 1;
 }
 
 .span {
   font-weight: 500;
   color: var(--gray-4);
-  width: 200px;
+  width: fit-content;
 }

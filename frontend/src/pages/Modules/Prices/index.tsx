@@ -89,6 +89,7 @@ export default function Prices() {
             <thead>
               <tr>
                 <th>Código</th>
+                <th>Servifresco</th>
                 <th>Descripción</th>
                 <th>Tipo</th>
                 <th>Precio ($)</th>
@@ -96,7 +97,6 @@ export default function Prices() {
                 <th>Fecha de Efectividad</th>
                 <th>Fecha de Vencimiento</th>
                 <th>Vigente</th>
-                <th>Servifresco</th>
                 <th>Comentario</th>
               </tr>
             </thead>
@@ -104,6 +104,7 @@ export default function Prices() {
               {filteredPrices.map((price) => (
                 <tr key={price.id}>
                   <td>{price.product_code}</td>
+                  <td>{price.store_name}</td>
                   <td>{price.product_description}</td>
                   <td>{price.product_type}</td>
                   <td>{price.price}</td>
@@ -115,7 +116,6 @@ export default function Prices() {
                       : ""}
                   </td>
                   <td>{price.is_active ? "✅" : "❌"}</td>
-                  <td>{price.store_name}</td>
                   <td>{price.comment}</td>
                 </tr>
               ))}
