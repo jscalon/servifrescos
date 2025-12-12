@@ -1,4 +1,4 @@
-import styles from "./NewUser.module.css";
+import styles from "./CreateUser.module.css";
 import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
@@ -10,7 +10,7 @@ import { useState } from "react";
 import { usersAPI } from "../../../../services/api";
 import type { UserCreate } from "../../../../services/api";
 
-interface NewUserFormData {
+interface CreateUserFormData {
   email: string;
   isActive: boolean;
   permissions: string[];
@@ -20,8 +20,8 @@ interface NewUserFormData {
   lastName: string;
 }
 
-export default function NewUser() {
-  const [formData, setFormData] = useState<NewUserFormData>({
+export default function CreateUser() {
+  const [formData, setFormData] = useState<CreateUserFormData>({
     email: "",
     isActive: true,
     permissions: [],
@@ -153,7 +153,7 @@ export default function NewUser() {
 
   return (
     <main>
-      <h1>Nuevo Usuario</h1>
+      <h1>Crear Usuario</h1>
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
         <BackButton to="/modules/users" />
         {error && <div className={styles.error}>{error}</div>}

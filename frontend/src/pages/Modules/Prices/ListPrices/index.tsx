@@ -81,52 +81,49 @@ export default function ListPrices() {
 
   return (
     <>
-      {location.pathname == "/modules/prices/list" && (
-        <main className={styles.main}>
-          <h1>Listar Precios</h1>
-          <PricesBar onSearch={handleSearch} onClear={handleClear} />
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Servifresco</th>
-                <th>Descripción</th>
-                <th>Tipo</th>
-                <th>Precio ($)</th>
-                <th>Fecha de Registro</th>
-                <th>Fecha de Efectividad</th>
-                <th>Fecha de Vencimiento</th>
-                <th>Vigente</th>
-                <th>Comentario</th>
+      <main className={styles.main}>
+        <h1>Listar Precios</h1>
+        <PricesBar onSearch={handleSearch} onClear={handleClear} />
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Servifresco</th>
+              <th>Descripción</th>
+              <th>Tipo</th>
+              <th>Precio ($)</th>
+              <th>Fecha de Registro</th>
+              <th>Fecha de Efectividad</th>
+              <th>Fecha de Vencimiento</th>
+              <th>Vigente</th>
+              <th>Comentario</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredPrices.map((price) => (
+              <tr key={price.id}>
+                <td>{price.product_code}</td>
+                <td>{price.store_name}</td>
+                <td>{price.product_description}</td>
+                <td>{price.product_type}</td>
+                <td>{price.price}</td>
+                <td>{new Date(price.registration_date).toLocaleString()}</td>
+                <td>{new Date(price.effective_date).toLocaleString()}</td>
+                <td>
+                  {price.expiration_date
+                    ? new Date(price.expiration_date).toLocaleString()
+                    : ""}
+                </td>
+                <td>{price.is_active ? "✅" : "❌"}</td>
+                <td>{price.comment}</td>
               </tr>
-            </thead>
-            <tbody>
-              {filteredPrices.map((price) => (
-                <tr key={price.id}>
-                  <td>{price.product_code}</td>
-                  <td>{price.store_name}</td>
-                  <td>{price.product_description}</td>
-                  <td>{price.product_type}</td>
-                  <td>{price.price}</td>
-                  <td>{new Date(price.registration_date).toLocaleString()}</td>
-                  <td>{new Date(price.effective_date).toLocaleString()}</td>
-                  <td>
-                    {price.expiration_date
-                      ? new Date(price.expiration_date).toLocaleString()
-                      : ""}
-                  </td>
-                  <td>{price.is_active ? "✅" : "❌"}</td>
-                  <td>{price.comment}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {filteredPrices.length === 0 && (
-            <span className={styles.noResults}>Sin coincidencias...</span>
-          )}
-        </main>
-      )}
-      <Outlet />
+            ))}
+          </tbody>
+        </table>
+        {filteredPrices.length === 0 && (
+          <span className={styles.noResults}>Sin coincidencias...</span>
+        )}
+      </main>
     </>
   );
 }

@@ -1,0 +1,18 @@
+.main {
+  margin-top: 10px;
+}
+
+.loading {
+  color: white;
+  font-weight: 500;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
+}
+
+.noUsers {
+  text-align: center;
+  color: var(--gray-5);
+}

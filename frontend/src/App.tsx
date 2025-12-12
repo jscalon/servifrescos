@@ -12,8 +12,9 @@ import QueryProduct from "./pages/Modules/Products/ListProducts";
 import Prices from "./pages/Modules/Prices";
 import ListPrices from "./pages/Modules/Prices/ListPrices";
 import CreatePrice from "./pages/Modules/Prices/CreatePrice";
-import UserManagement from "./pages/Modules/Users";
-import NewUser from "./pages/Modules/Users/NewUser";
+import Users from "./pages/Modules/Users";
+import ListUsers from "./pages/Modules/Users/ListUsers";
+import CreateUser from "./pages/Modules/Users/CreateUser";
 
 export default function App() {
   return (
@@ -33,8 +34,9 @@ export default function App() {
               <Route path="list" element={<ListPrices />} />
               <Route path="create" element={<CreatePrice />} />
             </Route>
-            <Route path="users" element={<UserManagement />}>
-              <Route path="new" element={<NewUser />} />
+            <Route path="users" element={<Users />}>
+              <Route path="list" element={<ListUsers />} />
+              <Route path="create" element={<CreateUser />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

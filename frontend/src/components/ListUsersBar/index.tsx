@@ -1,4 +1,4 @@
-import styles from "./UsersBar.module.css";
+import styles from "./ListUsersBar.module.css";
 import Button from "../Button";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "../Select";
 
-interface UsersBarProps {
+interface ListUsersBarProps {
   onSearch: (filters: {
     nameEmail: string;
     permissions: string;
@@ -15,7 +15,7 @@ interface UsersBarProps {
   onClear: () => void;
 }
 
-export default function UsersBar({ onSearch, onClear }: UsersBarProps) {
+export default function ListUsersBar({ onSearch, onClear }: ListUsersBarProps) {
   const navigate = useNavigate();
   const [nameEmail, setNameEmail] = useState<string>("");
   const [permissions, setPermissions] = useState<string>("");
@@ -58,9 +58,15 @@ export default function UsersBar({ onSearch, onClear }: UsersBarProps) {
     onClear();
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Escape") {
+      handleClear();
+    }
+  };
+
   return (
-    <div className={styles.usersBar}>
-      <BackButton to="/modules" />
+    <div className={styles.listUsersBar}>
+      <BackButton to="/modules/users" />
       <span className={styles.span}>Usuario:</span>
       <InputText
         id="nameEmail"
@@ -68,6 +74,7 @@ export default function UsersBar({ onSearch, onClear }: UsersBarProps) {
         className={styles.input}
         value={nameEmail}
         onChange={handleNameEmailChange}
+        onKeyDown={handleKeyDown}
         placeholder="Nombre o Email..."
       />
       <span className={styles.span}>Permisos:</span>
@@ -77,6 +84,7 @@ export default function UsersBar({ onSearch, onClear }: UsersBarProps) {
         className={styles.input}
         value={permissions}
         onChange={handlePermissionsChange}
+        onKeyDown={handleKeyDown}
         placeholder="Permisos..."
       />
       <span className={styles.span}>Activo:</span>
@@ -92,9 +100,9 @@ export default function UsersBar({ onSearch, onClear }: UsersBarProps) {
         <option>❌</option>
       </Select>
       <Button
-        text="Nuevo 👤"
+        text="Crear 👤"
         className={styles.button}
-        onClick={() => navigate("new")}
+        onClick={() => navigate("../create")}
       />
     </div>
   );

@@ -54,7 +54,7 @@ export default function ListProductsBar({
 
   return (
     <div className={styles.ListProductsBar}>
-      <BackButton to="/modules/products" />
+      <BackButton to=".." />
       <span className={styles.span}>Criterio de búsqueda:</span>
       <Select
         name="searchField"
@@ -83,12 +83,12 @@ export default function ListProductsBar({
       <Button
         text="Crear 📝"
         className={styles.button}
-        onClick={() => navigate("/modules/products/create")}
+        onClick={() => navigate("../create")}
       />
       <Button
         text="Modificar 🔄"
         className={styles.button}
-        onClick={() => navigate("/modules/products/modify")}
+        onClick={() => navigate("../modify")}
       />
     </div>
   );
