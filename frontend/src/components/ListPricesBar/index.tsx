@@ -1,4 +1,4 @@
-import styles from "./PricesBar.module.css";
+import styles from "./ListPricesBar.module.css";
 import Button from "../Button";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Select from "../Select";
 import { storesAPI, type Store } from "../../services/api";
 
-interface PricesBarProps {
+interface ListPricesBarProps {
   onSearch: (filters: {
     article: string;
     store: string;
@@ -16,7 +16,7 @@ interface PricesBarProps {
   onClear: () => void;
 }
 
-export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
+export default function ListPricesBar({ onSearch, onClear }: ListPricesBarProps) {
   const navigate = useNavigate();
   const [selectedStore, setSelectedStore] = useState<string>("Todos");
   const [searchArticle, setsearchArticle] = useState<string>("");
@@ -77,8 +77,8 @@ export default function PricesBar({ onSearch, onClear }: PricesBarProps) {
   };
 
   return (
-    <div className={styles.pricesBar}>
-      <BackButton to="/modules" />
+    <div className={styles.listPricesBar}>
+      <BackButton to="/modules/prices" />
       <span className={styles.span}>Servifresco:</span>
       <Select
         id="searchStore"

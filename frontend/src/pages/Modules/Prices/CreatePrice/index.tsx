@@ -1,4 +1,4 @@
-import styles from "./NewPrice.module.css";
+import styles from "./CreatePrice.module.css";
 import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
@@ -26,7 +26,7 @@ interface PriceFormData {
   type: string;
 }
 
-export default function NewPrice() {
+export default function CreatePrice() {
   const [productCode, setProductCode] = useState<string>("");
   const [store, setStore] = useState<string>("");
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
@@ -204,13 +204,13 @@ export default function NewPrice() {
 
   return (
     <main>
-      <h1>Nuevo Precio</h1>
+      <h1>Crear Precio</h1>
       <form
         className={`card ${styles.form}`}
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
       >
-        <BackButton to="/modules/prices" refresh={true}/>
+        <BackButton to="/modules/prices" refresh={true} />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.firstRow}>
           <FieldWrapper label="Tienda" id="store" className={styles.code}>

@@ -10,7 +10,8 @@ import CreateProduct from "./pages/Modules/Products/CreateProduct";
 import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
 import QueryProduct from "./pages/Modules/Products/ListProducts";
 import Prices from "./pages/Modules/Prices";
-import NewPrice from "./pages/Modules/Prices/NewPrice";
+import ListPrices from "./pages/Modules/Prices/ListPrices";
+import CreatePrice from "./pages/Modules/Prices/CreatePrice";
 import UserManagement from "./pages/Modules/Users";
 import NewUser from "./pages/Modules/Users/NewUser";
 
@@ -29,7 +30,8 @@ export default function App() {
               <Route path="list" element={<QueryProduct />} />
             </Route>
             <Route path="prices" element={<Prices />}>
-              <Route path="new" element={<NewPrice />} />
+              <Route path="list" element={<ListPrices />} />
+              <Route path="create" element={<CreatePrice />} />
             </Route>
             <Route path="users" element={<UserManagement />}>
               <Route path="new" element={<NewUser />} />
