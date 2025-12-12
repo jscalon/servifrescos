@@ -83,7 +83,7 @@ export default function ListPrices() {
     <>
       {location.pathname == "/modules/prices/list" && (
         <main className={styles.main}>
-          <h1>Listado de Precios</h1>
+          <h1>Listar Precios</h1>
           <PricesBar onSearch={handleSearch} onClear={handleClear} />
           <table className={styles.table}>
             <thead>

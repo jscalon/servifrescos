@@ -117,9 +117,9 @@ export default function ListPricesBar({ onSearch, onClear }: ListPricesBarProps)
         <option>❌</option>
       </Select>
       <Button
-        text="Nuevo 💲"
+        text="Crear 💲"
         className={styles.button}
-        onClick={() => navigate("/modules/prices/new")}
+        onClick={() => navigate("/modules/prices/create")}
       />
     </div>
   );
