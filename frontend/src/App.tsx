@@ -8,13 +8,14 @@ import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts";
 import CreateProduct from "./pages/Modules/Products/CreateProduct";
 import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
-import QueryProduct from "./pages/Modules/Products/ListProducts";
+import ListProduct from "./pages/Modules/Products/ListProducts";
 import Prices from "./pages/Modules/Prices";
 import ListPrices from "./pages/Modules/Prices/ListPrices";
 import CreatePrice from "./pages/Modules/Prices/CreatePrice";
 import Users from "./pages/Modules/Users";
 import ListUsers from "./pages/Modules/Users/ListUsers";
 import CreateUser from "./pages/Modules/Users/CreateUser";
+import ModifyUser from "./pages/Modules/Users/ModifyUser";
 
 export default function App() {
   return (
@@ -26,9 +27,9 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/modules" element={<Modules />}>
             <Route path="products" element={<Products />}>
+              <Route path="list" element={<ListProduct />} />
               <Route path="create" element={<CreateProduct />} />
               <Route path="modify" element={<ModifyProduct />} />
-              <Route path="list" element={<QueryProduct />} />
             </Route>
             <Route path="prices" element={<Prices />}>
               <Route path="list" element={<ListPrices />} />
@@ -37,6 +38,7 @@ export default function App() {
             <Route path="users" element={<Users />}>
               <Route path="list" element={<ListUsers />} />
               <Route path="create" element={<CreateUser />} />
+              <Route path="modify" element={<ModifyUser />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

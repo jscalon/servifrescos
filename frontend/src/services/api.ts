@@ -115,7 +115,7 @@ export const usersAPI = {
   create: (data: UserCreate): Promise<ApiResponse<User>> =>
     api.post("/users/", data),
   update: (id: number, data: Partial<UserCreate>): Promise<ApiResponse<User>> =>
-    api.put(`/users/${id}/`, data),
+    api.patch(`/users/${id}/`, data),
   delete: (id: number): Promise<ApiResponse<void>> =>
     api.delete(`/users/${id}/`),
 };

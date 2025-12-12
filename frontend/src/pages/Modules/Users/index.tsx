@@ -16,6 +16,7 @@ export default function Users() {
             <h2 className="h-dark">Usuarios:</h2>
             <Button text="Listado 📋" onClick={() => navigate("list")} />
             <Button text="Creación 📝" onClick={() => navigate("create")} />
+            <Button text="Modificación 🔄" onClick={() => navigate("modify")} />
           </div>
         </main>
       )}

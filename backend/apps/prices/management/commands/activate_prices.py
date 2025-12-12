@@ -46,11 +46,11 @@ class Command(BaseCommand):
                     latest_eligible_price.save(update_fields=['is_active'])
 
                     activated_count += 1
-                    print(
-                        f'Activado precio {latest_eligible_price} para tienda {latest_eligible_price.store.number}'
-                    )
+                    # print(
+                    #     f'Activado precio {latest_eligible_price} para tienda {latest_eligible_price.store.number}'
+                    # )
 
-        if activated_count == 0:
-            print('No hay precios para activar.')
-        else:
-            print(f'Se activaron {activated_count} precios.')
+        # if activated_count == 0:
+            # print('No hay precios para activar.')
+        # else:
+            # print(f'Se activaron {activated_count} precios.')
