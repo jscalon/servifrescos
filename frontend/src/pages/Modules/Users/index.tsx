@@ -27,8 +27,13 @@ export default function Users() {
       try {
         setLoading(true);
         const response = await usersAPI.getAll();
-        setUsers(response.data);
-        setFilteredUsers(response.data);
+        const sortedUsers = response.data.sort(
+          (a, b) =>
+            new Date(b.date_joined).getTime() -
+            new Date(a.date_joined).getTime()
+        );
+        setUsers(sortedUsers);
+        setFilteredUsers(sortedUsers);
       } catch (error) {
         console.error("Error loading users:", error);
         setError("Error al cargar los usuarios");
