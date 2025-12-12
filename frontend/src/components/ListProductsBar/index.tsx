@@ -3,6 +3,7 @@ import Button from "../Button";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Select from "../Select";
 
 interface ListProductsBarProps {
@@ -10,24 +11,32 @@ interface ListProductsBarProps {
   onClear: () => void;
 }
 
-export default function ListProductsBar({ onSearch, onClear }: ListProductsBarProps) {
+export default function ListProductsBar({
+  onSearch,
+  onClear,
+}: ListProductsBarProps) {
+  const navigate = useNavigate();
   const [searchField, setSearchField] = useState<string>("code");
   const [searchValue, setSearchValue] = useState<string>("");
 
-  const handleFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchField(e.target.value);
-  };
-
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value.toUpperCase());
-  };
-
-  const handleSearch = () => {
-    if (searchValue.trim()) {
-      onSearch(searchField, searchValue.trim());
+  const triggerSearch = (field: string, value: string) => {
+    if (value.trim()) {
+      onSearch(field, value.trim());
     } else {
       onClear();
     }
+  };
+
+  const handleFieldChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newField = e.target.value;
+    setSearchField(newField);
+    triggerSearch(newField, searchValue);
+  };
+
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value.toUpperCase();
+    setSearchValue(newValue);
+    triggerSearch(searchField, newValue);
   };
 
   const handleClear = () => {
@@ -37,7 +46,7 @@ export default function ListProductsBar({ onSearch, onClear }: ListProductsBarPr
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSearch();
+      triggerSearch(searchField, searchValue);
     } else if (e.key === "Escape") {
       handleClear();
     }
@@ -71,12 +80,15 @@ export default function ListProductsBar({ onSearch, onClear }: ListProductsBarPr
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el producto a buscar..."
       />
-      <Button text="Buscar" className={styles.button} onClick={handleSearch} />
       <Button
-        text="Reiniciar"
+        text="Crear 📝"
         className={styles.button}
-        onClick={handleClear}
-        style="secondary"
+        onClick={() => navigate("/modules/products/create")}
+      />
+      <Button
+        text="Modificar 🔄"
+        className={styles.button}
+        onClick={() => navigate("/modules/products/modify")}
       />
     </div>
   );
