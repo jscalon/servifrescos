@@ -3,8 +3,9 @@ import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
 import InputPassword from "../../../../components/InputPassword";
-import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
+import ConfirmationModal from "../../../../components/ConfirmationModal";
+import SuccessModal from "../../../../components/SuccessModal";
 import { useState } from "react";
 import { usersAPI } from "../../../../services/api";
 import type { UserCreate } from "../../../../services/api";
@@ -31,6 +32,8 @@ export default function NewUser() {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
   const permissionOptions = [
     { value: "view_product", label: "Consultar productos" },
@@ -44,7 +47,7 @@ export default function NewUser() {
   ];
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -90,6 +93,24 @@ export default function NewUser() {
       return;
     }
 
+    setShowConfirmDialog(true);
+  };
+
+  const handleReset = () => {
+    setFormData({
+      email: "",
+      isActive: true,
+      permissions: [],
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+    });
+    setError("");
+  };
+
+  const handleConfirmSave = async () => {
+    setShowConfirmDialog(false);
     setLoading(true);
     setError("");
 
@@ -104,7 +125,7 @@ export default function NewUser() {
       };
       await usersAPI.create(dataToSend);
 
-      alert("Usuario creado exitosamente!");
+      setShowSuccessDialog(true);
       setFormData({
         email: "",
         isActive: true,
@@ -122,17 +143,12 @@ export default function NewUser() {
     }
   };
 
-  const handleReset = () => {
-    setFormData({
-      email: "",
-      isActive: true,
-      permissions: [],
-      password: "",
-      confirmPassword: "",
-      firstName: "",
-      lastName: "",
-    });
-    setError("");
+  const handleCancelSave = () => {
+    setShowConfirmDialog(false);
+  };
+
+  const handleAcceptSuccess = () => {
+    setShowSuccessDialog(false);
   };
 
   return (
@@ -251,6 +267,25 @@ export default function NewUser() {
             disabled={loading}
           />
         </div>
+
+        {/* Modal de confirmación reutilizable */}
+        {showConfirmDialog && (
+          <ConfirmationModal
+            title="Confirmar Guardado"
+            message="¿Está seguro de que desea guardar este usuario?"
+            onConfirm={handleConfirmSave}
+            onCancel={handleCancelSave}
+          />
+        )}
+
+        {/* Modal de éxito reutilizable */}
+        {showSuccessDialog && (
+          <SuccessModal
+            title="¡Operación Exitosa!"
+            message="El usuario ha sido creado exitosamente."
+            onAccept={handleAcceptSuccess}
+          />
+        )}
       </form>
     </main>
   );
