@@ -2,7 +2,7 @@
   position: absolute;
   top: -15px;
   left: -15px;
-  background-color: var(--gray-B);
+  background-color: var(--color-secondary);
   border: none;
   cursor: pointer;
   color: white;
@@ -18,13 +18,13 @@
 }
 
 .backButton:hover {
-  background-color: var(--gray-C);
+  background-color: var(--color-secondary-light);
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
   scale: 1.02;
 }
 
 .backButton:active {
-  background-color: var(--gray-A);
+  background-color: var(--color-secondary-dark);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
   scale: 0.98;
 }

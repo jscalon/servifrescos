@@ -83,7 +83,7 @@ export default function Prices() {
     <>
       {location.pathname == "/modules/prices" && (
         <main className={styles.main}>
-          <h1>Precios</h1>
+          <h1>Listado de Precios</h1>
           <PricesBar onSearch={handleSearch} onClear={handleClear} />
           <table className={styles.table}>
             <thead>

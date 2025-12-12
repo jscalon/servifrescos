@@ -1,16 +1,16 @@
-import styles from "./QueryBar.module.css";
+import styles from "./ListProductsBar.module.css";
 import Button from "../Button";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
 import Select from "../Select";
 
-interface QueryBarProps {
+interface ListProductsBarProps {
   onSearch: (field: string, value: string) => void;
   onClear: () => void;
 }
 
-export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
+export default function ListProductsBar({ onSearch, onClear }: ListProductsBarProps) {
   const [searchField, setSearchField] = useState<string>("code");
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -26,12 +26,12 @@ export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
     if (searchValue.trim()) {
       onSearch(searchField, searchValue.trim());
     } else {
-      onClear(); // Si no hay valor, mostrar todos
+      onClear();
     }
   };
 
   const handleClear = () => {
-    setSearchValue(""); // Limpia el input
+    setSearchValue("");
     onClear();
   };
 
@@ -44,7 +44,7 @@ export default function QueryBar({ onSearch, onClear }: QueryBarProps) {
   };
 
   return (
-    <div className={styles.queryBar}>
+    <div className={styles.ListProductsBar}>
       <BackButton to="/modules/products" />
       <span className={styles.span}>Criterio de búsqueda:</span>
       <Select

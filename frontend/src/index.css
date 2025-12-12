@@ -1,7 +1,6 @@
 :root {
   --color-primary: #087033;
   --color-primary-light: color-mix(in oklab, var(--color-primary), white 5%);
-  --color-primary-dark: rgb(7, 101, 46);
   --color-primary-dark: color-mix(in oklab, var(--color-primary), black 10%);
   --color-primary-semi-white: rgb(206, 226, 214);
   --color-primary-white: rgb(230, 241, 235);

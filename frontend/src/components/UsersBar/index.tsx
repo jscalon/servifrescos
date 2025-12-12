@@ -92,7 +92,7 @@ export default function UsersBar({ onSearch, onClear }: UsersBarProps) {
         <option>❌</option>
       </Select>
       <Button
-        text="Nuevo +👤"
+        text="Nuevo 👤"
         className={styles.button}
         onClick={() => navigate("new")}
       />

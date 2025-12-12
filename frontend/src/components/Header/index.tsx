@@ -9,7 +9,7 @@ export default function Header() {
   const showProductsNavBar = [
     "/modules/products/create",
     "/modules/products/modify",
-    "/modules/products/query",
+    "/modules/products/list",
   ].includes(location.pathname);
 
   return (

@@ -19,7 +19,7 @@ export default function NotFound() {
       <Button
         text="Volver atrás..."
         className={styles.button}
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/modules")}
       />
     </main>
   );

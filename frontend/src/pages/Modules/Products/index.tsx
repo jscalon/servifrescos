@@ -14,9 +14,9 @@ export default function Products() {
           <div className={`card ${styles.card}`}>
 						<BackButton to="/modules"/>
             <h2 className="h-dark">Productos:</h2>
+            <Button text="Listado 📋" onClick={() => navigate("list")} />
             <Button text="Creación 📝" onClick={() => navigate("create")} />
             <Button text="Modificación 🔄" onClick={() => navigate("modify")} />
-            <Button text="Consulta 🔍" onClick={() => navigate("query")} />
           </div>
         </main>
       )}

@@ -1,9 +1,9 @@
-import styles from "./QueryProduct.module.css";
-import QueryBar from "../../../../components/QueryBar";
+import styles from "./ListProducts.module.css";
+import QueryBar from "../../../../components/ListProductsBar";
 import { useState, useEffect } from "react";
 import { productsAPI, type Product } from "../../../../services/api";
 
-export default function QueryProduct() {
+export default function ListProduct() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -42,7 +42,7 @@ export default function QueryProduct() {
   if (loading) {
     return (
       <main className={styles.main}>
-        <h1>Consultar Productos</h1>
+        <h1>Listar Productos</h1>
         <span className={styles.loading}>Cargando productos...</span>
       </main>
     );
@@ -51,7 +51,7 @@ export default function QueryProduct() {
   if (error) {
     return (
       <main className={styles.main}>
-        <h1>Consultar Productos</h1>
+        <h1>Listar Productos</h1>
         <span className={styles.error}>{error}</span>
       </main>
     );
@@ -59,7 +59,7 @@ export default function QueryProduct() {
 
   return (
     <main className={styles.main}>
-      <h1>Consultar Productos</h1>
+      <h1>Listar Productos</h1>
       <QueryBar onSearch={handleSearch} onClear={handleClear} />
       <table className={styles.table}>
         <thead className={styles.thead}>
