@@ -100,9 +100,14 @@ export default function ListUsersBar({ onSearch, onClear }: ListUsersBarProps) {
         <option>❌</option>
       </Select>
       <Button
-        text="Crear 👤"
+        text="Crear 📝"
         className={styles.button}
         onClick={() => navigate("../create")}
+      />
+      <Button
+        text="Modificar 🔄"
+        className={styles.button}
+        onClick={() => navigate("../modify")}
       />
     </div>
   );

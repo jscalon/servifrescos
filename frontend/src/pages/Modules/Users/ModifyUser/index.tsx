@@ -229,7 +229,7 @@ export default function ModifyUser() {
           </FieldWrapper>
           {!userFound && (
             <Button
-              text={searching ? "Buscando..." : "Buscar"}
+              text={searching ? "Cargando..." : "Aceptar"}
               onClick={searchUser}
               disabled={searching}
               style="primary"
@@ -239,17 +239,6 @@ export default function ModifyUser() {
 
         {userFound && (
           <>
-            <div className={styles.row}>
-              <FieldWrapper label="Email" id="email">
-                <InputText
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  disabled
-                />
-              </FieldWrapper>
-            </div>
             <div className={styles.row}>
               <FieldWrapper label="Nombre" id="firstName">
                 <InputText

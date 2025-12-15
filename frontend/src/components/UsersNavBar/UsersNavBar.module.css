@@ -1,0 +1,36 @@
+.navBar {
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  border-radius: 50px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--gray-5);
+  transition: all 0.2s linear;
+  font-size: 14px;
+}
+
+.currentLink {
+  color: var(--color-primary);
+  font-weight: bold;
+  text-decoration: underline;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.navLink:hover {
+  color: var(--color-primary-light);
+  scale: 1.02;
+}
+
+.navLink:active {
+  color: var(--color-primary-dark);
+  scale: 0.98;
+}

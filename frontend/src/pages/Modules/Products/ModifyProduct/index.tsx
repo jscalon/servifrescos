@@ -292,7 +292,7 @@ export default function ModifyProduct() {
           </FieldWrapper>
           {!productFound && (
             <Button
-              text={searching ? "Buscando..." : "Buscar"}
+              text={searching ? "Cargando..." : "Aceptar"}
               onClick={searchProduct}
               disabled={searching}
               style="primary"
