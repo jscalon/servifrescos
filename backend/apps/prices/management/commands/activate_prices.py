@@ -6,7 +6,7 @@ from apps.prices.models import Price
 class Command(BaseCommand):
     help = 'Activa automáticamente los precios cuya fecha efectiva ha llegado'
 
-    def handle(self):
+    def handle(self, *args, **options):
         now = timezone.now()
 
         all_groups = Price.objects.values('product_id', 'store_id').distinct()
