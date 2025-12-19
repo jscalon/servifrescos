@@ -1,5 +1,5 @@
 import styles from "./ListUsers.module.css";
-import ListUsersBar from "../../../../components/ListUsersBar";
+import ListUsersBar from "../../../../components/QueryUsersBar";
 import { useState, useEffect } from "react";
 import { usersAPI, type User } from "../../../../services/api";
 
@@ -7,9 +7,9 @@ const permissionOptions = [
   { value: "view_product", label: "Consultar productos" },
   { value: "add_product", label: "Crear productos" },
   { value: "change_product", label: "Modificar productos" },
-  { value: "view_price", label: "Listar precios" },
+  { value: "view_price", label: "Consultar precios" },
   { value: "add_price", label: "Crear Precios" },
-  { value: "view_user", label: "Listar usuarios" },
+  { value: "view_user", label: "Consultar usuarios" },
   { value: "add_user", label: "Crear usuarios" },
   { value: "change_user", label: "Modificar usuarios" },
 ];
@@ -103,7 +103,7 @@ export default function ListUsers() {
 
   return (
     <main className={styles.main}>
-      <h1>Listar Usuarios</h1>
+      <h1>Consultar Usuarios</h1>
       <ListUsersBar onSearch={handleSearch} onClear={handleClear} />
       <table className={styles.table}>
         <thead>

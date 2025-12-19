@@ -27,16 +27,16 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/modules" element={<Modules />}>
             <Route path="products" element={<Products />}>
-              <Route path="list" element={<ListProduct />} />
+              <Route path="query" element={<ListProduct />} />
               <Route path="create" element={<CreateProduct />} />
               <Route path="modify" element={<ModifyProduct />} />
             </Route>
             <Route path="prices" element={<Prices />}>
-              <Route path="list" element={<ListPrices />} />
+              <Route path="query" element={<ListPrices />} />
               <Route path="create" element={<CreatePrice />} />
             </Route>
             <Route path="users" element={<Users />}>
-              <Route path="list" element={<ListUsers />} />
+              <Route path="query" element={<ListUsers />} />
               <Route path="create" element={<CreateUser />} />
               <Route path="modify" element={<ModifyUser />} />
             </Route>

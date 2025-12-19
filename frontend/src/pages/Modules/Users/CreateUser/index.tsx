@@ -39,16 +39,14 @@ export default function CreateUser() {
     { value: "view_product", label: "Consultar productos" },
     { value: "add_product", label: "Crear productos" },
     { value: "change_product", label: "Modificar productos" },
-    { value: "view_price", label: "Listar precios" },
+    { value: "view_price", label: "Consultar precios" },
     { value: "add_price", label: "Crear Precios" },
-    { value: "view_user", label: "Listar usuarios" },
+    { value: "view_user", label: "Consultar usuarios" },
     { value: "add_user", label: "Crear usuarios" },
     { value: "change_user", label: "Modificar usuarios" },
   ];
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,

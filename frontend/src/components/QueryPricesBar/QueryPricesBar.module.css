@@ -1,4 +1,4 @@
-.ListProductsBar {
+.queryPricesBar {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -11,18 +11,16 @@
   background: var(--gray-D);
 }
 
-.span {
-  font-weight: 500;
-  color: var(--gray-4);
-  white-space: nowrap;
-}
-
-.select {
+.queryPricesBar > .select,
+.queryPricesBar > .input {
+  min-width: 0;
   flex: 1;
 }
 
-.input {
-  flex: 2;
+.span {
+  font-weight: 500;
+  color: var(--gray-4);
+  width: fit-content;
 }
 
 .button {

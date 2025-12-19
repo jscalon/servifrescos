@@ -1,5 +1,5 @@
 import styles from "./ListProducts.module.css";
-import QueryBar from "../../../../components/ListProductsBar";
+import QueryBar from "../../../../components/QueryProductsBar";
 import { useState, useEffect } from "react";
 import { productsAPI, type Product } from "../../../../services/api";
 
@@ -42,7 +42,7 @@ export default function ListProduct() {
   if (loading) {
     return (
       <main className={styles.main}>
-        <h1>Listar Productos</h1>
+        <h1>Consultar Productos</h1>
         <span className={styles.loading}>Cargando productos...</span>
       </main>
     );
@@ -51,7 +51,7 @@ export default function ListProduct() {
   if (error) {
     return (
       <main className={styles.main}>
-        <h1>Listar Productos</h1>
+        <h1>Consultar Productos</h1>
         <span className={styles.error}>{error}</span>
       </main>
     );
@@ -59,7 +59,7 @@ export default function ListProduct() {
 
   return (
     <main className={styles.main}>
-      <h1>Listar Productos</h1>
+      <h1>Consultar Productos</h1>
       <QueryBar onSearch={handleSearch} onClear={handleClear} />
       <table className={styles.table}>
         <thead className={styles.thead}>
@@ -88,9 +88,7 @@ export default function ListProduct() {
         </tbody>
       </table>
       {filteredProducts.length === 0 && (
-        <span className={styles.noProducts}>
-          Sin coincidencias...
-        </span>
+        <span className={styles.noProducts}>Sin coincidencias...</span>
       )}
     </main>
   );

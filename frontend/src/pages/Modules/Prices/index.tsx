@@ -12,10 +12,10 @@ export default function Prices() {
       {location.pathname === "/modules/prices" && (
         <main className={styles.main}>
           <div className={`card ${styles.card}`}>
-						<BackButton to="/modules"/>
+            <BackButton to="/modules" />
             <h2 className="h-dark">Precios:</h2>
-            <Button text="Listado 📋" onClick={() => navigate("list")} />
-            <Button text="Creación 📝" onClick={() => navigate("create")} />
+            <Button text="Consultar 📋" onClick={() => navigate("query")} />
+            <Button text="Crear 📝" onClick={() => navigate("create")} />
           </div>
         </main>
       )}

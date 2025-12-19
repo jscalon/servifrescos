@@ -1,5 +1,5 @@
 import styles from "./ListPrices.module.css";
-import PricesBar from "../../../../components/ListPricesBar";
+import PricesBar from "../../../../components/QueryPricesBar";
 import { useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { pricesAPI, type Price } from "../../../../services/api";
@@ -82,7 +82,7 @@ export default function ListPrices() {
   return (
     <>
       <main className={styles.main}>
-        <h1>Listar Precios</h1>
+        <h1>Consultar Precios</h1>
         <PricesBar onSearch={handleSearch} onClear={handleClear} />
         <table className={styles.table}>
           <thead>

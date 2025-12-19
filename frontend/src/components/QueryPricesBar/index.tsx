@@ -1,13 +1,11 @@
-import styles from "./ListPricesBar.module.css";
-import Button from "../Button";
+import styles from "./QueryPricesBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Select from "../Select";
 import { storesAPI, type Store } from "../../services/api";
 
-interface ListPricesBarProps {
+interface QueryPricesBarProps {
   onSearch: (filters: {
     article: string;
     store: string;
@@ -16,8 +14,7 @@ interface ListPricesBarProps {
   onClear: () => void;
 }
 
-export default function ListPricesBar({ onSearch, onClear }: ListPricesBarProps) {
-  const navigate = useNavigate();
+export default function QueryPricesBar({ onSearch, onClear }: QueryPricesBarProps) {
   const [selectedStore, setSelectedStore] = useState<string>("Todos");
   const [searchArticle, setsearchArticle] = useState<string>("");
   const [selectedActive, setSelectedActive] = useState<string>("Todos");
@@ -77,7 +74,7 @@ export default function ListPricesBar({ onSearch, onClear }: ListPricesBarProps)
   };
 
   return (
-    <div className={styles.listPricesBar}>
+    <div className={styles.queryPricesBar}>
       <BackButton to="/modules/prices" />
       <span className={styles.span}>Servifresco:</span>
       <Select
@@ -116,11 +113,6 @@ export default function ListPricesBar({ onSearch, onClear }: ListPricesBarProps)
         <option>✅</option>
         <option>❌</option>
       </Select>
-      <Button
-        text="Crear 📝"
-        className={styles.button}
-        onClick={() => navigate("../create")}
-      />
     </div>
   );
 }

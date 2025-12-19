@@ -12,11 +12,11 @@ export default function Users() {
       {location.pathname === "/modules/users" && (
         <main className={styles.main}>
           <div className={`card ${styles.card}`}>
-						<BackButton to="/modules"/>
+            <BackButton to="/modules" />
             <h2 className="h-dark">Usuarios:</h2>
-            <Button text="Listado 📋" onClick={() => navigate("list")} />
-            <Button text="Creación 📝" onClick={() => navigate("create")} />
-            <Button text="Modificación 🔄" onClick={() => navigate("modify")} />
+            <Button text="Consultar 📋" onClick={() => navigate("query")} />
+            <Button text="Crear 📝" onClick={() => navigate("create")} />
+            <Button text="Modificar 🔄" onClick={() => navigate("modify")} />
           </div>
         </main>
       )}

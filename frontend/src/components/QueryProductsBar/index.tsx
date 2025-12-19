@@ -1,21 +1,18 @@
-import styles from "./ListProductsBar.module.css";
-import Button from "../Button";
+import styles from "./QueryProductsBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Select from "../Select";
 
-interface ListProductsBarProps {
+interface QueryProductsBarProps {
   onSearch: (field: string, value: string) => void;
   onClear: () => void;
 }
 
-export default function ListProductsBar({
+export default function QueryProductsBar({
   onSearch,
   onClear,
-}: ListProductsBarProps) {
-  const navigate = useNavigate();
+}: QueryProductsBarProps) {
   const [searchField, setSearchField] = useState<string>("code");
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -53,7 +50,7 @@ export default function ListProductsBar({
   };
 
   return (
-    <div className={styles.ListProductsBar}>
+    <div className={styles.queryProductsBar}>
       <BackButton to=".." />
       <span className={styles.span}>Criterio de búsqueda:</span>
       <Select
@@ -79,16 +76,6 @@ export default function ListProductsBar({
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el producto a buscar..."
-      />
-      <Button
-        text="Crear 📝"
-        className={styles.button}
-        onClick={() => navigate("../create")}
-      />
-      <Button
-        text="Modificar 🔄"
-        className={styles.button}
-        onClick={() => navigate("../modify")}
       />
     </div>
   );

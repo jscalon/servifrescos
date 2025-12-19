@@ -1,12 +1,10 @@
-import styles from "./ListUsersBar.module.css";
-import Button from "../Button";
+import styles from "./QueryUsersBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Select from "../Select";
 
-interface ListUsersBarProps {
+interface QueryUsersBarProps {
   onSearch: (filters: {
     nameEmail: string;
     permissions: string;
@@ -15,8 +13,7 @@ interface ListUsersBarProps {
   onClear: () => void;
 }
 
-export default function ListUsersBar({ onSearch, onClear }: ListUsersBarProps) {
-  const navigate = useNavigate();
+export default function QueryUsersBar({ onSearch, onClear }: QueryUsersBarProps) {
   const [nameEmail, setNameEmail] = useState<string>("");
   const [permissions, setPermissions] = useState<string>("");
   const [selectedActive, setSelectedActive] = useState<string>("Todos");
@@ -65,7 +62,7 @@ export default function ListUsersBar({ onSearch, onClear }: ListUsersBarProps) {
   };
 
   return (
-    <div className={styles.listUsersBar}>
+    <div className={styles.queryUsersBar}>
       <BackButton to="/modules/users" />
       <span className={styles.span}>Usuario:</span>
       <InputText
@@ -99,16 +96,6 @@ export default function ListUsersBar({ onSearch, onClear }: ListUsersBarProps) {
         <option>✅</option>
         <option>❌</option>
       </Select>
-      <Button
-        text="Crear 📝"
-        className={styles.button}
-        onClick={() => navigate("../create")}
-      />
-      <Button
-        text="Modificar 🔄"
-        className={styles.button}
-        onClick={() => navigate("../modify")}
-      />
     </div>
   );
 }

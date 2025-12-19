@@ -9,16 +9,16 @@ import UsersNavBar from "../UsersNavBar";
 export default function Header() {
   const location = useLocation();
   const showProductsNavBar = [
-    "/modules/products/list",
+    "/modules/products/query",
     "/modules/products/create",
     "/modules/products/modify",
   ].includes(location.pathname);
   const showPricesNavBar = [
-    "/modules/prices/list",
+    "/modules/prices/query",
     "/modules/prices/create",
   ].includes(location.pathname);
   const showUsersNavBar = [
-    "/modules/users/list",
+    "/modules/users/query",
     "/modules/users/create",
     "/modules/users/modify",
   ].includes(location.pathname);
@@ -26,9 +26,9 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <img src={logo} alt="servifresco-logo" className={styles.logo} />
-      {showProductsNavBar && <ProductsNavBar />}
+      {/*{showProductsNavBar && <ProductsNavBar />}
       {showPricesNavBar && <PricesNavBar />}
-      {showUsersNavBar && <UsersNavBar />}
+      {showUsersNavBar && <UsersNavBar />}*/}
       <UserSection />
     </header>
   );
