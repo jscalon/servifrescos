@@ -2,6 +2,7 @@ import styles from "./CreateUser.module.css";
 import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
+import InputEmail from "../../../../components/InputEmail";
 import InputPassword from "../../../../components/InputPassword";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
@@ -32,6 +33,8 @@ export default function CreateUser() {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
@@ -52,6 +55,15 @@ export default function CreateUser() {
       ...prev,
       [name]: value,
     }));
+
+    if (name === "password" || name === "confirmPassword") {
+      const updatedFormData = { ...formData, [name]: value };
+      if (updatedFormData.password !== updatedFormData.confirmPassword) {
+        setPasswordError("Las contraseñas no coinciden");
+      } else {
+        setPasswordError("");
+      }
+    }
   };
 
   const handlePermissionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,9 +87,11 @@ export default function CreateUser() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validación básica
-    if (formData.password !== formData.confirmPassword) {
-      setError("Las contraseñas no coinciden");
+    if (passwordError) {
+      return;
+    }
+
+    if (emailError) {
       return;
     }
 
@@ -105,6 +119,8 @@ export default function CreateUser() {
       lastName: "",
     });
     setError("");
+    setEmailError("");
+    setPasswordError("");
   };
 
   const handleConfirmSave = async () => {
@@ -133,6 +149,8 @@ export default function CreateUser() {
         firstName: "",
         lastName: "",
       });
+      setEmailError("");
+      setPasswordError("");
     } catch (error) {
       console.error("Error creando usuario:", error);
       setError("Error al crear el usuario. Inténtalo de nuevo.");
@@ -157,11 +175,12 @@ export default function CreateUser() {
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>
           <FieldWrapper label="Email" id="email">
-            <InputText
+            <InputEmail
               id="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
+              onErrorChange={setEmailError}
               required
             />
           </FieldWrapper>
@@ -173,6 +192,7 @@ export default function CreateUser() {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
+              error={!!passwordError}
               required
             />
           </FieldWrapper>
@@ -182,10 +202,14 @@ export default function CreateUser() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
+              error={!!passwordError}
               required
             />
           </FieldWrapper>
         </div>
+        {passwordError && (
+          <div className={styles.passwordError}>{passwordError}</div>
+        )}
         <div className={styles.row}>
           <FieldWrapper label="Nombre" id="firstName">
             <InputText
@@ -266,7 +290,6 @@ export default function CreateUser() {
           />
         </div>
 
-        {/* Modal de confirmación reutilizable */}
         {showConfirmDialog && (
           <ConfirmationModal
             title="Confirmar Guardado"
@@ -276,7 +299,6 @@ export default function CreateUser() {
           />
         )}
 
-        {/* Modal de éxito reutilizable */}
         {showSuccessDialog && (
           <SuccessModal
             title="¡Operación Exitosa!"

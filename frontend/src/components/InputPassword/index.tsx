@@ -9,6 +9,7 @@ interface InputProps {
   value?: string; // Añade value
   required?: boolean;
   readOnly?: boolean;
+  error?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
@@ -21,6 +22,7 @@ export default function InputPassword({
   value = "", // Añade valor por defecto
   required = true,
   readOnly = false,
+  error = false,
   className = "",
   onChange,
   onKeyDown,
@@ -28,7 +30,9 @@ export default function InputPassword({
   const [showPassword, setShowPassword] = useState(false);
   const inputElement = (
     <input
-      className={styles.inputPassword + " " + className}
+      className={`${styles.inputPassword} ${
+        error ? styles.error : ""
+      } ${className}`}
       type={showPassword ? "text" : "password"}
       placeholder={placeholder}
       id={id}

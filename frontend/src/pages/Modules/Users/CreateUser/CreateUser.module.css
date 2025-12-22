@@ -40,6 +40,14 @@ main > .form {
 
 .error {
   color: red;
+  text-align: center;
+}
+
+.passwordError {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+  margin-top: -17px;
 }
 
 .form > .active {
