@@ -155,7 +155,7 @@ export default function CreateUser() {
       console.error("Error creando usuario:", error);
       if (error.response && error.response.data && error.response.data.email) {
         setError(
-          "Error al crear el usuario. Ya existe un usuario con ese email."
+          "Error creando usuario: Ya existe un usuario con ese email."
         );
       } else {
         setError("Error al crear el usuario. Inténtalo de nuevo.");
