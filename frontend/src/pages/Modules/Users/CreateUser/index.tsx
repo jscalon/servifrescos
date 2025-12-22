@@ -151,9 +151,15 @@ export default function CreateUser() {
       });
       setEmailError("");
       setPasswordError("");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creando usuario:", error);
-      setError("Error al crear el usuario. Inténtalo de nuevo.");
+      if (error.response && error.response.data && error.response.data.email) {
+        setError(
+          "Error al crear el usuario. Ya existe un usuario con ese email."
+        );
+      } else {
+        setError("Error al crear el usuario. Inténtalo de nuevo.");
+      }
     } finally {
       setLoading(false);
     }
