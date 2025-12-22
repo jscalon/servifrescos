@@ -14,8 +14,8 @@ export default function Prices() {
           <div className={`card ${styles.card}`}>
             <BackButton to="/modules" />
             <h2 className="h-dark">Precios:</h2>
-            <Button text="Consultar 📋" onClick={() => navigate("query")} />
             <Button text="Crear 📝" onClick={() => navigate("create")} />
+            <Button text="Consultar 📋" onClick={() => navigate("query")} />
           </div>
         </main>
       )}
