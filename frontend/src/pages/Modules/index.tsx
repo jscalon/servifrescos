@@ -1,8 +1,10 @@
 import styles from "./Modules.module.css";
 import Button from "../../components/Button";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { usePermissions } from "../../contexts";
 
 export default function Modules() {
+  const { hasPermission } = usePermissions();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -12,9 +14,15 @@ export default function Modules() {
         <main className={styles.main}>
           <div className={`card ${styles.card}`}>
             <h2 className="h-dark">Módulo:</h2>
-            <Button text="Productos 🍗" onClick={() => navigate("products")} />
-            <Button text="Precios 💲" onClick={() => navigate("prices")}/>
-            <Button text="Usuarios 👥" onClick={() => navigate("users")} />
+            {hasPermission('view_product') && (
+              <Button text="Productos 🍗" onClick={() => navigate("products")} />
+            )}
+            {hasPermission('view_price') && (
+              <Button text="Precios 💲" onClick={() => navigate("prices")} />
+            )}
+            {hasPermission('view_user') && (
+              <Button text="Usuarios 👥" onClick={() => navigate("users")} />
+            )}
           </div>
         </main>
       )}

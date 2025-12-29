@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import authenticate
 from .models import User
 
 
@@ -22,3 +24,23 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
         instance.save()
         return instance
+
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        password = attrs.get('password')
+
+        if email and password:
+            user = authenticate(username=email, password=password)
+            if not user:
+                raise serializers.ValidationError('Credenciales incorrectas')
+            if not user.is_active:
+                raise serializers.ValidationError('Usuario inactivo')
+            attrs['user'] = user
+            return attrs
+        else:
+            raise serializers.ValidationError('Debe incluir email y password')

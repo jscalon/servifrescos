@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
 from .models import Price
@@ -14,6 +15,7 @@ class PriceViewSet(viewsets.ModelViewSet):
     filterset_fields = ['product', 'store', 'is_active', 'effective_date']
     ordering_fields = ['effective_date', 'price', 'registration_date']
     ordering = ['-registration_date']
+    permission_classes = [IsAuthenticated]
 
     @action(detail=False, methods=['get'])
     def active_prices(self, request):

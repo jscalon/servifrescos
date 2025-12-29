@@ -1,10 +1,19 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+
+interface User {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  permissions: string[];
+}
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  userName: string | null;
-  login: (name: string) => void;
+  user: User | null;
+  token: string | null;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -13,30 +22,66 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const stored = localStorage.getItem("isLoggedIn");
-    return stored === "true";
-  });
-  const [userName, setUserName] = useState(() => {
-    return localStorage.getItem("userName");
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  const login = (name: string) => {
-    setIsLoggedIn(true);
-    setUserName(name);
-    localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("userName", name);
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    if (storedToken && storedUser) {
+      setToken(storedToken);
+      setUser(JSON.parse(storedUser));
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await fetch("http://localhost:8000/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const data = await response.json();
+      const { access, first_name, last_name, permissions } = data;
+
+      const userData: User = {
+        id: data.user_id,
+        email,
+        first_name,
+        last_name,
+        permissions,
+      };
+
+      setToken(access);
+      setUser(userData);
+      setIsLoggedIn(true);
+
+      localStorage.setItem("token", access);
+      localStorage.setItem("user", JSON.stringify(userData));
+    } catch (error) {
+      throw error;
+    }
   };
 
   const logout = () => {
     setIsLoggedIn(false);
-    setUserName(null);
-    localStorage.removeItem("isLoggedIn");
-    localStorage.removeItem("userName");
+    setUser(null);
+    setToken(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userName, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -46,4 +91,34 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within AuthProvider");
   return context;
+};
+
+export const usePermissions = () => {
+  const { user } = useAuth();
+  const hasPermission = (permission: string) => {
+    return user?.permissions?.includes(permission) ?? false;
+  };
+  return { hasPermission };
+};
+
+export const useApi = () => {
+  const { token } = useAuth();
+
+  const apiFetch = async (url: string, options: RequestInit = {}) => {
+    const headers = {
+      "Content-Type": "application/json",
+      ...options.headers,
+    };
+
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
+    return fetch(`http://localhost:8000${url}`, {
+      ...options,
+      headers,
+    });
+  };
+
+  return { apiFetch };
 };

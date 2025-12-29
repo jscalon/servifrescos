@@ -2,6 +2,7 @@ import styles from "./ListUsers.module.css";
 import ListUsersBar from "../../../../components/QueryUsersBar";
 import { useState, useEffect } from "react";
 import { usersAPI, type User } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 const permissionOptions = [
   { value: "view_product", label: "Consultar productos" },
@@ -15,10 +16,20 @@ const permissionOptions = [
 ];
 
 export default function ListUsers() {
+  const { hasPermission } = usePermissions();
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+
+  if (!hasPermission('view_user')) {
+    return (
+      <main className={styles.main}>
+        <h1>Usuarios</h1>
+        <span className={styles.error}>No tienes permisos para consultar usuarios</span>
+      </main>
+    );
+  }
 
   useEffect(() => {
     const loadUsers = async () => {

@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts";
 import { useLocation, useNavigate } from "react-router-dom";
 
 export default function UserSection() {
-  const { isLoggedIn, userName, logout } = useAuth();
+  const { isLoggedIn, user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const showUserSection = isLoggedIn && location.pathname !== "/login";
@@ -14,14 +14,14 @@ export default function UserSection() {
 
   return (
     <>
-      {showUserSection && (
+      {showUserSection && user && (
         <div className={styles.userSection}>
-          <span>{userName}</span>
+          <span>{user.first_name} {user.last_name}</span>
           <Button
             text="Salir"
             icon={door}
-						style="other"
-						className={styles.button}
+            style="other"
+            className={styles.button}
             onClick={() => {
               logout();
               navigate("/login");

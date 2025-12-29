@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Modules from "./pages/Modules";
 import Products from "./pages/Modules/Products";
 import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./contexts";
+import { AuthProvider, useAuth } from "./contexts";
 import CreateProduct from "./pages/Modules/Products/CreateProduct";
 import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
 import ListProduct from "./pages/Modules/Products/ListProducts";
@@ -16,6 +16,12 @@ import Users from "./pages/Modules/Users";
 import ListUsers from "./pages/Modules/Users/ListUsers";
 import CreateUser from "./pages/Modules/Users/CreateUser";
 import ModifyUser from "./pages/Modules/Users/ModifyUser";
+import type { ReactNode } from "react";
+
+const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const { isLoggedIn } = useAuth();
+  return isLoggedIn ? <>{children}</> : <Navigate to="/login" replace />;
+};
 
 export default function App() {
   return (
@@ -25,7 +31,14 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/modules" element={<Modules />}>
+          <Route
+            path="/modules"
+            element={
+              <ProtectedRoute>
+                <Modules />
+              </ProtectedRoute>
+            }
+          >
             <Route path="products" element={<Products />}>
               <Route path="query" element={<ListProduct />} />
               <Route path="create" element={<CreateProduct />} />

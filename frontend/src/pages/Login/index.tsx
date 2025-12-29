@@ -6,22 +6,33 @@ import InputText from "../../components/InputText";
 import InputPassword from "../../components/InputPassword";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts";
-import { useState } from "react"; // Añade este import
+import { useState } from "react";
 
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [username, setUsername] = useState<string>(""); // Añade estado
-  const [password, setPassword] = useState<string>(""); // Añade estado
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    login(username);
-    navigate("/modules");
+    setLoading(true);
+    setError("");
+
+    try {
+      await login(email, password);
+      navigate("/modules");
+    } catch (err) {
+      setError("Credenciales incorrectas");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,22 +45,23 @@ export default function Login() {
       <form className={`card`} onSubmit={handleSubmit}>
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <InputText
-          id="username"
-          name="username"
-          placeholder="Usuario"
+          id="email"
+          name="email"
+          placeholder="Email"
           className={styles.inputText}
-          value={username} // Añade value
-          onChange={handleUsernameChange} // Añade onChange
+          value={email}
+          onChange={handleEmailChange}
         />
         <InputPassword
           id="password"
           name="password"
           placeholder="Contraseña"
-          value={password} // Añade value
-          onChange={handlePasswordChange} // Añade onChange
+          value={password}
+          onChange={handlePasswordChange}
         />
-        <Button text="Ingresar" className={styles.button} />
+        <Button text={loading ? "Cargando..." : "Ingresar"} className={styles.button} disabled={loading} />
         <Link to="/" className={styles.forgot}>
           ¿Olvidaste tu contraseña?
         </Link>
