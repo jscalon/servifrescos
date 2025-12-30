@@ -14,13 +14,13 @@ export default function Modules() {
         <main className={styles.main}>
           <div className={`card ${styles.card}`}>
             <h2 className="h-dark">Módulo:</h2>
-            {hasPermission('view_product') && (
+            {(hasPermission('view_product') || hasPermission('add_product') || hasPermission('change_product')) && (
               <Button text="Productos 🍗" onClick={() => navigate("products")} />
             )}
-            {hasPermission('view_price') && (
+            {(hasPermission('view_price') || hasPermission('add_price')) && (
               <Button text="Precios 💲" onClick={() => navigate("prices")} />
             )}
-            {hasPermission('view_user') && (
+            {(hasPermission('view_user') || hasPermission('add_user') || hasPermission('change_user')) && (
               <Button text="Usuarios 👥" onClick={() => navigate("users")} />
             )}
           </div>

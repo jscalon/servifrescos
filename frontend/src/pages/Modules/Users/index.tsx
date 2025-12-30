@@ -2,8 +2,10 @@ import styles from "./Users.module.css";
 import Button from "../../../components/Button";
 import BackButton from "../../../components/BackButton";
 import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { usePermissions } from "../../../contexts";
 
 export default function Users() {
+  const { hasPermission } = usePermissions();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -14,9 +16,15 @@ export default function Users() {
           <div className={`card ${styles.card}`}>
             <BackButton to="/modules" />
             <h2 className="h-dark">Usuarios:</h2>
-            <Button text="Crear 📝" onClick={() => navigate("create")} />
-            <Button text="Modificar 🔄" onClick={() => navigate("modify")} />
-            <Button text="Consultar 📋" onClick={() => navigate("query")} />
+            {hasPermission("add_user") && (
+              <Button text="Crear 📝" onClick={() => navigate("create")} />
+            )}
+            {hasPermission("change_user") && (
+              <Button text="Modificar 🔄" onClick={() => navigate("modify")} />
+            )}
+            {hasPermission("view_user") && (
+              <Button text="Consultar 📋" onClick={() => navigate("query")} />
+            )}
           </div>
         </main>
       )}

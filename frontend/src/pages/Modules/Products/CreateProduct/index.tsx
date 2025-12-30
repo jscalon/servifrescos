@@ -8,6 +8,7 @@ import ConfirmationModal from "../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../components/SuccessModal";
 import { useState } from "react";
 import { productsAPI } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 interface ProductFormData {
   code: string;
@@ -20,6 +21,22 @@ interface ProductFormData {
 }
 
 export default function CreateProduct() {
+  const { hasPermission } = usePermissions();
+
+  if (!hasPermission("add_product")) {
+    return (
+      <main>
+        <h1>Crear Producto</h1>
+        <div className={`card ${styles.form}`}>
+          <BackButton to="/modules/products" />
+          <div className={styles.error}>
+            No tienes permisos para crear productos
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const [formData, setFormData] = useState<ProductFormData>({
     code: "",
     description: "",

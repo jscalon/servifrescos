@@ -42,7 +42,7 @@ export default function Login() {
   return (
     <main className={styles.main}>
       <h1>Ficha de Productos</h1>
-      <form className={`card`} onSubmit={handleSubmit}>
+      <form className={`card ${styles.card}`} onSubmit={handleSubmit}>
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
         {error && <p style={{ color: 'red' }}>{error}</p>}
