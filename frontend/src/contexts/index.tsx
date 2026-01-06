@@ -38,7 +38,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch("http://localhost:8000/api/login/", {
+      const apiUrl =
+        import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+      const response = await fetch(`${apiUrl.replace("/api", "")}/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,6 +107,7 @@ export const useApi = () => {
   const { token } = useAuth();
 
   const apiFetch = async (url: string, options: RequestInit = {}) => {
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       ...(options.headers as Record<string, string>),
@@ -114,7 +117,7 @@ export const useApi = () => {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    return fetch(`http://localhost:8000${url}`, {
+    return fetch(`${apiUrl}${url}`, {
       ...options,
       headers,
     });
