@@ -31,7 +31,6 @@ class LoginView(APIView):
             refresh['last_name'] = user.last_name
             refresh['permissions'] = user.permissions
             return Response({
-                'refresh': str(refresh),
                 'access': str(refresh.access_token),
                 'user_id': user.id,
                 'first_name': user.first_name,

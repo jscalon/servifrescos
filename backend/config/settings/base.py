@@ -4,6 +4,7 @@ Django base settings for backend project.
 This file contains common settings shared across all environments.
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -111,4 +112,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+}
+
+# JWT Configuration
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # 1 hora para access token
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # 7 días para refresh token
 }
