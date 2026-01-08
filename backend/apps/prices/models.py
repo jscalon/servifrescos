@@ -2,6 +2,7 @@ from django.db import models, transaction
 from django.utils import timezone
 from apps.products.models import Product
 from apps.stores.models import Store
+from apps.users.models import User
 
 
 class Price(models.Model):
@@ -20,13 +21,14 @@ class Price(models.Model):
     effective_date = models.DateTimeField()
     expiration_date = models.DateTimeField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
-    # created_by = models.ForeignKey(
-    #     'users.CustomUser',
-    #     on_delete=models.SET_NULL,
-    #     null=True,
-    #     related_name='created_prices'
-    # )
     comment = models.CharField(max_length=200, blank=True, null=True)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='created_prices'
+    )
 
     class Meta:
         db_table = "Prices"

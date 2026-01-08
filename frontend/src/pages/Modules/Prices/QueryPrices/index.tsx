@@ -1,6 +1,6 @@
 import styles from "./QueryPrices.module.css";
 import QueryPricesBar from "../../../../components/QueryPricesBar";
-import { useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { pricesAPI, type Price } from "../../../../services/api";
 
@@ -96,6 +96,7 @@ export default function QueryPrices() {
               <th>Fecha de Efectividad</th>
               <th>Fecha de Vencimiento</th>
               <th>Vigente</th>
+              <th>Creado por</th>
               <th>Comentario</th>
             </tr>
           </thead>
@@ -115,6 +116,15 @@ export default function QueryPrices() {
                     : ""}
                 </td>
                 <td>{price.is_active ? "✅" : "❌"}</td>
+                <td>
+                  {price.created_by_username ? (
+                    <>
+                      {price.created_by_username.split('@')[0]}<br />@{price.created_by_username.split('@')[1]}
+                    </>
+                  ) : (
+                    ''
+                  )}
+                </td>
                 <td>{price.comment}</td>
               </tr>
             ))}

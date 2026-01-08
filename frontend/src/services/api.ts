@@ -72,6 +72,7 @@ export interface Price {
   is_active: boolean;
   status: string;
   comment: string;
+  created_by_username: string;
 }
 
 // Interface para crear un Price

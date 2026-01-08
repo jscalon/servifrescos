@@ -10,8 +10,8 @@ class PriceSerializer(serializers.ModelSerializer):
     store_number = serializers.CharField(source='store.number', read_only=True)
     store_name = serializers.CharField(source='store.name', read_only=True)
     status = serializers.CharField(read_only=True)
-    # created_by_username = serializers.CharField(
-    #     source='created_by.username', read_only=True)
+    created_by_username = serializers.CharField(
+        source='created_by.email', read_only=True)
 
     class Meta:
         model = Price
@@ -19,15 +19,12 @@ class PriceSerializer(serializers.ModelSerializer):
             'id', 'product', 'product_code', 'product_description', 'product_type',
             'store', 'store_number', 'store_name', 'price',
             'registration_date', 'effective_date', 'expiration_date',
-            'is_active', 'status', 'comment', # 'created_by', 'created_by_username',
+            'is_active', 'status', 'comment', 'created_by_username',
         ]
-        read_only_fields = ['registration_date'
-                            # 'created_by_username'
-                            ]
+        read_only_fields = ['registration_date', 'created_by_username']
 
     def create(self, validated_data):
         # Asignar el usuario que crea el precio
-        # user = self.context['request'].user
-        # validated_data['created_by'] = user
+        user = self.context['request'].user
+        validated_data['created_by'] = user
         return super().create(validated_data)
-
