@@ -8,12 +8,12 @@ import NotFound from "./pages/NotFound";
 import { AuthProvider, useAuth } from "./contexts";
 import CreateProduct from "./pages/Modules/Products/CreateProduct";
 import ModifyProduct from "./pages/Modules/Products/ModifyProduct";
-import ListProduct from "./pages/Modules/Products/ListProducts";
+import QueryProducts from "./pages/Modules/Products/QueryProducts";
 import Prices from "./pages/Modules/Prices";
-import ListPrices from "./pages/Modules/Prices/ListPrices";
+import QueryPrices from "./pages/Modules/Prices/QueryPrices";
 import CreatePrice from "./pages/Modules/Prices/CreatePrice";
 import Users from "./pages/Modules/Users";
-import ListUsers from "./pages/Modules/Users/ListUsers";
+import QueryUsers from "./pages/Modules/Users/QueryUsers";
 import CreateUser from "./pages/Modules/Users/CreateUser";
 import ModifyUser from "./pages/Modules/Users/ModifyUser";
 import type { ReactNode } from "react";
@@ -45,16 +45,16 @@ export default function App() {
             }
           >
             <Route path="products" element={<Products />}>
-              <Route path="query" element={<ListProduct />} />
+              <Route path="query" element={<QueryProducts />} />
               <Route path="create" element={<CreateProduct />} />
               <Route path="modify" element={<ModifyProduct />} />
             </Route>
             <Route path="prices" element={<Prices />}>
-              <Route path="query" element={<ListPrices />} />
+              <Route path="query" element={<QueryPrices />} />
               <Route path="create" element={<CreatePrice />} />
             </Route>
             <Route path="users" element={<Users />}>
-              <Route path="query" element={<ListUsers />} />
+              <Route path="query" element={<QueryUsers />} />
               <Route path="create" element={<CreateUser />} />
               <Route path="modify" element={<ModifyUser />} />
             </Route>

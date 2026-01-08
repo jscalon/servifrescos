@@ -1,10 +1,10 @@
-import styles from "./ListPrices.module.css";
-import PricesBar from "../../../../components/QueryPricesBar";
-import { useLocation, Outlet } from "react-router-dom";
+import styles from "./QueryPrices.module.css";
+import QueryPricesBar from "../../../../components/QueryPricesBar";
+import { useLocation} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { pricesAPI, type Price } from "../../../../services/api";
 
-export default function ListPrices() {
+export default function QueryPrices() {
   const location = useLocation();
   const [prices, setPrices] = useState<Price[]>([]);
   const [filteredPrices, setFilteredPrices] = useState<Price[]>([]);
@@ -83,7 +83,7 @@ export default function ListPrices() {
     <>
       <main className={styles.main}>
         <h1>Consultar Precios</h1>
-        <PricesBar onSearch={handleSearch} onClear={handleClear} />
+        <QueryPricesBar onSearch={handleSearch} onClear={handleClear} />
         <table className={styles.table}>
           <thead>
             <tr>

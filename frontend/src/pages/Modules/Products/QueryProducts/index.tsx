@@ -1,9 +1,9 @@
-import styles from "./ListProducts.module.css";
-import QueryBar from "../../../../components/QueryProductsBar";
+import styles from "./QueryProducts.module.css";
+import QueryProductsBar from "../../../../components/QueryProductsBar";
 import { useState, useEffect } from "react";
 import { productsAPI, type Product } from "../../../../services/api";
 
-export default function ListProduct() {
+export default function QueryProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -60,7 +60,7 @@ export default function ListProduct() {
   return (
     <main className={styles.main}>
       <h1>Consultar Productos</h1>
-      <QueryBar onSearch={handleSearch} onClear={handleClear} />
+      <QueryProductsBar onSearch={handleSearch} onClear={handleClear} />
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>

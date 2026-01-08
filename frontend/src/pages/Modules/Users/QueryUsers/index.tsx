@@ -1,5 +1,5 @@
-import styles from "./ListUsers.module.css";
-import ListUsersBar from "../../../../components/QueryUsersBar";
+import styles from "./QueryUsers.module.css";
+import QueryUsersBar from "../../../../components/QueryUsersBar";
 import { useState, useEffect } from "react";
 import { usersAPI, type User } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
@@ -15,7 +15,7 @@ const permissionOptions = [
   { value: "change_user", label: "Modificar usuarios" },
 ];
 
-export default function ListUsers() {
+export default function QueryUsers() {
   const { hasPermission } = usePermissions();
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
@@ -115,7 +115,7 @@ export default function ListUsers() {
   return (
     <main className={styles.main}>
       <h1>Consultar Usuarios</h1>
-      <ListUsersBar onSearch={handleSearch} onClear={handleClear} />
+      <QueryUsersBar onSearch={handleSearch} onClear={handleClear} />
       <table className={styles.table}>
         <thead>
           <tr>
