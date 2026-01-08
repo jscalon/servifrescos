@@ -19,7 +19,12 @@ import ModifyUser from "./pages/Modules/Users/ModifyUser";
 import type { ReactNode } from "react";
 
 const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Cargando...</div>; // O un spinner
+  }
+
   return isLoggedIn ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
