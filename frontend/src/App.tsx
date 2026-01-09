@@ -16,6 +16,10 @@ import Users from "./pages/Modules/Users";
 import QueryUsers from "./pages/Modules/Users/QueryUsers";
 import CreateUser from "./pages/Modules/Users/CreateUser";
 import ModifyUser from "./pages/Modules/Users/ModifyUser";
+import Stores from "./pages/Modules/Stores";
+import QueryStores from "./pages/Modules/Stores/QueryStores";
+import CreateStore from "./pages/Modules/Stores/CreateStore";
+import ModifyStore from "./pages/Modules/Stores/ModifyStore";
 import type { ReactNode } from "react";
 
 const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -57,6 +61,11 @@ export default function App() {
               <Route path="query" element={<QueryUsers />} />
               <Route path="create" element={<CreateUser />} />
               <Route path="modify" element={<ModifyUser />} />
+            </Route>
+            <Route path="stores" element={<Stores />}>
+              <Route path="query" element={<QueryStores />} />
+              <Route path="create" element={<CreateStore />} />
+              <Route path="modify" element={<ModifyStore />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

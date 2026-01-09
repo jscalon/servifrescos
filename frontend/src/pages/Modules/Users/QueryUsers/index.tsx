@@ -8,6 +8,9 @@ const permissionOptions = [
   { value: "view_product", label: "Consultar productos" },
   { value: "add_product", label: "Crear productos" },
   { value: "change_product", label: "Modificar productos" },
+  { value: "view_store", label: "Consultar tiendas" },
+  { value: "add_store", label: "Crear tiendas" },
+  { value: "change_store", label: "Modificar tiendas" },
   { value: "view_price", label: "Consultar precios" },
   { value: "add_price", label: "Crear Precios" },
   { value: "view_user", label: "Consultar usuarios" },
@@ -22,11 +25,13 @@ export default function QueryUsers() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
-  if (!hasPermission('view_user')) {
+  if (!hasPermission("view_user")) {
     return (
       <main className={styles.main}>
         <h1>Usuarios</h1>
-        <span className={styles.error}>No tienes permisos para consultar usuarios</span>
+        <span className={styles.error}>
+          No tienes permisos para consultar usuarios
+        </span>
       </main>
     );
   }

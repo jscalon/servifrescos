@@ -46,6 +46,9 @@ export default function ModifyUser() {
     { value: "view_product", label: "Consultar productos" },
     { value: "add_product", label: "Crear productos" },
     { value: "change_product", label: "Modificar productos" },
+    { value: "view_store", label: "Consultar tiendas" },
+    { value: "add_store", label: "Crear tiendas" },
+    { value: "change_store", label: "Modificar tiendas" },
     { value: "view_price", label: "Consultar precios" },
     { value: "add_price", label: "Crear Precios" },
     { value: "view_user", label: "Consultar usuarios" },
@@ -383,7 +386,7 @@ export default function ModifyUser() {
             <FieldWrapper label="Permisos" id="permissions">
               <div className={styles.permissions}>
                 <div className={styles.permissionsColumn}>
-                  {permissionOptions.slice(0, 4).map((option) => (
+                  {permissionOptions.slice(0, 6).map((option) => (
                     <label key={option.value} className={styles.checkboxLabel}>
                       <input
                         type="checkbox"
@@ -396,7 +399,7 @@ export default function ModifyUser() {
                   ))}
                 </div>
                 <div className={styles.permissionsColumn}>
-                  {permissionOptions.slice(4, 8).map((option) => (
+                  {permissionOptions.slice(6, 11).map((option) => (
                     <label key={option.value} className={styles.checkboxLabel}>
                       <input
                         type="checkbox"

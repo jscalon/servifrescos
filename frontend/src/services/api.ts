@@ -53,6 +53,7 @@ export interface Product {
 export interface Store {
   number: string;
   name: string;
+  address: string;
 }
 
 // Interface para el modelo Price
@@ -124,6 +125,10 @@ export const productsAPI = {
 
 export const storesAPI = {
   getAll: (): Promise<ApiResponse<Store[]>> => api.get("/stores/"),
+  getByNumber: (number: string): Promise<ApiResponse<Store>> => api.get(`/stores/${number}/`),
+  create: (data: Store): Promise<ApiResponse<Store>> => api.post("/stores/", data),
+  update: (number: string, data: Partial<Store>): Promise<ApiResponse<Store>> => api.put(`/stores/${number}/`, data),
+  delete: (number: string): Promise<ApiResponse<void>> => api.delete(`/stores/${number}/`),
 };
 
 export const pricesAPI = {
