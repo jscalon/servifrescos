@@ -36,6 +36,7 @@ export default function ModifyStore() {
 
   const [stores, setStores] = useState<Store[]>([]);
   const [selectedStore, setSelectedStore] = useState<string>("");
+  const [originalNumber, setOriginalNumber] = useState<string>("");
   const [formData, setFormData] = useState<StoreFormData>({
     number: "",
     name: "",
@@ -60,20 +61,19 @@ export default function ModifyStore() {
 
   useEffect(() => {
     if (selectedStore) {
-      const store = stores.find(s => s.number === selectedStore);
+      const store = stores.find((s) => s.number === selectedStore);
       if (store) {
         setFormData({
           number: store.number,
           name: store.name,
           address: store.address,
         });
+        setOriginalNumber(store.number);
       }
     }
   }, [selectedStore, stores]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const processedValue =
       name === "number" || name === "name" ? value.toUpperCase() : value;
@@ -95,11 +95,33 @@ export default function ModifyStore() {
     setError("");
 
     try {
-      await storesAPI.update(formData.number, formData);
+      if (formData.number !== originalNumber) {
+        // Create new store
+        await storesAPI.create(formData);
+        // Delete old store
+        await storesAPI.delete(originalNumber);
+      } else {
+        // Update normal
+        await storesAPI.update(formData.number, formData);
+      }
       setShowSuccessDialog(true);
+      // Reset
+      setSelectedStore("");
+      setOriginalNumber("");
+      setFormData({
+        number: "",
+        name: "",
+        address: "",
+      });
     } catch (error: any) {
       console.error("Error modificando tienda:", error);
-      setError("Error al modificar la tienda. Inténtalo de nuevo.");
+      if (error.response?.status === 400 && error.response?.data?.number) {
+        setError(
+          "Error modificando tienda: Ya existe una tienda con ese número."
+        );
+      } else {
+        setError("Error al modificar la tienda. Inténtalo de nuevo.");
+      }
     } finally {
       setLoading(false);
     }
@@ -120,6 +142,7 @@ export default function ModifyStore() {
       address: "",
     });
     setSelectedStore("");
+    setOriginalNumber("");
     setError("");
   };
 
@@ -170,7 +193,6 @@ export default function ModifyStore() {
               name="number"
               value={formData.number}
               onChange={handleInputChange}
-              disabled
             />
           </FieldWrapper>
           <FieldWrapper label="Nombre" id="name">
