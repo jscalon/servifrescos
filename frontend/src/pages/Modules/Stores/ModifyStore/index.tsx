@@ -2,13 +2,13 @@ import styles from "./ModifyStore.module.css";
 import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
+import InputNumber from "../../../../components/InputNumber";
 import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../components/SuccessModal";
 import { useState, useEffect } from "react";
-import { storesAPI } from "../../../../services/api";
-import type { Store } from "../../../../services/api";
+import { storesAPI, type Store } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
 interface StoreFormData {
@@ -36,7 +36,7 @@ export default function ModifyStore() {
 
   const [stores, setStores] = useState<Store[]>([]);
   const [selectedStore, setSelectedStore] = useState<string>("");
-  const [originalNumber, setOriginalNumber] = useState<string>("");
+  const [originalNumber, setOriginalNumber] = useState<number>(0);
   const [formData, setFormData] = useState<StoreFormData>({
     number: "",
     name: "",
@@ -61,10 +61,10 @@ export default function ModifyStore() {
 
   useEffect(() => {
     if (selectedStore) {
-      const store = stores.find((s) => s.number === selectedStore);
+      const store = stores.find((s) => s.number === parseInt(selectedStore));
       if (store) {
         setFormData({
-          number: store.number,
+          number: store.number.toString(),
           name: store.name,
           address: store.address,
         });
@@ -95,19 +95,30 @@ export default function ModifyStore() {
     setError("");
 
     try {
-      if (formData.number !== originalNumber) {
+      const newNumber = parseInt(formData.number) || 0;
+      if (newNumber !== originalNumber) {
         // Create new store
-        await storesAPI.create(formData);
+        const dataToSend: Store = {
+          number: newNumber,
+          name: formData.name,
+          address: formData.address,
+        };
+        await storesAPI.create(dataToSend);
         // Delete old store
         await storesAPI.delete(originalNumber);
       } else {
         // Update normal
-        await storesAPI.update(formData.number, formData);
+        const dataToSend: Store = {
+          number: newNumber,
+          name: formData.name,
+          address: formData.address,
+        };
+        await storesAPI.update(dataToSend.number, dataToSend);
       }
       setShowSuccessDialog(true);
       // Reset
       setSelectedStore("");
-      setOriginalNumber("");
+      setOriginalNumber(0);
       setFormData({
         number: "",
         name: "",
@@ -142,7 +153,7 @@ export default function ModifyStore() {
       address: "",
     });
     setSelectedStore("");
-    setOriginalNumber("");
+    setOriginalNumber(0);
     setError("");
   };
 
@@ -180,7 +191,7 @@ export default function ModifyStore() {
           >
             <option value="">Seleccionar tienda</option>
             {stores.map((store) => (
-              <option key={store.number} value={store.number}>
+              <option key={store.number} value={store.number.toString()}>
                 {store.number} - {store.name}
               </option>
             ))}
@@ -188,7 +199,7 @@ export default function ModifyStore() {
         </FieldWrapper>
         <div className={styles.row}>
           <FieldWrapper label="Número" id="number">
-            <InputText
+            <InputNumber
               id="number"
               name="number"
               value={formData.number}

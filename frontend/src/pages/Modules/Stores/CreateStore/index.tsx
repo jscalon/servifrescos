@@ -2,11 +2,12 @@ import styles from "./CreateStore.module.css";
 import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
+import InputNumber from "../../../../components/InputNumber";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../components/SuccessModal";
 import { useState } from "react";
-import { storesAPI } from "../../../../services/api";
+import { storesAPI, type Store } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
 interface StoreFormData {
@@ -42,12 +43,12 @@ export default function CreateStore() {
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const processedValue =
-      name === "number" || name === "name" ? value.toUpperCase() : value;
+    let processedValue = value;
+    if (name === "number" || name === "name") {
+      processedValue = value.toUpperCase();
+    }
 
     setFormData((prev) => ({
       ...prev,
@@ -66,7 +67,12 @@ export default function CreateStore() {
     setError("");
 
     try {
-      await storesAPI.create(formData);
+      const dataToSend: Store = {
+        number: parseInt(formData.number) || 0,
+        name: formData.name,
+        address: formData.address,
+      };
+      await storesAPI.create(dataToSend);
       setShowSuccessDialog(true);
       setFormData({
         number: "",
@@ -77,9 +83,7 @@ export default function CreateStore() {
       console.error("Error creando tienda:", error);
 
       if (error.response?.status === 400 && error.response?.data?.number) {
-        setError(
-          "Error creando tienda: Ya existe una tienda con ese número."
-        );
+        setError("Error creando tienda: Ya existe una tienda con ese número.");
       } else {
         setError("Error al crear la tienda. Inténtalo de nuevo.");
       }
@@ -132,7 +136,7 @@ export default function CreateStore() {
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>
           <FieldWrapper label="Número" id="number">
-            <InputText
+            <InputNumber
               id="number"
               name="number"
               value={formData.number}

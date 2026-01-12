@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Store(models.Model):
-    number = models.CharField(max_length=10, unique=True, primary_key=True)
+    number = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(max_length=100)
     address = models.TextField(null=True, blank=True)
 

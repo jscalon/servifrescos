@@ -61,7 +61,10 @@ export default function QueryStores() {
           } else {
             const filtered = stores.filter(
               (store) =>
-                store.number.toLowerCase().includes(value.toLowerCase()) ||
+                store.number
+                  .toString()
+                  .toLowerCase()
+                  .includes(value.toLowerCase()) ||
                 store.name.toLowerCase().includes(value.toLowerCase()) ||
                 (store.address?.toLowerCase().includes(value.toLowerCase()) ??
                   false)

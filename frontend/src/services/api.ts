@@ -51,7 +51,7 @@ export interface Product {
 
 // Interface para el modelo Store
 export interface Store {
-  number: string;
+  number: number;
   name: string;
   address: string;
 }
@@ -64,7 +64,7 @@ export interface Price {
   product_description: string;
   product_type: string;
   store: string;
-  store_number: string;
+  store_number: number;
   store_name: string;
   price: string;
   registration_date: string;
@@ -79,7 +79,7 @@ export interface Price {
 // Interface para crear un Price
 export interface PriceCreate {
   product: string;
-  store: string;
+  store: number;
   price: string;
   effective_date: string;
   comment: string;
@@ -125,19 +125,23 @@ export const productsAPI = {
 
 export const storesAPI = {
   getAll: (): Promise<ApiResponse<Store[]>> => api.get("/stores/"),
-  getByNumber: (number: string): Promise<ApiResponse<Store>> => api.get(`/stores/${number}/`),
-  create: (data: Store): Promise<ApiResponse<Store>> => api.post("/stores/", data),
-  update: (number: string, data: Partial<Store>): Promise<ApiResponse<Store>> => api.put(`/stores/${number}/`, data),
-  delete: (number: string): Promise<ApiResponse<void>> => api.delete(`/stores/${number}/`),
+  getByNumber: (number: number): Promise<ApiResponse<Store>> =>
+    api.get(`/stores/${number}/`),
+  create: (data: Store): Promise<ApiResponse<Store>> =>
+    api.post("/stores/", data),
+  update: (number: number, data: Partial<Store>): Promise<ApiResponse<Store>> =>
+    api.put(`/stores/${number}/`, data),
+  delete: (number: number): Promise<ApiResponse<void>> =>
+    api.delete(`/stores/${number}/`),
 };
 
 export const pricesAPI = {
   getAll: (): Promise<ApiResponse<Price[]>> => api.get("/prices/"),
-  activePrices: (store?: string): Promise<ApiResponse<Price[]>> =>
+  activePrices: (store?: number): Promise<ApiResponse<Price[]>> =>
     api.get(`/prices/active_prices/${store ? `?store=${store}` : ""}`),
   priceHistory: (
     product: string,
-    store: string
+    store: number
   ): Promise<ApiResponse<Price[]>> =>
     api.get(`/prices/price_history/?product=${product}&store=${store}`),
   create: (data: PriceCreate): Promise<ApiResponse<Price>> =>
