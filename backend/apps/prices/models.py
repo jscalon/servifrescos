@@ -1,18 +1,15 @@
 from django.db import models, transaction
 from django.utils import timezone
-from apps.products.models import Product
-from apps.stores.models import Store
-from apps.users.models import User
 
 
 class Price(models.Model):
     product = models.ForeignKey(
-        Product,
+        'products.Product',
         on_delete=models.CASCADE,
         related_name='prices'
     )
     store = models.ForeignKey(
-        Store,
+        'stores.Store',
         on_delete=models.CASCADE,
         related_name='prices'
     )
@@ -23,7 +20,7 @@ class Price(models.Model):
     is_active = models.BooleanField(default=False)
     comment = models.CharField(max_length=200, blank=True, null=True)
     created_by = models.ForeignKey(
-        User,
+        'users.User',
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

@@ -35,7 +35,7 @@ class Department(models.Model):
 class Group(models.Model):
     code = models.CharField(max_length=10, unique=True)
     description = models.CharField(max_length=100)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey('Department', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Groups'
@@ -47,7 +47,7 @@ class Group(models.Model):
 class Subgroup(models.Model):
     code = models.CharField(max_length=10, unique=True)
     description = models.CharField(max_length=100)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    group = models.ForeignKey('Group', on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'Subgroups'
