@@ -20,6 +20,7 @@ import Stores from "./pages/Modules/Stores";
 import QueryStores from "./pages/Modules/Stores/QueryStores";
 import CreateStore from "./pages/Modules/Stores/CreateStore";
 import ModifyStore from "./pages/Modules/Stores/ModifyStore";
+import Categories from "./pages/Modules/Categories";
 import type { ReactNode } from "react";
 
 const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -67,6 +68,7 @@ export default function App() {
               <Route path="create" element={<CreateStore />} />
               <Route path="modify" element={<ModifyStore />} />
             </Route>
+            <Route path="categories" element={<Categories />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

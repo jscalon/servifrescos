@@ -35,6 +35,11 @@ export default function Modules() {
               hasPermission("change_user")) && (
               <Button text="Usuarios 👥" onClick={() => navigate("users")} />
             )}
+            {/* Agregar botón para Categorías - ajustar permisos según se definan */}
+            <Button
+              text="Categorías 📂"
+              onClick={() => navigate("categories")}
+            />
           </div>
         </main>
       )}
