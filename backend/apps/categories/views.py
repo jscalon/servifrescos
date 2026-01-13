@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import Brand, ProductType
-from .serializers import BrandSerializer, ProductTypeSerializer
+from .models import Brand, ProductType, Department
+from .serializers import BrandSerializer, ProductTypeSerializer, DepartmentSerializer
 
 
 class BrandViewSet(viewsets.ModelViewSet):
@@ -13,4 +13,10 @@ class BrandViewSet(viewsets.ModelViewSet):
 class ProductTypeViewSet(viewsets.ModelViewSet):
     queryset = ProductType.objects.all()
     serializer_class = ProductTypeSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class DepartmentViewSet(viewsets.ModelViewSet):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
     permission_classes = [IsAuthenticated]

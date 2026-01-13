@@ -19,3 +19,14 @@ class ProductType(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Department(models.Model):
+    code = models.CharField(max_length=10, unique=True)
+    description = models.CharField(max_length=100)
+
+    class Meta:
+        db_table = 'Departments'
+
+    def __str__(self):
+        return self.description
