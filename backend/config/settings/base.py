@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     'apps.products',
     'apps.prices',
     'apps.stores',
-    'apps.users'
+    'apps.users',
+    'apps.categories'
 ]
 
 # Custom user model
