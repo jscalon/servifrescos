@@ -4,7 +4,7 @@ from .models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['code', 'description', 'brand', 'type', 'department']
-    search_fields = ['code', 'description', 'brand']
-    list_filter = ['brand', 'type', 'department', 'group', 'subgroup']
+    list_display = ['code', 'description', 'brand', 'type', 'subgroup']
+    search_fields = ['code', 'description']
+    list_filter = ['brand', 'type', 'subgroup']
     ordering = ['code']
