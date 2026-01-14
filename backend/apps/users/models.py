@@ -9,6 +9,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, first_name=first_name,
                           last_name=last_name, **extra_fields)
+        user.username = email
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -19,11 +20,24 @@ class UserManager(BaseUserManager):
         return self.create_user(email, first_name, last_name, password, **extra_fields)
 
 
+class Permission(models.Model):
+    name = models.CharField(max_length=100, unique=True, verbose_name='Nombre')
+
+    class Meta:
+        db_table = 'Permissions'
+        verbose_name = 'Permiso'
+        verbose_name_plural = 'Permisos'
+
+    def __str__(self):
+        return self.name
+
+
 class User(AbstractUser):
     username = models.CharField(
         max_length=150, blank=True, null=True, verbose_name='Username')
     email = models.EmailField(unique=True, verbose_name='Email')
-    permissions = models.JSONField(default=list, verbose_name='Permisos')
+    permissions = models.ManyToManyField(
+        Permission, blank=True, verbose_name='Permisos')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']

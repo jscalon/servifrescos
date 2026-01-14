@@ -1,11 +1,14 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from .models import User
+from .models import User, Permission
 
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    permissions = serializers.SlugRelatedField(
+        many=True, slug_field='name', queryset=Permission.objects.all()
+    )
 
     class Meta:
         model = User

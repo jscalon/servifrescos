@@ -29,12 +29,13 @@ class LoginView(APIView):
             refresh = RefreshToken.for_user(user)
             refresh['first_name'] = user.first_name
             refresh['last_name'] = user.last_name
-            refresh['permissions'] = user.permissions
+            permissions_list = [perm.name for perm in user.permissions.all()]
+            refresh['permissions'] = permissions_list
             return Response({
                 'access': str(refresh.access_token),
                 'user_id': user.id,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
-                'permissions': user.permissions,
+                'permissions': permissions_list,
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
