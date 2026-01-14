@@ -5,8 +5,9 @@ from .models import Store
 class StoreModelTest(TestCase):
     def test_store_creation(self):
         store = Store.objects.create(
-            number="001", name="Tienda Central", address="Dirección de ejemplo")
-        self.assertEqual(store.number, "001")
+            number=1, name="Tienda Central", address="Dirección de ejemplo")
+        self.assertEqual(store.number, 1)
         self.assertEqual(store.name, "Tienda Central")
         self.assertEqual(store.address, "Dirección de ejemplo")
-        self.assertEqual(str(store), "001 - Tienda Central")
+        self.assertIsNotNone(store.id)
+        self.assertEqual(str(store), f"{store.id} - Tienda Central")

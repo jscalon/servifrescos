@@ -90,6 +90,7 @@ export interface ProductCreate {
 
 // Interface para el modelo Store
 export interface Store {
+  id: number;
   number: number;
   name: string;
   address: string;
