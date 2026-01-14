@@ -7,9 +7,9 @@ import InputPassword from "../../../../components/InputPassword";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../components/SuccessModal";
-import { useState } from "react";
-import { usersAPI } from "../../../../services/api";
-import type { UserCreate } from "../../../../services/api";
+import { useState, useEffect } from "react";
+import { usersAPI, permissionsAPI } from "../../../../services/api";
+import type { UserCreate, Permission } from "../../../../services/api";
 
 interface CreateUserFormData {
   email: string;
@@ -37,20 +37,25 @@ export default function CreateUser() {
   const [passwordError, setPasswordError] = useState<string>("");
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
+  const [permissionOptions, setPermissionOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
 
-  const permissionOptions = [
-    { value: "view_product", label: "Consultar productos" },
-    { value: "add_product", label: "Crear productos" },
-    { value: "change_product", label: "Modificar productos" },
-    { value: "view_store", label: "Consultar tiendas" },
-    { value: "add_store", label: "Crear tiendas" },
-    { value: "change_store", label: "Modificar tiendas" },
-    { value: "view_price", label: "Consultar precios" },
-    { value: "add_price", label: "Crear Precios" },
-    { value: "view_user", label: "Consultar usuarios" },
-    { value: "add_user", label: "Crear usuarios" },
-    { value: "change_user", label: "Modificar usuarios" },
-  ];
+  useEffect(() => {
+    const loadPermissions = async () => {
+      try {
+        const response = await permissionsAPI.getAll();
+        const options = response.data.map((perm: Permission) => ({
+          value: perm.name,
+          label: perm.name, // Usar name como label por ahora
+        }));
+        setPermissionOptions(options);
+      } catch (error) {
+        console.error("Error loading permissions:", error);
+      }
+    };
+    loadPermissions();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

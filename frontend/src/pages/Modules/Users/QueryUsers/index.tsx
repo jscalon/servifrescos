@@ -1,22 +1,13 @@
 import styles from "./QueryUsers.module.css";
 import QueryUsersBar from "../../../../components/QueryUsersBar";
 import { useState, useEffect } from "react";
-import { usersAPI, type User } from "../../../../services/api";
+import {
+  usersAPI,
+  permissionsAPI,
+  type User,
+  type Permission,
+} from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
-
-const permissionOptions = [
-  { value: "view_product", label: "Consultar productos" },
-  { value: "add_product", label: "Crear productos" },
-  { value: "change_product", label: "Modificar productos" },
-  { value: "view_store", label: "Consultar tiendas" },
-  { value: "add_store", label: "Crear tiendas" },
-  { value: "change_store", label: "Modificar tiendas" },
-  { value: "view_price", label: "Consultar precios" },
-  { value: "add_price", label: "Crear Precios" },
-  { value: "view_user", label: "Consultar usuarios" },
-  { value: "add_user", label: "Crear usuarios" },
-  { value: "change_user", label: "Modificar usuarios" },
-];
 
 export default function QueryUsers() {
   const { hasPermission } = usePermissions();
@@ -24,6 +15,9 @@ export default function QueryUsers() {
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
+  const [permissionOptions, setPermissionOptions] = useState<
+    { value: string; label: string }[]
+  >([]);
 
   if (!hasPermission("view_user")) {
     return (
@@ -37,11 +31,20 @@ export default function QueryUsers() {
   }
 
   useEffect(() => {
-    const loadUsers = async () => {
+    const loadData = async () => {
       try {
         setLoading(true);
-        const response = await usersAPI.getAll();
-        const sortedUsers = response.data.sort(
+        // Load permissions
+        const permResponse = await permissionsAPI.getAll();
+        const options = permResponse.data.map((perm: Permission) => ({
+          value: perm.name,
+          label: perm.name, // Usar name como label por ahora
+        }));
+        setPermissionOptions(options);
+
+        // Load users
+        const userResponse = await usersAPI.getAll();
+        const sortedUsers = userResponse.data.sort(
           (a, b) =>
             new Date(b.date_joined).getTime() -
             new Date(a.date_joined).getTime()
@@ -49,13 +52,13 @@ export default function QueryUsers() {
         setUsers(sortedUsers);
         setFilteredUsers(sortedUsers);
       } catch (error) {
-        console.error("Error loading users:", error);
-        setError("Error al cargar los usuarios");
+        console.error("Error loading data:", error);
+        setError("Error al cargar los datos");
       } finally {
         setLoading(false);
       }
     };
-    loadUsers();
+    loadData();
   }, []);
 
   const handleSearch = (filters: {

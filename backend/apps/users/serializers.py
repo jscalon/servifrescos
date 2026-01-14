@@ -4,6 +4,12 @@ from django.contrib.auth import authenticate
 from .models import User, Permission
 
 
+class PermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = ['name']
+
+
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     permissions = serializers.SlugRelatedField(
@@ -16,16 +22,21 @@ class UserSerializer(serializers.ModelSerializer):
                   'last_name', 'email', 'permissions', 'is_active', 'date_joined']
 
     def create(self, validated_data):
+        permissions = validated_data.pop('permissions', [])
         user = User.objects.create_user(**validated_data)
+        user.permissions.set(permissions)
         return user
 
     def update(self, instance, validated_data):
+        permissions = validated_data.pop('permissions', None)
         password = validated_data.pop('password', None)
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         if password:
             instance.set_password(password)
         instance.save()
+        if permissions is not None:
+            instance.permissions.set(permissions)
         return instance
 
 

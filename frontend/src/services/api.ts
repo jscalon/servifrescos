@@ -124,6 +124,11 @@ export interface PriceCreate {
   comment: string;
 }
 
+// Interface para el modelo Permission
+export interface Permission {
+  name: string;
+}
+
 // Interface para el modelo User
 export interface User {
   id: number;
@@ -165,38 +170,72 @@ export const productsAPI = {
 export const categoriesAPI = {
   brands: {
     getAll: (): Promise<ApiResponse<Brand[]>> => api.get("/brands/"),
-    getById: (id: number): Promise<ApiResponse<Brand>> => api.get(`/brands/${id}/`),
-    create: (data: Omit<Brand, 'id'>): Promise<ApiResponse<Brand>> => api.post("/brands/", data),
-    update: (id: number, data: Partial<Omit<Brand, 'id'>>): Promise<ApiResponse<Brand>> => api.put(`/brands/${id}/`, data),
-    delete: (id: number): Promise<ApiResponse<void>> => api.delete(`/brands/${id}/`),
+    getById: (id: number): Promise<ApiResponse<Brand>> =>
+      api.get(`/brands/${id}/`),
+    create: (data: Omit<Brand, "id">): Promise<ApiResponse<Brand>> =>
+      api.post("/brands/", data),
+    update: (
+      id: number,
+      data: Partial<Omit<Brand, "id">>
+    ): Promise<ApiResponse<Brand>> => api.put(`/brands/${id}/`, data),
+    delete: (id: number): Promise<ApiResponse<void>> =>
+      api.delete(`/brands/${id}/`),
   },
   productTypes: {
-    getAll: (): Promise<ApiResponse<ProductType[]>> => api.get("/product-types/"),
-    getById: (id: number): Promise<ApiResponse<ProductType>> => api.get(`/product-types/${id}/`),
-    create: (data: Omit<ProductType, 'id'>): Promise<ApiResponse<ProductType>> => api.post("/product-types/", data),
-    update: (id: number, data: Partial<Omit<ProductType, 'id'>>): Promise<ApiResponse<ProductType>> => api.put(`/product-types/${id}/`, data),
-    delete: (id: number): Promise<ApiResponse<void>> => api.delete(`/product-types/${id}/`),
+    getAll: (): Promise<ApiResponse<ProductType[]>> =>
+      api.get("/product-types/"),
+    getById: (id: number): Promise<ApiResponse<ProductType>> =>
+      api.get(`/product-types/${id}/`),
+    create: (
+      data: Omit<ProductType, "id">
+    ): Promise<ApiResponse<ProductType>> => api.post("/product-types/", data),
+    update: (
+      id: number,
+      data: Partial<Omit<ProductType, "id">>
+    ): Promise<ApiResponse<ProductType>> =>
+      api.put(`/product-types/${id}/`, data),
+    delete: (id: number): Promise<ApiResponse<void>> =>
+      api.delete(`/product-types/${id}/`),
   },
   departments: {
     getAll: (): Promise<ApiResponse<Department[]>> => api.get("/departments/"),
-    getByCode: (code: string): Promise<ApiResponse<Department>> => api.get(`/departments/${code}/`),
-    create: (data: Omit<Department, 'id'>): Promise<ApiResponse<Department>> => api.post("/departments/", data),
-    update: (code: string, data: Partial<Omit<Department, 'id'>>): Promise<ApiResponse<Department>> => api.put(`/departments/${code}/`, data),
-    delete: (code: string): Promise<ApiResponse<void>> => api.delete(`/departments/${code}/`),
+    getByCode: (code: string): Promise<ApiResponse<Department>> =>
+      api.get(`/departments/${code}/`),
+    create: (data: Omit<Department, "id">): Promise<ApiResponse<Department>> =>
+      api.post("/departments/", data),
+    update: (
+      code: string,
+      data: Partial<Omit<Department, "id">>
+    ): Promise<ApiResponse<Department>> =>
+      api.put(`/departments/${code}/`, data),
+    delete: (code: string): Promise<ApiResponse<void>> =>
+      api.delete(`/departments/${code}/`),
   },
   groups: {
     getAll: (): Promise<ApiResponse<Group[]>> => api.get("/groups/"),
-    getByCode: (code: string): Promise<ApiResponse<Group>> => api.get(`/groups/${code}/`),
-    create: (data: Omit<Group, 'id'>): Promise<ApiResponse<Group>> => api.post("/groups/", data),
-    update: (code: string, data: Partial<Omit<Group, 'id'>>): Promise<ApiResponse<Group>> => api.put(`/groups/${code}/`, data),
-    delete: (code: string): Promise<ApiResponse<void>> => api.delete(`/groups/${code}/`),
+    getByCode: (code: string): Promise<ApiResponse<Group>> =>
+      api.get(`/groups/${code}/`),
+    create: (data: Omit<Group, "id">): Promise<ApiResponse<Group>> =>
+      api.post("/groups/", data),
+    update: (
+      code: string,
+      data: Partial<Omit<Group, "id">>
+    ): Promise<ApiResponse<Group>> => api.put(`/groups/${code}/`, data),
+    delete: (code: string): Promise<ApiResponse<void>> =>
+      api.delete(`/groups/${code}/`),
   },
   subgroups: {
     getAll: (): Promise<ApiResponse<Subgroup[]>> => api.get("/subgroups/"),
-    getByCode: (code: string): Promise<ApiResponse<Subgroup>> => api.get(`/subgroups/${code}/`),
-    create: (data: Omit<Subgroup, 'id'>): Promise<ApiResponse<Subgroup>> => api.post("/subgroups/", data),
-    update: (code: string, data: Partial<Omit<Subgroup, 'id'>>): Promise<ApiResponse<Subgroup>> => api.put(`/subgroups/${code}/`, data),
-    delete: (code: string): Promise<ApiResponse<void>> => api.delete(`/subgroups/${code}/`),
+    getByCode: (code: string): Promise<ApiResponse<Subgroup>> =>
+      api.get(`/subgroups/${code}/`),
+    create: (data: Omit<Subgroup, "id">): Promise<ApiResponse<Subgroup>> =>
+      api.post("/subgroups/", data),
+    update: (
+      code: string,
+      data: Partial<Omit<Subgroup, "id">>
+    ): Promise<ApiResponse<Subgroup>> => api.put(`/subgroups/${code}/`, data),
+    delete: (code: string): Promise<ApiResponse<void>> =>
+      api.delete(`/subgroups/${code}/`),
   },
 };
 
@@ -234,6 +273,10 @@ export const usersAPI = {
     api.patch(`/users/${id}/`, data),
   delete: (id: number): Promise<ApiResponse<void>> =>
     api.delete(`/users/${id}/`),
+};
+
+export const permissionsAPI = {
+  getAll: (): Promise<ApiResponse<Permission[]>> => api.get("/permissions/"),
 };
 
 export default api;
