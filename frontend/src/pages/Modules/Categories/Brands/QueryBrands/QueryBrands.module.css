@@ -1,0 +1,14 @@
+.loading {
+  color: white;
+  font-weight: 500;
+}
+
+.error {
+  color: red;
+  font-weight: 500;
+}
+
+.noBrands {
+  text-align: center;
+  color: var(--gray-5);
+}
