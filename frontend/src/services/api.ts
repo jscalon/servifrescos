@@ -139,6 +139,7 @@ export interface User {
   permissions: string[];
   is_active: boolean;
   date_joined: string;
+  last_login: string | null;
 }
 
 // Interface para crear un User

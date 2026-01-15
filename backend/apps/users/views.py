@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -32,6 +33,8 @@ class LoginView(APIView):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
+            user.last_login = timezone.now()
+            user.save(update_fields=['last_login'])
             refresh = RefreshToken.for_user(user)
             refresh['first_name'] = user.first_name
             refresh['last_name'] = user.last_name

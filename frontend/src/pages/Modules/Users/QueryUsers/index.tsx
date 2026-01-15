@@ -130,6 +130,7 @@ export default function QueryUsers() {
             <th>Nombre Completo</th>
             <th>Email</th>
             <th>Permisos</th>
+            <th>Último Inicio de Sesión</th>
             <th>Activo</th>
           </tr>
         </thead>
@@ -146,6 +147,13 @@ export default function QueryUsers() {
                         ?.label || perm
                   )
                   .join(", ")}
+              </td>
+              <td>
+                {user.last_login
+                  ? new Date(user.last_login).toLocaleString("es-ES", {
+                      timeZone: "America/Caracas",
+                    })
+                  : "Nunca"}
               </td>
               <td>{user.is_active ? "✅" : "❌"}</td>
             </tr>
