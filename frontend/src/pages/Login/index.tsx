@@ -4,7 +4,6 @@ import logos from "../../assets/protinalproagro-logos.png";
 import Button from "../../components/Button";
 import InputText from "../../components/InputText";
 import InputPassword from "../../components/InputPassword";
-import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts";
 import { useState } from "react";
 
@@ -62,9 +61,6 @@ export default function Login() {
           onChange={handlePasswordChange}
         />
         <Button text={loading ? "Cargando..." : "Ingresar"} className={styles.button} disabled={loading} />
-        <Link to="/" className={styles.forgot}>
-          ¿Olvidaste tu contraseña?
-        </Link>
       </form>
     </main>
   );

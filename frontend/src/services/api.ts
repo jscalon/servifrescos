@@ -76,6 +76,8 @@ export interface Product {
   description: string;
   brand: string; // Nombre (StringRelatedField)
   type: string; // Nombre
+  department: string; // Nombre
+  group: string; // Nombre
   subgroup: string; // Nombre
 }
 

@@ -6,17 +6,24 @@ import Select from "../../../../components/Select";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../components/SuccessModal";
-import { useState } from "react";
-import { productsAPI, type Product } from "../../../../services/api";
+import { useState, useEffect } from "react";
+import {
+  productsAPI,
+  categoriesAPI,
+  type Brand,
+  type ProductType,
+  type Department,
+  type Group,
+  type Subgroup,
+  type Product,
+} from "../../../../services/api";
 
 interface ProductFormData {
   code: string;
   description: string;
-  brand: string;
-  type: string;
-  department: string;
-  group: string;
-  subgroup: string;
+  brand: number;
+  type: number;
+  subgroup: number;
 }
 
 export default function ModifyProduct() {
@@ -25,12 +32,12 @@ export default function ModifyProduct() {
   const [formData, setFormData] = useState<ProductFormData>({
     code: "",
     description: "",
-    brand: "",
-    type: "",
-    department: "",
-    group: "",
-    subgroup: "",
+    brand: 0,
+    type: 0,
+    subgroup: 0,
   });
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
+  const [selectedGroup, setSelectedGroup] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [searching, setSearching] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -38,62 +45,40 @@ export default function ModifyProduct() {
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
-  // Opciones dinámicas basadas en selecciones
-  const getGroupOptions = (department: string) => {
-    switch (department) {
-      case "CONGELADOS":
-        return ["CONGELADOS", "HELADOS"];
-      case "REFRIGERADOS":
-        return ["AVES BENEFICIADAS", "EMBUTIDOS", "CARNE", "LACTEOS"];
-      case "SECOS":
-        return ["ALIMENTOS PARA MASCOTAS"];
-      default:
-        return [];
-    }
-  };
+  // Estados para opciones dinámicas
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [productTypes, setProductTypes] = useState<ProductType[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [subgroups, setSubgroups] = useState<Subgroup[]>([]);
+  const [optionsLoading, setOptionsLoading] = useState<boolean>(true);
 
-  const getSubgroupOptions = (group: string) => {
-    switch (group) {
-      case "CONGELADOS":
-        return [
-          "NUGGETS",
-          "MILANESAS",
-          "TENDERS",
-          "PALITOS",
-          "HAMBURGUESAS",
-          "ALAS",
-        ];
-      case "HELADOS":
-        return ["HELADOS"];
-      case "AVES BENEFICIADAS":
-        return [
-          "ENTEROS",
-          "DESPRESADOS",
-          "DESHUESADOS",
-          "MENUDOS",
-          "RESIDUALES",
-        ];
-      case "EMBUTIDOS":
-        return ["SALCHICHAS", "JAMONES", "MORTADELAS"];
-      case "CARNE":
-        return ["CARNE BOVINA"];
-      case "LACTEOS":
-        return [
-          "LECHE",
-          "QUESOS",
-          "YOGURT",
-          "MANTEQUILLA",
-          "JUGOS",
-          "CHICHA",
-          "CHOCO",
-          "LACTOVISOY",
-        ];
-      case "ALIMENTOS PARA MASCOTAS":
-        return ["PROTICAN", "PROTICAT"];
-      default:
-        return [];
-    }
-  };
+  // Cargar opciones al montar el componente
+  useEffect(() => {
+    const loadOptions = async () => {
+      try {
+        const [brandsRes, typesRes, deptsRes, groupsRes, subgroupsRes] =
+          await Promise.all([
+            categoriesAPI.brands.getAll(),
+            categoriesAPI.productTypes.getAll(),
+            categoriesAPI.departments.getAll(),
+            categoriesAPI.groups.getAll(),
+            categoriesAPI.subgroups.getAll(),
+          ]);
+        setBrands(brandsRes.data);
+        setProductTypes(typesRes.data);
+        setDepartments(deptsRes.data);
+        setGroups(groupsRes.data);
+        setSubgroups(subgroupsRes.data);
+      } catch (error) {
+        console.error("Error cargando opciones:", error);
+        setError("Error al cargar las opciones. Inténtalo de nuevo.");
+      } finally {
+        setOptionsLoading(false);
+      }
+    };
+    loadOptions();
+  }, []);
 
   const handleCurrentCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentCode(e.target.value);
@@ -107,25 +92,22 @@ export default function ModifyProduct() {
     const processedValue =
       name === "code" || name === "description" ? value.toUpperCase() : value;
 
-    setFormData((prev) => {
-      const newData = {
+    if (name === "department") {
+      setSelectedDepartment(value);
+      setSelectedGroup("");
+      setFormData((prev) => ({ ...prev, subgroup: 0 }));
+    } else if (name === "group") {
+      setSelectedGroup(value);
+      setFormData((prev) => ({ ...prev, subgroup: 0 }));
+    } else {
+      setFormData((prev) => ({
         ...prev,
-        [name]: processedValue,
-      };
-
-      // Resetear campos dependientes cuando cambie el departamento
-      if (name === "department") {
-        newData.group = "";
-        newData.subgroup = "";
-      }
-
-      // Resetear subgrupo cuando cambie el grupo
-      if (name === "group") {
-        newData.subgroup = "";
-      }
-
-      return newData;
-    });
+        [name]:
+          name === "brand" || name === "type" || name === "subgroup"
+            ? Number(value)
+            : processedValue,
+      }));
+    }
   };
 
   const searchProduct = async () => {
@@ -146,15 +128,26 @@ export default function ModifyProduct() {
       );
 
       if (product) {
+        // Mapear nombres a IDs
+        const brandObj = brands.find((b) => b.name === product.brand);
+        const typeObj = productTypes.find((t) => t.name === product.type);
+        const subgroupObj = subgroups.find(
+          (s) => s.description === product.subgroup
+        );
+        const groupObj = groups.find((g) => g.description === product.group);
+        const deptObj = departments.find(
+          (d) => d.description === product.department
+        );
+
         setFormData({
           code: product.code,
           description: product.description,
-          brand: product.brand,
-          type: product.type,
-          department: product.department,
-          group: product.group,
-          subgroup: product.subgroup,
+          brand: brandObj ? brandObj.id : 0,
+          type: typeObj ? typeObj.id : 0,
+          subgroup: subgroupObj ? subgroupObj.id : 0,
         });
+        setSelectedDepartment(deptObj ? deptObj.code : "");
+        setSelectedGroup(groupObj ? groupObj.code : "");
         setProductCode(product.code);
         setProductFound(true);
         setError("");
@@ -205,12 +198,12 @@ export default function ModifyProduct() {
       setFormData({
         code: "",
         description: "",
-        brand: "",
-        type: "",
-        department: "",
-        group: "",
-        subgroup: "",
+        brand: 0,
+        type: 0,
+        subgroup: 0,
       });
+      setSelectedDepartment("");
+      setSelectedGroup("");
       setProductFound(false);
     } catch (error) {
       console.error("Error modificando producto:", error);
@@ -234,12 +227,12 @@ export default function ModifyProduct() {
     setFormData({
       code: "",
       description: "",
-      brand: "",
-      type: "",
-      department: "",
-      group: "",
-      subgroup: "",
+      brand: 0,
+      type: 0,
+      subgroup: 0,
     });
+    setSelectedDepartment("");
+    setSelectedGroup("");
     setError("");
     setProductFound(false);
   };
@@ -325,32 +318,32 @@ export default function ModifyProduct() {
                 <Select
                   id="brand"
                   name="brand"
-                  value={formData.brand}
+                  value={formData.brand ? formData.brand.toString() : ""}
                   onChange={handleInputChange}
+                  disabled={optionsLoading}
                 >
                   <option value="">Seleccionar marca</option>
-                  <option value="CENTENARIO">CENTENARIO</option>
-                  <option value="COCA COLA">COCA COLA</option>
-                  <option value="DEL CORRAL">DEL CORRAL</option>
-                  <option value="DON MIGUEL">DON MIGUEL</option>
-                  <option value="KEMPIS">KEMPIS</option>
-                  <option value="NEVADA">NEVADA</option>
-                  <option value="PALMIZULIA">PALMIZULIA</option>
-                  <option value="PASTOR">PASTOR</option>
-                  <option value="SUR DEL LAGO">SUR DEL LAGO</option>
-                  <option value="UPACA">UPACA</option>
+                  {brands.map((brand) => (
+                    <option key={brand.id} value={brand.id.toString()}>
+                      {brand.name}
+                    </option>
+                  ))}
                 </Select>
               </FieldWrapper>
               <FieldWrapper label="Tipo" id="type">
                 <Select
                   id="type"
                   name="type"
-                  value={formData.type}
+                  value={formData.type ? formData.type.toString() : ""}
                   onChange={handleInputChange}
+                  disabled={optionsLoading}
                 >
                   <option value="">Seleccionar tipo</option>
-                  <option value="PESABLE">PESABLE</option>
-                  <option value="UNIDADES">UNIDADES</option>
+                  {productTypes.map((type) => (
+                    <option key={type.id} value={type.id.toString()}>
+                      {type.name}
+                    </option>
+                  ))}
                 </Select>
               </FieldWrapper>
             </div>
@@ -359,45 +352,62 @@ export default function ModifyProduct() {
                 <Select
                   id="department"
                   name="department"
-                  value={formData.department}
+                  value={selectedDepartment}
                   onChange={handleInputChange}
+                  disabled={optionsLoading}
                 >
                   <option value="">Seleccionar departamento</option>
-                  <option value="CONGELADOS">CONGELADOS</option>
-                  <option value="REFRIGERADOS">REFRIGERADOS</option>
-                  <option value="SECOS">SECOS</option>
+                  {departments.map((dept) => (
+                    <option key={dept.id} value={dept.code}>
+                      {dept.description}
+                    </option>
+                  ))}
                 </Select>
               </FieldWrapper>
               <FieldWrapper label="Grupo" id="group">
                 <Select
                   id="group"
                   name="group"
-                  value={formData.group}
+                  value={selectedGroup}
                   onChange={handleInputChange}
-                  disabled={!formData.department}
+                  disabled={!selectedDepartment || optionsLoading}
                 >
                   <option value="">Seleccionar grupo</option>
-                  {getGroupOptions(formData.department).map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
+                  {groups
+                    .filter((group) => {
+                      const dept = departments.find(
+                        (d) => d.code === selectedDepartment
+                      );
+                      return dept && group.department === dept.id;
+                    })
+                    .map((group) => (
+                      <option key={group.id} value={group.code}>
+                        {group.description}
+                      </option>
+                    ))}
                 </Select>
               </FieldWrapper>
               <FieldWrapper label="Subgrupo" id="subgroup">
                 <Select
                   id="subgroup"
                   name="subgroup"
-                  value={formData.subgroup}
+                  value={formData.subgroup ? formData.subgroup.toString() : ""}
                   onChange={handleInputChange}
-                  disabled={!formData.group}
+                  disabled={!selectedGroup || optionsLoading}
                 >
                   <option value="">Seleccionar subgrupo</option>
-                  {getSubgroupOptions(formData.group).map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
+                  {subgroups
+                    .filter((subgroup) => {
+                      const group = groups.find(
+                        (g) => g.code === selectedGroup
+                      );
+                      return group && subgroup.group === group.id;
+                    })
+                    .map((subgroup) => (
+                      <option key={subgroup.id} value={subgroup.id.toString()}>
+                        {subgroup.description}
+                      </option>
+                    ))}
                 </Select>
               </FieldWrapper>
             </div>

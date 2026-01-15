@@ -30,16 +30,16 @@ export default function Modules() {
               hasPermission("change_store")) && (
               <Button text="Tiendas 🏪" onClick={() => navigate("stores")} />
             )}
-            {(hasPermission("view_user") ||
-              hasPermission("add_user") ||
-              hasPermission("change_user")) && (
-              <Button text="Usuarios 👥" onClick={() => navigate("users")} />
-            )}
             {hasPermission("view_category") && (
               <Button
                 text="Categorías 📂"
                 onClick={() => navigate("categories")}
               />
+            )}
+            {(hasPermission("view_user") ||
+              hasPermission("add_user") ||
+              hasPermission("change_user")) && (
+              <Button text="Usuarios 👥" onClick={() => navigate("users")} />
             )}
           </div>
         </main>

@@ -17,8 +17,11 @@ export default function QueryProducts() {
     try {
       setLoading(true);
       const response = await productsAPI.getAll();
-      setProducts(response.data);
-      setFilteredProducts(response.data);
+      const sortedProducts = response.data.sort((a, b) =>
+        a.description.localeCompare(b.description)
+      );
+      setProducts(sortedProducts);
+      setFilteredProducts(sortedProducts);
     } catch (error) {
       console.error("Error loading products:", error);
       setError("Error al cargar los productos");
