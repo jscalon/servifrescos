@@ -17,8 +17,8 @@ import {
 } from "../../../../services/api";
 
 interface PriceFormData {
-  product: string;
-  store: string;
+  product: number;
+  store: number;
   price: string;
   effective_date: string;
   comment: string;
@@ -32,8 +32,8 @@ export default function CreatePrice() {
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
   const [stores, setStores] = useState<Store[]>([]);
   const [formData, setFormData] = useState<PriceFormData>({
-    product: "",
-    store: "",
+    product: 0,
+    store: 0,
     price: "",
     effective_date: "",
     comment: "",
@@ -100,8 +100,8 @@ export default function CreatePrice() {
       }
 
       setFormData({
-        product: product.code,
-        store: selectedStore.number,
+        product: product.id,
+        store: selectedStore.id,
         price: "",
         effective_date: "",
         comment: "",
@@ -128,8 +128,8 @@ export default function CreatePrice() {
     setError("");
 
     if (
-      formData.product === "" ||
-      formData.store === "" ||
+      formData.product === 0 ||
+      formData.store === 0 ||
       formData.price.trim() === "" ||
       formData.effective_date === ""
     ) {
@@ -171,8 +171,8 @@ export default function CreatePrice() {
     setStore("");
     setSelectedStore(null);
     setFormData({
-      product: "",
-      store: "",
+      product: 0,
+      store: 0,
       price: "",
       effective_date: "",
       comment: "",

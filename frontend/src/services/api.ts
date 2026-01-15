@@ -120,7 +120,7 @@ export interface Price {
 
 // Interface para crear un Price
 export interface PriceCreate {
-  product: string;
+  product: number;
   store: number;
   price: string;
   effective_date: string;
