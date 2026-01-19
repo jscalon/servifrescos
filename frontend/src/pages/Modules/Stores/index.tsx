@@ -16,13 +16,11 @@ export default function Stores() {
           <div className={`card ${styles.card}`}>
             <BackButton to="/modules" />
             <h2 className="h-dark">Tiendas:</h2>
-            {hasPermission('add_store') && (
-              <Button text="Crear 📝" onClick={() => navigate("create")} />
-            )}
-            {hasPermission('change_store') && (
-              <Button text="Modificar 🔄" onClick={() => navigate("modify")} />
-            )}
-            {hasPermission('view_store') && (
+            {hasPermission("manage_store") && [
+              <Button text="Crear 📝" onClick={() => navigate("create")} />,
+              <Button text="Modificar 🔄" onClick={() => navigate("modify")} />,
+            ]}
+            {hasPermission("view_store") && (
               <Button text="Consultar 📋" onClick={() => navigate("query")} />
             )}
           </div>

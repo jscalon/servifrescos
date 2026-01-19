@@ -2,8 +2,24 @@ import styles from "./QueryProducts.module.css";
 import QueryProductsBar from "../../../../components/QueryProductsBar";
 import { useState, useEffect } from "react";
 import { productsAPI, type Product } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 export default function QueryProducts() {
+  const { hasPermission } = usePermissions();
+
+  if (!hasPermission("view_product")) {
+    return (
+      <main>
+        <h1>Consultar Productos</h1>
+        <div className={`card ${styles.form}`}>
+          <div className={styles.error}>
+            No tienes permisos para consultar productos
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -18,7 +34,7 @@ export default function QueryProducts() {
       setLoading(true);
       const response = await productsAPI.getAll();
       const sortedProducts = response.data.sort((a, b) =>
-        a.description.localeCompare(b.description)
+        a.description.localeCompare(b.description),
       );
       setProducts(sortedProducts);
       setFilteredProducts(sortedProducts);

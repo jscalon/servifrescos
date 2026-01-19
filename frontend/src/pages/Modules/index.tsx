@@ -15,30 +15,26 @@ export default function Modules() {
           <div className={`card ${styles.card}`}>
             <h2 className="h-dark">Módulo:</h2>
             {(hasPermission("view_product") ||
-              hasPermission("add_product") ||
-              hasPermission("change_product")) && (
+              hasPermission("manage_product")) && (
               <Button
                 text="Productos 🍗"
                 onClick={() => navigate("products")}
               />
             )}
-            {(hasPermission("view_price") || hasPermission("add_price")) && (
+            {(hasPermission("view_price") || hasPermission("manage_price")) && (
               <Button text="Precios 💲" onClick={() => navigate("prices")} />
             )}
-            {(hasPermission("view_store") ||
-              hasPermission("add_store") ||
-              hasPermission("change_store")) && (
-              <Button text="Tiendas 🏪" onClick={() => navigate("stores")} />
-            )}
-            {hasPermission("view_category") && (
+            {(hasPermission("view_category") ||
+              hasPermission("manage_category")) && (
               <Button
                 text="Categorías 📂"
                 onClick={() => navigate("categories")}
               />
             )}
-            {(hasPermission("view_user") ||
-              hasPermission("add_user") ||
-              hasPermission("change_user")) && (
+            {(hasPermission("view_store") || hasPermission("manage_store")) && (
+              <Button text="Tiendas 🏪" onClick={() => navigate("stores")} />
+            )}
+            {(hasPermission("view_user") || hasPermission("manage_user")) && (
               <Button text="Usuarios 👥" onClick={() => navigate("users")} />
             )}
           </div>

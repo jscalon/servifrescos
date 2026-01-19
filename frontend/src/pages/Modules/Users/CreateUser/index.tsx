@@ -10,6 +10,7 @@ import SuccessModal from "../../../../components/SuccessModal";
 import { useState, useEffect } from "react";
 import { usersAPI, permissionsAPI } from "../../../../services/api";
 import type { UserCreate, Permission } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 interface CreateUserFormData {
   email: string;
@@ -22,6 +23,22 @@ interface CreateUserFormData {
 }
 
 export default function CreateUser() {
+  const { hasPermission } = usePermissions();
+
+  if (!hasPermission("manage_user")) {
+    return (
+      <main>
+        <h1>Crear Usuario</h1>
+        <div className={`card ${styles.form}`}>
+          <BackButton to="/modules/users" />
+          <div className={styles.error}>
+            No tienes permisos para crear usuarios
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const [formData, setFormData] = useState<CreateUserFormData>({
     email: "",
     isActive: true,

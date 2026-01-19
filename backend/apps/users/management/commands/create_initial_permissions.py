@@ -8,17 +8,15 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         permissions = [
             'view_product',
-            'add_product',
-            'change_product',
-            'view_store',
-            'add_store',
-            'change_store',
+            'manage_product',
             'view_price',
-            'add_price',
+            'manage_price',
+            'view_category',
+            'manage_category',
+            'view_store',
+            'manage_store',
             'view_user',
-            'add_user',
-            'change_user',
-            'view_category',  # Para categorías
+            'manage_user',
         ]
 
         for perm_name in permissions:

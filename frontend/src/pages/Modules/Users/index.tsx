@@ -16,12 +16,10 @@ export default function Users() {
           <div className={`card ${styles.card}`}>
             <BackButton to="/modules" />
             <h2 className="h-dark">Usuarios:</h2>
-            {hasPermission("add_user") && (
-              <Button text="Crear 📝" onClick={() => navigate("create")} />
-            )}
-            {hasPermission("change_user") && (
-              <Button text="Modificar 🔄" onClick={() => navigate("modify")} />
-            )}
+            {hasPermission("manage_user") && [
+              <Button text="Crear 📝" onClick={() => navigate("create")} />,
+              <Button text="Modificar 🔄" onClick={() => navigate("modify")} />,
+            ]}
             {hasPermission("view_user") && (
               <Button text="Consultar 📋" onClick={() => navigate("query")} />
             )}

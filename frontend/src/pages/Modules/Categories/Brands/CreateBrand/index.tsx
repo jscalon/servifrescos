@@ -16,8 +16,8 @@ interface BrandFormData {
 export default function CreateBrand() {
   const { hasPermission } = usePermissions();
 
-  // Asumir permiso add_brand, ajustar según se defina
-  if (!hasPermission("add_product")) {
+  // Asumir permiso manage_category, ajustar según se defina
+  if (!hasPermission("manage_category")) {
     // Placeholder
     return (
       <main>

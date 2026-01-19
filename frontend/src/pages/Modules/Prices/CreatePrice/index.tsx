@@ -15,6 +15,7 @@ import {
   pricesAPI,
   type Store,
 } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 interface PriceFormData {
   product: number;
@@ -27,6 +28,22 @@ interface PriceFormData {
 }
 
 export default function CreatePrice() {
+  const { hasPermission } = usePermissions();
+
+  if (!hasPermission("manage_price")) {
+    return (
+      <main>
+        <h1>Crear Precio</h1>
+        <div className={`card ${styles.form}`}>
+          <BackButton to="/modules/prices" refresh={true} />
+          <div className={styles.error}>
+            No tienes permisos para crear precios
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const [productCode, setProductCode] = useState<string>("");
   const [store, setStore] = useState<string>("");
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
@@ -60,7 +77,7 @@ export default function CreatePrice() {
   }, []);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     if (name === "productCode") {
@@ -90,7 +107,7 @@ export default function CreatePrice() {
     try {
       const productsRes = await productsAPI.getAll();
       const product = productsRes.data.find(
-        (p) => p.code.toLowerCase() === productCode.trim().toLowerCase()
+        (p) => p.code.toLowerCase() === productCode.trim().toLowerCase(),
       );
 
       if (!product) {

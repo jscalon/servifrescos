@@ -3,8 +3,24 @@ import QueryPricesBar from "../../../../components/QueryPricesBar";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { pricesAPI, type Price } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 export default function QueryPrices() {
+  const { hasPermission } = usePermissions();
+
+  if (!hasPermission("view_price")) {
+    return (
+      <main>
+        <h1>Consultar Precios</h1>
+        <div className={`card ${styles.form}`}>
+          <div className={styles.error}>
+            No tienes permisos para consultar precios
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const location = useLocation();
   const [prices, setPrices] = useState<Price[]>([]);
   const [filteredPrices, setFilteredPrices] = useState<Price[]>([]);
@@ -41,7 +57,7 @@ export default function QueryPrices() {
       filtered = filtered.filter(
         (price) =>
           price.product_code.toUpperCase().includes(filters.article) ||
-          price.product_description.toUpperCase().includes(filters.article)
+          price.product_description.toUpperCase().includes(filters.article),
       );
     }
 
@@ -119,10 +135,11 @@ export default function QueryPrices() {
                 <td>
                   {price.created_by_username ? (
                     <>
-                      {price.created_by_username.split('@')[0]}<br />@{price.created_by_username.split('@')[1]}
+                      {price.created_by_username.split("@")[0]}
+                      <br />@{price.created_by_username.split("@")[1]}
                     </>
                   ) : (
-                    ''
+                    ""
                   )}
                 </td>
                 <td>{price.comment}</td>

@@ -21,7 +21,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Interceptor para manejar errores de respuesta
@@ -35,7 +35,7 @@ api.interceptors.response.use(
       window.location.href = "/login";
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 // Interfaces para categorías
@@ -165,7 +165,7 @@ export const productsAPI = {
     api.post("/products/", data),
   update: (
     code: string,
-    data: Partial<ProductCreate>
+    data: Partial<ProductCreate>,
   ): Promise<ApiResponse<Product>> => api.put(`/products/${code}/`, data),
   delete: (code: string): Promise<ApiResponse<void>> =>
     api.delete(`/products/${code}/`),
@@ -180,7 +180,7 @@ export const categoriesAPI = {
       api.post("/brands/", data),
     update: (
       id: number,
-      data: Partial<Omit<Brand, "id">>
+      data: Partial<Omit<Brand, "id">>,
     ): Promise<ApiResponse<Brand>> => api.put(`/brands/${id}/`, data),
     delete: (id: number): Promise<ApiResponse<void>> =>
       api.delete(`/brands/${id}/`),
@@ -191,11 +191,11 @@ export const categoriesAPI = {
     getById: (id: number): Promise<ApiResponse<ProductType>> =>
       api.get(`/product-types/${id}/`),
     create: (
-      data: Omit<ProductType, "id">
+      data: Omit<ProductType, "id">,
     ): Promise<ApiResponse<ProductType>> => api.post("/product-types/", data),
     update: (
       id: number,
-      data: Partial<Omit<ProductType, "id">>
+      data: Partial<Omit<ProductType, "id">>,
     ): Promise<ApiResponse<ProductType>> =>
       api.put(`/product-types/${id}/`, data),
     delete: (id: number): Promise<ApiResponse<void>> =>
@@ -209,7 +209,7 @@ export const categoriesAPI = {
       api.post("/departments/", data),
     update: (
       code: string,
-      data: Partial<Omit<Department, "id">>
+      data: Partial<Omit<Department, "id">>,
     ): Promise<ApiResponse<Department>> =>
       api.put(`/departments/${code}/`, data),
     delete: (code: string): Promise<ApiResponse<void>> =>
@@ -223,7 +223,7 @@ export const categoriesAPI = {
       api.post("/groups/", data),
     update: (
       code: string,
-      data: Partial<Omit<Group, "id">>
+      data: Partial<Omit<Group, "id">>,
     ): Promise<ApiResponse<Group>> => api.put(`/groups/${code}/`, data),
     delete: (code: string): Promise<ApiResponse<void>> =>
       api.delete(`/groups/${code}/`),
@@ -236,7 +236,7 @@ export const categoriesAPI = {
       api.post("/subgroups/", data),
     update: (
       code: string,
-      data: Partial<Omit<Subgroup, "id">>
+      data: Partial<Omit<Subgroup, "id">>,
     ): Promise<ApiResponse<Subgroup>> => api.put(`/subgroups/${code}/`, data),
     delete: (code: string): Promise<ApiResponse<void>> =>
       api.delete(`/subgroups/${code}/`),
@@ -247,10 +247,12 @@ export const storesAPI = {
   getAll: (): Promise<ApiResponse<Store[]>> => api.get("/stores/"),
   getByNumber: (number: number): Promise<ApiResponse<Store>> =>
     api.get(`/stores/${number}/`),
-  create: (data: Store): Promise<ApiResponse<Store>> =>
+  create: (data: Omit<Store, "id">): Promise<ApiResponse<Store>> =>
     api.post("/stores/", data),
-  update: (number: number, data: Partial<Store>): Promise<ApiResponse<Store>> =>
-    api.put(`/stores/${number}/`, data),
+  update: (
+    number: number,
+    data: Omit<Store, "id">,
+  ): Promise<ApiResponse<Store>> => api.put(`/stores/${number}/`, data),
   delete: (number: number): Promise<ApiResponse<void>> =>
     api.delete(`/stores/${number}/`),
 };
@@ -261,7 +263,7 @@ export const pricesAPI = {
     api.get(`/prices/active_prices/${store ? `?store=${store}` : ""}`),
   priceHistory: (
     product: string,
-    store: number
+    store: number,
   ): Promise<ApiResponse<Price[]>> =>
     api.get(`/prices/price_history/?product=${product}&store=${store}`),
   create: (data: PriceCreate): Promise<ApiResponse<Price>> =>

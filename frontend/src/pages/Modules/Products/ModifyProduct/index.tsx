@@ -17,6 +17,7 @@ import {
   type Subgroup,
   type Product,
 } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 interface ProductFormData {
   code: string;
@@ -27,6 +28,22 @@ interface ProductFormData {
 }
 
 export default function ModifyProduct() {
+  const { hasPermission } = usePermissions();
+
+  if (!hasPermission("manage_product")) {
+    return (
+      <main>
+        <h1>Modificar Producto</h1>
+        <div className={`card ${styles.form}`}>
+          <BackButton to="/modules/products" />
+          <div className={styles.error}>
+            No tienes permisos para modificar productos
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const [currentCode, setCurrentCode] = useState<string>("");
   const [productCode, setProductCode] = useState<string>("");
   const [formData, setFormData] = useState<ProductFormData>({
@@ -85,7 +102,7 @@ export default function ModifyProduct() {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     // Convertir code y description a mayúsculas
@@ -124,7 +141,7 @@ export default function ModifyProduct() {
       const response = await productsAPI.getAll();
       const products: Product[] = response.data;
       const product = products.find(
-        (p) => p.code.toLowerCase() === currentCode.trim().toLowerCase()
+        (p) => p.code.toLowerCase() === currentCode.trim().toLowerCase(),
       );
 
       if (product) {
@@ -132,11 +149,11 @@ export default function ModifyProduct() {
         const brandObj = brands.find((b) => b.name === product.brand);
         const typeObj = productTypes.find((t) => t.name === product.type);
         const subgroupObj = subgroups.find(
-          (s) => s.description === product.subgroup
+          (s) => s.description === product.subgroup,
         );
         const groupObj = groups.find((g) => g.description === product.group);
         const deptObj = departments.find(
-          (d) => d.description === product.department
+          (d) => d.description === product.department,
         );
 
         setFormData({
@@ -376,7 +393,7 @@ export default function ModifyProduct() {
                   {groups
                     .filter((group) => {
                       const dept = departments.find(
-                        (d) => d.code === selectedDepartment
+                        (d) => d.code === selectedDepartment,
                       );
                       return dept && group.department === dept.id;
                     })
@@ -399,7 +416,7 @@ export default function ModifyProduct() {
                   {subgroups
                     .filter((subgroup) => {
                       const group = groups.find(
-                        (g) => g.code === selectedGroup
+                        (g) => g.code === selectedGroup,
                       );
                       return group && subgroup.group === group.id;
                     })

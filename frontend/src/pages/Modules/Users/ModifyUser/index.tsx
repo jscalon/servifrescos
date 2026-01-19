@@ -14,6 +14,7 @@ import {
   type User,
   type Permission,
 } from "../../../../services/api";
+import { usePermissions } from "../../../../contexts";
 
 interface UserFormData {
   email: string;
@@ -26,6 +27,22 @@ interface UserFormData {
 }
 
 export default function ModifyUser() {
+  const { hasPermission } = usePermissions();
+
+  if (!hasPermission("manage_user")) {
+    return (
+      <main>
+        <h1>Modificar Usuario</h1>
+        <div className={`card ${styles.form}`}>
+          <BackButton to="/modules/users" />
+          <div className={styles.error}>
+            No tienes permisos para modificar usuarios
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   const [currentEmail, setCurrentEmail] = useState<string>("");
   const [originalEmail, setOriginalEmail] = useState<string>("");
   const [userId, setUserId] = useState<number | null>(null);
@@ -126,7 +143,7 @@ export default function ModifyUser() {
       const response = await usersAPI.getAll();
       const users: User[] = response.data;
       const user = users.find(
-        (u) => u.email.toLowerCase() === currentEmail.trim().toLowerCase()
+        (u) => u.email.toLowerCase() === currentEmail.trim().toLowerCase(),
       );
 
       if (user) {

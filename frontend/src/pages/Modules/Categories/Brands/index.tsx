@@ -16,10 +16,13 @@ export default function Brands() {
           <div className={`card ${styles.card}`}>
             <BackButton to="/modules/categories" />
             <h2 className="h-dark">Marcas:</h2>
-            {/* Ajustar permisos según se definan */}
-            <Button text="Crear 📝" onClick={() => navigate("create")} />
-            <Button text="Modificar 🔄" onClick={() => navigate("modify")} />
-            <Button text="Consultar 📋" onClick={() => navigate("query")} />
+            {hasPermission("manage_category") && [
+              <Button text="Crear 📝" onClick={() => navigate("create")} />,
+              <Button text="Modificar 🔄" onClick={() => navigate("modify")} />,
+            ]}
+            {hasPermission("view_category") && (
+              <Button text="Consultar 📋" onClick={() => navigate("query")} />
+            )}
           </div>
         </main>
       )}

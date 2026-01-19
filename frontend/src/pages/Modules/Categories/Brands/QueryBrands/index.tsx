@@ -9,7 +9,7 @@ export default function QueryBrands() {
   const { hasPermission } = usePermissions();
 
   // Placeholder permission
-  if (!hasPermission("view_product")) {
+  if (!hasPermission("view_category")) {
     return (
       <main>
         <h1>Consultar Marcas</h1>

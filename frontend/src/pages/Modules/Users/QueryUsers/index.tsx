@@ -9,6 +9,22 @@ import {
 } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
+const translatePermission = (perm: string): string => {
+  const translations: Record<string, string> = {
+    'view_product': 'consultar productos',
+    'manage_product': 'gestionar productos',
+    'view_price': 'consultar precios',
+    'manage_price': 'gestionar precios',
+    'view_category': 'consultar categorías',
+    'manage_category': 'gestionar categorías',
+    'view_store': 'consultar tiendas',
+    'manage_store': 'gestionar tiendas',
+    'view_user': 'consultar usuarios',
+    'manage_user': 'gestionar usuarios',
+  };
+  return translations[perm] || perm;
+};
+
 export default function QueryUsers() {
   const { hasPermission } = usePermissions();
   const [users, setUsers] = useState<User[]>([]);
@@ -38,7 +54,7 @@ export default function QueryUsers() {
         const permResponse = await permissionsAPI.getAll();
         const options = permResponse.data.map((perm: Permission) => ({
           value: perm.name,
-          label: perm.name, // Usar name como label por ahora
+          label: translatePermission(perm.name),
         }));
         setPermissionOptions(options);
 

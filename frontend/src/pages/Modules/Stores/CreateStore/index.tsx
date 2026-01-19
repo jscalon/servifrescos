@@ -19,7 +19,7 @@ interface StoreFormData {
 export default function CreateStore() {
   const { hasPermission } = usePermissions();
 
-  if (!hasPermission("add_store")) {
+  if (!hasPermission("manage_store")) {
     return (
       <main>
         <h1>Crear Tienda</h1>
@@ -67,7 +67,7 @@ export default function CreateStore() {
     setError("");
 
     try {
-      const dataToSend: Store = {
+      const dataToSend: Omit<Store, 'id'> = {
         number: parseInt(formData.number) || 0,
         name: formData.name,
         address: formData.address,

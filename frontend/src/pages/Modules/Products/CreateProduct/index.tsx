@@ -29,7 +29,7 @@ interface ProductFormData {
 export default function CreateProduct() {
   const { hasPermission } = usePermissions();
 
-  if (!hasPermission("add_product")) {
+  if (!hasPermission("manage_product")) {
     return (
       <main>
         <h1>Crear Producto</h1>
@@ -93,7 +93,7 @@ export default function CreateProduct() {
   }, []);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     // Convertir code y description a mayúsculas
@@ -148,7 +148,7 @@ export default function CreateProduct() {
       // Verificar si es un error de código duplicado
       if (error.response?.status === 400 && error.response?.data?.code) {
         setError(
-          "Error creando producto: Ya existe un producto con ese código."
+          "Error creando producto: Ya existe un producto con ese código.",
         );
       } else {
         setError("Error al crear el producto. Inténtalo de nuevo.");
@@ -287,7 +287,9 @@ export default function CreateProduct() {
               <option value="">Seleccionar grupo</option>
               {groups
                 .filter((group) => {
-                  const dept = departments.find((d) => d.code === selectedDepartment);
+                  const dept = departments.find(
+                    (d) => d.code === selectedDepartment,
+                  );
                   return dept && group.department === dept.id;
                 })
                 .map((group) => (

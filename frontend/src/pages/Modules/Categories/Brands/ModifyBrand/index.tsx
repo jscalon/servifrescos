@@ -23,7 +23,7 @@ export default function ModifyBrand() {
   const navigate = useNavigate();
 
   // Placeholder permission
-  if (!hasPermission("add_product")) {
+  if (!hasPermission("manage_category")) {
     return (
       <main>
         <h1>Modificar Marca</h1>
@@ -66,7 +66,7 @@ export default function ModifyBrand() {
       // Since API doesn't have search by name, fetch all and find
       const response = await categoriesAPI.brands.getAll();
       const brand = response.data.find(
-        (b) => b.name.toLowerCase() === searchData.name.toLowerCase()
+        (b) => b.name.toLowerCase() === searchData.name.toLowerCase(),
       );
       if (brand) {
         setSelectedBrand(brand);
@@ -103,7 +103,7 @@ export default function ModifyBrand() {
       console.error("Error modificando marca:", error);
       if (error.response?.status === 400 && error.response?.data?.name) {
         setError(
-          "Error modificando marca: Ya existe una marca con ese nombre."
+          "Error modificando marca: Ya existe una marca con ese nombre.",
         );
       } else {
         setError("Error al modificar la marca. Inténtalo de nuevo.");
@@ -171,7 +171,11 @@ export default function ModifyBrand() {
                 required
               />
             </FieldWrapper>
-            <Button text={loading ? "Cargando..." : "Aceptar"} onClick={handleSearch} disabled={loading} />
+            <Button
+              text={loading ? "Cargando..." : "Aceptar"}
+              onClick={handleSearch}
+              disabled={loading}
+            />
           </div>
         ) : (
           <>

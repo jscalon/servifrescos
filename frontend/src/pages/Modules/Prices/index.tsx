@@ -16,7 +16,7 @@ export default function Prices() {
           <div className={`card ${styles.card}`}>
             <BackButton to="/modules" />
             <h2 className="h-dark">Precios:</h2>
-            {hasPermission("add_price") && (
+            {hasPermission("manage_price") && (
               <Button text="Crear 📝" onClick={() => navigate("create")} />
             )}
             {hasPermission("view_price") && (

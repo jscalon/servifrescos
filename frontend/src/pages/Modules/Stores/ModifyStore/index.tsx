@@ -20,7 +20,7 @@ interface StoreFormData {
 export default function ModifyStore() {
   const { hasPermission } = usePermissions();
 
-  if (!hasPermission("change_store")) {
+  if (!hasPermission("manage_store")) {
     return (
       <main>
         <h1>Modificar Tienda</h1>
@@ -98,7 +98,7 @@ export default function ModifyStore() {
       const newNumber = parseInt(formData.number) || 0;
       if (newNumber !== originalNumber) {
         // Create new store
-        const dataToSend: Store = {
+        const dataToSend: Omit<Store, "id"> = {
           number: newNumber,
           name: formData.name,
           address: formData.address,
@@ -108,7 +108,7 @@ export default function ModifyStore() {
         await storesAPI.delete(originalNumber);
       } else {
         // Update normal
-        const dataToSend: Store = {
+        const dataToSend: Omit<Store, 'id'> = {
           number: newNumber,
           name: formData.name,
           address: formData.address,
@@ -128,7 +128,7 @@ export default function ModifyStore() {
       console.error("Error modificando tienda:", error);
       if (error.response?.status === 400 && error.response?.data?.number) {
         setError(
-          "Error modificando tienda: Ya existe una tienda con ese número."
+          "Error modificando tienda: Ya existe una tienda con ese número.",
         );
       } else {
         setError("Error al modificar la tienda. Inténtalo de nuevo.");
