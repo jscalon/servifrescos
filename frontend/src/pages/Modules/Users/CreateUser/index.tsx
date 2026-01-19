@@ -12,6 +12,22 @@ import { usersAPI, permissionsAPI } from "../../../../services/api";
 import type { UserCreate, Permission } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
+const translatePermission = (perm: string): string => {
+  const translations: Record<string, string> = {
+    view_product: "consultar productos",
+    manage_product: "gestionar productos",
+    view_price: "consultar precios",
+    manage_price: "gestionar precios",
+    view_category: "consultar categorías",
+    manage_category: "gestionar categorías",
+    view_store: "consultar tiendas",
+    manage_store: "gestionar tiendas",
+    view_user: "consultar usuarios",
+    manage_user: "gestionar usuarios",
+  };
+  return translations[perm] || perm;
+};
+
 interface CreateUserFormData {
   email: string;
   isActive: boolean;
@@ -64,7 +80,7 @@ export default function CreateUser() {
         const response = await permissionsAPI.getAll();
         const options = response.data.map((perm: Permission) => ({
           value: perm.name,
-          label: perm.name, // Usar name como label por ahora
+          label: translatePermission(perm.name),
         }));
         setPermissionOptions(options);
       } catch (error) {
@@ -275,7 +291,7 @@ export default function CreateUser() {
         <FieldWrapper label="Permisos" id="permissions">
           <div className={styles.permissions}>
             <div className={styles.permissionsColumn}>
-              {permissionOptions.slice(0, 6).map((option) => (
+              {permissionOptions.slice(0, 5).map((option) => (
                 <label key={option.value} className={styles.checkboxLabel}>
                   <input
                     type="checkbox"
@@ -288,7 +304,7 @@ export default function CreateUser() {
               ))}
             </div>
             <div className={styles.permissionsColumn}>
-              {permissionOptions.slice(6, 11).map((option) => (
+              {permissionOptions.slice(5, 10).map((option) => (
                 <label key={option.value} className={styles.checkboxLabel}>
                   <input
                     type="checkbox"
