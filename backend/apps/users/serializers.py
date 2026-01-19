@@ -48,13 +48,19 @@ class LoginSerializer(serializers.Serializer):
         email = attrs.get('email')
         password = attrs.get('password')
 
-        if email and password:
-            user = authenticate(username=email, password=password)
-            if not user:
-                raise serializers.ValidationError('Credenciales incorrectas')
-            if not user.is_active:
-                raise serializers.ValidationError('Usuario inactivo')
-            attrs['user'] = user
-            return attrs
-        else:
+        if not email or not password:
             raise serializers.ValidationError('Debe incluir email y password')
+
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            raise serializers.ValidationError('Usuario inexistente')
+
+        if not user.is_active:
+            raise serializers.ValidationError('Usuario inactivo')
+
+        if not user.check_password(password):
+            raise serializers.ValidationError('Contraseña incorrecta')
+
+        attrs['user'] = user
+        return attrs

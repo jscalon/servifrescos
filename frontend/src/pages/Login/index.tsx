@@ -24,7 +24,7 @@ export default function Login() {
       await login(email, password);
       navigate("/modules");
     } catch (err) {
-      setError("Credenciales incorrectas");
+      setError((err as Error).message);
     } finally {
       setLoading(false);
     }
@@ -44,7 +44,7 @@ export default function Login() {
       <form className={`card ${styles.card}`} onSubmit={handleSubmit}>
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.iniciarSesion} h-dark`}>Iniciar Sesión</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <InputText
           id="email"
           name="email"
@@ -60,7 +60,11 @@ export default function Login() {
           value={password}
           onChange={handlePasswordChange}
         />
-        <Button text={loading ? "Cargando..." : "Ingresar"} className={styles.button} disabled={loading} />
+        <Button
+          text={loading ? "Cargando..." : "Ingresar"}
+          className={styles.button}
+          disabled={loading}
+        />
       </form>
     </main>
   );

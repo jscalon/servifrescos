@@ -52,7 +52,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       });
 
       if (!response.ok) {
-        throw new Error("Login failed");
+        const errorData = await response.json();
+        const errorMessage = errorData.non_field_errors
+          ? errorData.non_field_errors[0]
+          : "Error desconocido";
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -86,7 +90,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, isLoading, user, token, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, isLoading, user, token, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
