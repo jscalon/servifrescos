@@ -11,16 +11,16 @@ import { usePermissions } from "../../../../contexts";
 
 const translatePermission = (perm: string): string => {
   const translations: Record<string, string> = {
-    'view_product': 'consultar productos',
-    'manage_product': 'gestionar productos',
-    'view_price': 'consultar precios',
-    'manage_price': 'gestionar precios',
-    'view_category': 'consultar categorías',
-    'manage_category': 'gestionar categorías',
-    'view_store': 'consultar tiendas',
-    'manage_store': 'gestionar tiendas',
-    'view_user': 'consultar usuarios',
-    'manage_user': 'gestionar usuarios',
+    view_product: "consultar productos",
+    manage_product: "gestionar productos",
+    view_price: "consultar precios",
+    manage_price: "gestionar precios",
+    view_category: "consultar categorías",
+    manage_category: "gestionar categorías",
+    view_store: "consultar tiendas",
+    manage_store: "gestionar tiendas",
+    view_user: "consultar usuarios",
+    manage_user: "gestionar usuarios",
   };
   return translations[perm] || perm;
 };
@@ -63,7 +63,7 @@ export default function QueryUsers() {
         const sortedUsers = userResponse.data.sort(
           (a, b) =>
             new Date(b.date_joined).getTime() -
-            new Date(a.date_joined).getTime()
+            new Date(a.date_joined).getTime(),
         );
         setUsers(sortedUsers);
         setFilteredUsers(sortedUsers);
@@ -91,7 +91,7 @@ export default function QueryUsers() {
           `${user.first_name} ${user.last_name}`
             .toLowerCase()
             .includes(nameEmailLower) ||
-          user.email.toLowerCase().includes(nameEmailLower)
+          user.email.toLowerCase().includes(nameEmailLower),
       );
     }
 
@@ -102,7 +102,7 @@ export default function QueryUsers() {
           const label =
             permissionOptions.find((opt) => opt.value === perm)?.label || perm;
           return label.toLowerCase().includes(permissionsLower);
-        })
+        }),
       );
     }
 
@@ -146,7 +146,8 @@ export default function QueryUsers() {
             <th>Nombre Completo</th>
             <th>Email</th>
             <th>Permisos</th>
-            <th>Último Inicio de Sesión</th>
+            <th>Fecha de Creación</th>
+            <th>Fecha de Último Login</th>
             <th>Activo</th>
           </tr>
         </thead>
@@ -160,9 +161,14 @@ export default function QueryUsers() {
                   .map(
                     (perm) =>
                       permissionOptions.find((opt) => opt.value === perm)
-                        ?.label || perm
+                        ?.label || perm,
                   )
                   .join(", ")}
+              </td>
+              <td>
+                {new Date(user.date_joined).toLocaleString("es-ES", {
+                  timeZone: "America/Caracas",
+                })}
               </td>
               <td>
                 {user.last_login
