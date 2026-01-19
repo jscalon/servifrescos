@@ -29,6 +29,10 @@ import ProductTypes from "./pages/Modules/Categories/ProductTypes";
 import CreateProductType from "./pages/Modules/Categories/ProductTypes/CreateProductType";
 import ModifyProductType from "./pages/Modules/Categories/ProductTypes/ModifyProductType";
 import QueryProductTypes from "./pages/Modules/Categories/ProductTypes/QueryProductTypes";
+import Departments from "./pages/Modules/Categories/Departments";
+import CreateDepartment from "./pages/Modules/Categories/Departments/CreateDepartment";
+import ModifyDepartment from "./pages/Modules/Categories/Departments/ModifyDepartment";
+import QueryDepartments from "./pages/Modules/Categories/Departments/QueryDepartments";
 import type { ReactNode } from "react";
 
 const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -77,17 +81,22 @@ export default function App() {
               <Route path="modify" element={<ModifyStore />} />
             </Route>
             <Route path="categories" element={<Categories />}>
-               <Route path="brands" element={<Brands />}>
-                 <Route path="query" element={<QueryBrands />} />
-                 <Route path="create" element={<CreateBrand />} />
-                 <Route path="modify" element={<ModifyBrand />} />
-               </Route>
-               <Route path="product-types" element={<ProductTypes />}>
-                 <Route path="query" element={<QueryProductTypes />} />
-                 <Route path="create" element={<CreateProductType />} />
-                 <Route path="modify" element={<ModifyProductType />} />
-               </Route>
-             </Route>
+              <Route path="brands" element={<Brands />}>
+                <Route path="query" element={<QueryBrands />} />
+                <Route path="create" element={<CreateBrand />} />
+                <Route path="modify" element={<ModifyBrand />} />
+              </Route>
+              <Route path="product-types" element={<ProductTypes />}>
+                <Route path="query" element={<QueryProductTypes />} />
+                <Route path="create" element={<CreateProductType />} />
+                <Route path="modify" element={<ModifyProductType />} />
+              </Route>
+              <Route path="departments" element={<Departments />}>
+                <Route path="query" element={<QueryDepartments />} />
+                <Route path="create" element={<CreateDepartment />} />
+                <Route path="modify" element={<ModifyDepartment />} />
+              </Route>
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
