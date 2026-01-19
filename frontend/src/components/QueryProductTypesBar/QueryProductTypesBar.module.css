@@ -1,0 +1,22 @@
+.queryProductTypesBar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+  padding: 10px 30px;
+  width: 100%;
+  gap: 20px;
+  border-radius: 20px;
+  background: var(--gray-D);
+}
+
+.span {
+  font-weight: 500;
+  color: var(--gray-4);
+  white-space: nowrap;
+}
+
+.input {
+  flex: 3;
+}

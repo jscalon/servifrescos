@@ -25,6 +25,10 @@ import Brands from "./pages/Modules/Categories/Brands";
 import CreateBrand from "./pages/Modules/Categories/Brands/CreateBrand";
 import ModifyBrand from "./pages/Modules/Categories/Brands/ModifyBrand";
 import QueryBrands from "./pages/Modules/Categories/Brands/QueryBrands";
+import ProductTypes from "./pages/Modules/Categories/ProductTypes";
+import CreateProductType from "./pages/Modules/Categories/ProductTypes/CreateProductType";
+import ModifyProductType from "./pages/Modules/Categories/ProductTypes/ModifyProductType";
+import QueryProductTypes from "./pages/Modules/Categories/ProductTypes/QueryProductTypes";
 import type { ReactNode } from "react";
 
 const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -73,12 +77,17 @@ export default function App() {
               <Route path="modify" element={<ModifyStore />} />
             </Route>
             <Route path="categories" element={<Categories />}>
-              <Route path="brands" element={<Brands />}>
-                <Route path="query" element={<QueryBrands />} />
-                <Route path="create" element={<CreateBrand />} />
-                <Route path="modify" element={<ModifyBrand />} />
-              </Route>
-            </Route>
+               <Route path="brands" element={<Brands />}>
+                 <Route path="query" element={<QueryBrands />} />
+                 <Route path="create" element={<CreateBrand />} />
+                 <Route path="modify" element={<ModifyBrand />} />
+               </Route>
+               <Route path="product-types" element={<ProductTypes />}>
+                 <Route path="query" element={<QueryProductTypes />} />
+                 <Route path="create" element={<CreateProductType />} />
+                 <Route path="modify" element={<ModifyProductType />} />
+               </Route>
+             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
