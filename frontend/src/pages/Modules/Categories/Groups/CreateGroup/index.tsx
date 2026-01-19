@@ -2,19 +2,21 @@ import styles from "../../../Products/CreateProduct/CreateProduct.module.css";
 import Button from "../../../../../components/Button";
 import FieldWrapper from "../../../../../components/FieldWrapper";
 import InputText from "../../../../../components/InputText";
+import Select from "../../../../../components/Select";
 import BackButton from "../../../../../components/BackButton";
 import ConfirmationModal from "../../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../../components/SuccessModal";
-import { useState } from "react";
-import { categoriesAPI } from "../../../../../services/api";
+import { useState, useEffect } from "react";
+import { categoriesAPI, type Department } from "../../../../../services/api";
 import { usePermissions } from "../../../../../contexts";
 
-interface DepartmentFormData {
+interface GroupFormData {
   code: string;
   description: string;
+  department: string; // ID as string
 }
 
-export default function CreateDepartment() {
+export default function CreateGroup() {
   const { hasPermission } = usePermissions();
 
   // Asumir permiso manage_category, ajustar según se defina
@@ -22,27 +24,44 @@ export default function CreateDepartment() {
     // Placeholder
     return (
       <main>
-        <h1>Crear Departamento</h1>
+        <h1>Crear Grupo</h1>
         <div className={`card ${styles.form}`}>
-          <BackButton to="/modules/categories/departments" />
+          <BackButton to="/modules/categories/groups" />
           <div className={styles.error}>
-            No tienes permisos para crear departamentos
+            No tienes permisos para crear grupos
           </div>
         </div>
       </main>
     );
   }
 
-  const [formData, setFormData] = useState<DepartmentFormData>({
+  const [formData, setFormData] = useState<GroupFormData>({
     code: "",
     description: "",
+    department: "",
   });
+  const [departments, setDepartments] = useState<Department[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const loadDepartments = async () => {
+      try {
+        const response = await categoriesAPI.departments.getAll();
+        setDepartments(response.data);
+      } catch (error) {
+        console.error("Error cargando departamentos:", error);
+        setError("Error al cargar los departamentos.");
+      }
+    };
+    loadDepartments();
+  }, []);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -62,20 +81,19 @@ export default function CreateDepartment() {
     setError("");
 
     try {
-      await categoriesAPI.departments.create({
+      await categoriesAPI.groups.create({
         code: formData.code,
         description: formData.description,
+        department: parseInt(formData.department),
       });
       setShowSuccessDialog(true);
-      setFormData({ code: "", description: "" });
+      setFormData({ code: "", description: "", department: "" });
     } catch (error: any) {
-      console.error("Error creando departamento:", error);
+      console.error("Error creando grupo:", error);
       if (error.response?.status === 400 && error.response?.data?.code) {
-        setError(
-          "Error creando departamento: Ya existe un departamento con ese código.",
-        );
+        setError("Error creando grupo: Ya existe un grupo con ese código.");
       } else {
-        setError("Error al crear el departamento. Inténtalo de nuevo.");
+        setError("Error al crear el grupo. Inténtalo de nuevo.");
       }
     } finally {
       setLoading(false);
@@ -91,7 +109,7 @@ export default function CreateDepartment() {
   };
 
   const handleClear = () => {
-    setFormData({ code: "", description: "" });
+    setFormData({ code: "", description: "", department: "" });
     setError("");
   };
 
@@ -112,13 +130,13 @@ export default function CreateDepartment() {
 
   return (
     <main>
-      <h1>Crear Departamento</h1>
+      <h1>Crear Grupo</h1>
       <form
         className={`card ${styles.form}`}
         onSubmit={handleSubmit}
         onKeyDown={handleKeyDown}
       >
-        <BackButton to="/modules/categories/departments" />
+        <BackButton to="/modules/categories/groups" />
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.row}>
           <FieldWrapper label="Código" id="code">
@@ -140,6 +158,24 @@ export default function CreateDepartment() {
             />
           </FieldWrapper>
         </div>
+        <div className={styles.row}>
+          <FieldWrapper label="Departamento" id="department">
+            <Select
+              id="department"
+              name="department"
+              value={formData.department}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="">Seleccione un departamento</option>
+              {departments.map((dept) => (
+                <option key={dept.id} value={dept.id.toString()}>
+                  {dept.description}
+                </option>
+              ))}
+            </Select>
+          </FieldWrapper>
+        </div>
         <div className={styles.rowButtons}>
           <Button
             text={loading ? "Guardando..." : "Guardar"}
@@ -152,7 +188,7 @@ export default function CreateDepartment() {
         {showConfirmDialog && (
           <ConfirmationModal
             title="Confirmar Guardado"
-            message="¿Está seguro de que desea guardar este departamento?"
+            message="¿Está seguro de que desea guardar este grupo?"
             onConfirm={handleConfirmSave}
             onCancel={handleCancelSave}
           />
@@ -161,7 +197,7 @@ export default function CreateDepartment() {
         {showSuccessDialog && (
           <SuccessModal
             title="¡Operación Exitosa!"
-            message="El departamento ha sido creado exitosamente."
+            message="El grupo ha sido creado exitosamente."
             onAccept={handleAcceptSuccess}
           />
         )}
