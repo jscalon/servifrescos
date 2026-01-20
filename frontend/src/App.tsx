@@ -37,6 +37,10 @@ import Groups from "./pages/Modules/Categories/Groups";
 import CreateGroup from "./pages/Modules/Categories/Groups/CreateGroup";
 import ModifyGroup from "./pages/Modules/Categories/Groups/ModifyGroup";
 import QueryGroups from "./pages/Modules/Categories/Groups/QueryGroups";
+import Subgroups from "./pages/Modules/Categories/Subgroups";
+import CreateSubgroup from "./pages/Modules/Categories/Subgroups/CreateSubgroup";
+import ModifySubgroup from "./pages/Modules/Categories/Subgroups/ModifySubgroup";
+import QuerySubgroups from "./pages/Modules/Categories/Subgroups/QuerySubgroups";
 import type { ReactNode } from "react";
 
 const ProtectedRoute: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -104,6 +108,11 @@ export default function App() {
                 <Route path="query" element={<QueryGroups />} />
                 <Route path="create" element={<CreateGroup />} />
                 <Route path="modify" element={<ModifyGroup />} />
+              </Route>
+              <Route path="subgroups" element={<Subgroups />}>
+                <Route path="query" element={<QuerySubgroups />} />
+                <Route path="create" element={<CreateSubgroup />} />
+                <Route path="modify" element={<ModifySubgroup />} />
               </Route>
             </Route>
           </Route>
