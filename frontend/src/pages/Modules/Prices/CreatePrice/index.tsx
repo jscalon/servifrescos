@@ -238,7 +238,7 @@ export default function CreatePrice() {
               onChange={handleInputChange}
               disabled={productFound}
             >
-              <option value="">Seleccionar tienda</option>
+              <option value="">(seleccionar)</option>
               {stores.map((s) => (
                 <option key={s.number} value={s.name}>
                   {s.name}

@@ -187,7 +187,7 @@ export default function CreateSubgroup() {
               onChange={handleInputChange}
               required
             >
-              <option value="">(Seleccionar)</option>
+              <option value="">(seleccionar)</option>
               {departments.map((dept) => (
                 <option key={dept.id} value={dept.id.toString()}>
                   {dept.description}
@@ -204,7 +204,7 @@ export default function CreateSubgroup() {
               required
               disabled={!formData.department}
             >
-              <option value="">(Seleccionar)</option>
+              <option value="">(seleccionar)</option>
               {filteredGroups.map((group) => (
                 <option key={group.id} value={group.id.toString()}>
                   {group.description}

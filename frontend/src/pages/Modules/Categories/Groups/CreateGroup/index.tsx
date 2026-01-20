@@ -167,7 +167,7 @@ export default function CreateGroup() {
               onChange={handleInputChange}
               required
             >
-              <option value="">Seleccione un departamento</option>
+              <option value="">(seleccionar)</option>
               {departments.map((dept) => (
                 <option key={dept.id} value={dept.id.toString()}>
                   {dept.description}

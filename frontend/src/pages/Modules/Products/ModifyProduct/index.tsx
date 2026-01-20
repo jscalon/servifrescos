@@ -339,7 +339,7 @@ export default function ModifyProduct() {
                   onChange={handleInputChange}
                   disabled={optionsLoading}
                 >
-                  <option value="">Seleccionar marca</option>
+                  <option value="">(seleccionar)</option>
                   {brands.map((brand) => (
                     <option key={brand.id} value={brand.id.toString()}>
                       {brand.name}
@@ -355,7 +355,7 @@ export default function ModifyProduct() {
                   onChange={handleInputChange}
                   disabled={optionsLoading}
                 >
-                  <option value="">Seleccionar tipo</option>
+                  <option value="">(seleccionar)</option>
                   {productTypes.map((type) => (
                     <option key={type.id} value={type.id.toString()}>
                       {type.name}
@@ -373,7 +373,7 @@ export default function ModifyProduct() {
                   onChange={handleInputChange}
                   disabled={optionsLoading}
                 >
-                  <option value="">Seleccionar departamento</option>
+                  <option value="">(seleccionar)</option>
                   {departments.map((dept) => (
                     <option key={dept.id} value={dept.code}>
                       {dept.description}
@@ -389,7 +389,7 @@ export default function ModifyProduct() {
                   onChange={handleInputChange}
                   disabled={!selectedDepartment || optionsLoading}
                 >
-                  <option value="">Seleccionar grupo</option>
+                  <option value="">(seleccionar)</option>
                   {groups
                     .filter((group) => {
                       const dept = departments.find(
@@ -412,7 +412,7 @@ export default function ModifyProduct() {
                   onChange={handleInputChange}
                   disabled={!selectedGroup || optionsLoading}
                 >
-                  <option value="">Seleccionar subgrupo</option>
+                  <option value="">(seleccionar)</option>
                   {subgroups
                     .filter((subgroup) => {
                       const group = groups.find(

@@ -274,7 +274,7 @@ export default function ModifyGroup() {
                   onChange={handleModifyChange}
                   required
                 >
-                  <option value="">Seleccione un departamento</option>
+                  <option value="">(seleccionar)</option>
                   {departments.map((dept) => (
                     <option key={dept.id} value={dept.id.toString()}>
                       {dept.description}
