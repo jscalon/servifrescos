@@ -11,7 +11,7 @@ export default function ResetPassword() {
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -19,7 +19,7 @@ export default function ResetPassword() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setMessage("");
+    setMessage(false);
 
     if (newPassword !== confirmPassword) {
       setError("Las contraseñas no coinciden.");
@@ -31,10 +31,8 @@ export default function ResetPassword() {
       await api.post(`/reset/${uid}/${token}/`, {
         new_password: newPassword,
       });
-      setMessage(
-        "¡Contraseña restablecida exitosamente! \n Redirigiendo a Login...",
-      );
-      setTimeout(() => navigate("/login"), 3000);
+      setMessage(true);
+      setTimeout(() => navigate("/login"), 5000);
     } catch (err: any) {
       setError(
         err.response?.data?.error || "Error al restablecer la contraseña.",
@@ -61,7 +59,12 @@ export default function ResetPassword() {
         <img src={logos} alt="logos" className={styles.protinallogos} />
         <h2 className={`${styles.title} h-dark`}>Restablecer Contraseña</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {message && <p style={{ color: "green" }}>{message}</p>}
+        {message && (
+          <p style={{ color: "green" }}>
+            ¡Contraseña restablecida exitosamente! <br />
+            <br /> Redirigiendo a Login...
+          </p>
+        )}
         <InputPassword
           id="newPassword"
           name="newPassword"

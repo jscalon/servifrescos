@@ -36,23 +36,37 @@ export default function ForgotPassword() {
     <main className={styles.main}>
       <h1>Ficha de Productos</h1>
       <form className={`card`} onSubmit={handleSubmit}>
-        <img src={logos} alt="logos"/>
+        <img src={logos} alt="logos" />
         <h2 className={`${styles.title} h-dark`}>Olvidé mi Contraseña</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {message && <p style={{ color: "green" }}>{message}</p>}
-        <InputText
-          id="email"
-          name="email"
-          placeholder="Email"
-          className={styles.inputText}
-          value={email}
-          onChange={handleEmailChange}
-        />
-        <Button
-          text={loading ? "Enviando..." : "Enviar"}
-          className={styles.button}
-          disabled={loading}
-        />
+        {message ? (
+          <>
+            <p style={{ color: "green" }}>{message}</p>
+            <a
+              href="https://webmail.protinalproagro.com.ve"
+              rel="noopener noreferrer"
+              className={styles.webmailLink}
+            >
+              Ir al Correo Electrónico
+            </a>
+          </>
+        ) : (
+          <>
+            <InputText
+              id="email"
+              name="email"
+              placeholder="Email"
+              className={styles.inputText}
+              value={email}
+              onChange={handleEmailChange}
+            />
+            <Button
+              text={loading ? "Enviando..." : "Enviar"}
+              className={styles.button}
+              disabled={loading}
+            />
+          </>
+        )}
         <Link to="/login" className={styles.back}>
           Volver al Inicio de Sesión
         </Link>
