@@ -49,3 +49,13 @@ CORS_ALLOWED_ORIGINS = [
 
 # Permitir todas las origins en desarrollo (opcional, menos seguro)
 # CORS_ALLOW_ALL_ORIGINS = True
+
+# Configuración de email para desarrollo
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.protinalproagro.com.ve'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.environ.get(
+    'DEFAULT_FROM_EMAIL', 'noreply@protinalproagro.com.ve')

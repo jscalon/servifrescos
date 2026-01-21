@@ -13,6 +13,7 @@ services:
       - CHOKIDAR_USEPOLLING=true
       - CHOKIDAR_INTERVAL=100
       - VITE_HOST=0.0.0.0
+      - VITE_API_URL=http://172.20.12.33:8000/api
     depends_on:
       - backend
     command: sh -c "npm run dev -- --host 0.0.0.0"
@@ -25,6 +26,8 @@ services:
       - "8000:8000"
     volumes:
       - ./backend:/app
+    env_file:
+      - backend/.env
     environment:
       - DEBUG=1
       - DJANGO_SETTINGS_MODULE=config.settings.development

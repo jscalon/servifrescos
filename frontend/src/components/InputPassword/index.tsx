@@ -6,13 +6,14 @@ interface InputProps {
   placeholder?: string;
   id: string;
   name: string;
-  value?: string; // Añade value
+  value?: string;
   required?: boolean;
   readOnly?: boolean;
   error?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
+  classNameWrapper?: string;
 }
 
 export default function InputPassword({
@@ -26,6 +27,7 @@ export default function InputPassword({
   className = "",
   onChange,
   onKeyDown,
+  classNameWrapper = "",
 }: InputProps) {
   const [showPassword, setShowPassword] = useState(false);
   const inputElement = (
@@ -50,7 +52,7 @@ export default function InputPassword({
   const openEye = <EyeIcon closed={false} />;
 
   return (
-    <div className={styles.wrapper}>
+    <div className={`${styles.wrapper} ${classNameWrapper}`}>
       {inputElement}
       <span
         className={styles.eyeContainer}

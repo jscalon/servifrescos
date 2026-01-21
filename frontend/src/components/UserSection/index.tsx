@@ -8,7 +8,11 @@ export default function UserSection() {
   const { isLoggedIn, user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const showUserSection = isLoggedIn && location.pathname !== "/login";
+  const showUserSection =
+    isLoggedIn &&
+    !["/login", "/forgot-password", "/reset-password/"].includes(
+      location.pathname.slice(0, 16),
+    );
 
   const door = <DoorIcon />;
 
@@ -16,7 +20,9 @@ export default function UserSection() {
     <>
       {showUserSection && user && (
         <div className={styles.userSection}>
-          <span>{user.first_name} {user.last_name}</span>
+          <span>
+            {user.first_name} {user.last_name}
+          </span>
           <Button
             text="Salir"
             icon={door}
