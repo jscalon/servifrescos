@@ -1,13 +1,11 @@
 .button {
   color: white;
-	background-color: black;
   border: none;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* width: fit-content; */
 	box-sizing: border-box;
   padding: 10px 15px;
   gap: 7px;
@@ -50,4 +48,16 @@
 
 .secondary:active {
   background-color: var(--color-secondary-dark);
+}
+
+.reset {
+  background-color: var(--gray-9);
+}
+
+.reset:hover {
+  background-color: var(--gray-A);
+}
+
+.reset:active {
+  background-color: var(--gray-8);
 }

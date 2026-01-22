@@ -322,7 +322,7 @@ export default function CreateUser() {
         <div className={styles.rowButtons}>
           <Button
             text="Reiniciar"
-            style="secondary"
+            style="reset"
             className={styles.buttonReiniciar}
             type="button"
             onClick={handleReset}

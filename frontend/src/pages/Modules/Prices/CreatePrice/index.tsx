@@ -325,7 +325,7 @@ export default function CreatePrice() {
             <div className={styles.rowButtons}>
               <Button
                 text="Reiniciar"
-                style="secondary"
+                style="reset"
                 className={styles.buttonReiniciar}
                 type="button"
                 onClick={handleReset}

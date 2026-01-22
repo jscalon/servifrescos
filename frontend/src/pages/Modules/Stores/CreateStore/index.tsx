@@ -165,7 +165,7 @@ export default function CreateStore() {
         <div className={styles.rowButtons}>
           <Button
             text="Reiniciar"
-            style="secondary"
+            style="reset"
             className={styles.buttonReiniciar}
             type="button"
             onClick={handleClear}

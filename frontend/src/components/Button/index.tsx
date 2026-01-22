@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 interface ButtonProps {
   text: string;
   icon?: ReactNode;
-  style?: "primary" | "secondary" | "other";
+  style?: "primary" | "secondary" | "reset" | "other";
   type?: "submit" | "button" | "reset" | undefined;
   disabled?: boolean;
   className?: string;
