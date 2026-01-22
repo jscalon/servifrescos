@@ -67,7 +67,7 @@ export default function QueryStores() {
                   .includes(value.toLowerCase()) ||
                 store.name.toLowerCase().includes(value.toLowerCase()) ||
                 (store.address?.toLowerCase().includes(value.toLowerCase()) ??
-                  false)
+                  false),
             );
             setFilteredStores(filtered);
           }

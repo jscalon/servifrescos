@@ -1,0 +1,27 @@
+.exportButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #217346; /* Verde similar al de Excel */
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.exportButton:hover:not(:disabled) {
+  background-color: #1a5a35;
+}
+
+.exportButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.icon {
+  font-size: 1rem;
+}

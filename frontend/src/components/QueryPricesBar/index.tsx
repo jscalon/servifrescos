@@ -14,7 +14,10 @@ interface QueryPricesBarProps {
   onClear: () => void;
 }
 
-export default function QueryPricesBar({ onSearch, onClear }: QueryPricesBarProps) {
+export default function QueryPricesBar({
+  onSearch,
+  onClear,
+}: QueryPricesBarProps) {
   const [selectedStore, setSelectedStore] = useState<string>("Todos");
   const [searchArticle, setsearchArticle] = useState<string>("");
   const [selectedActive, setSelectedActive] = useState<string>("Todos");

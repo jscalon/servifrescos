@@ -79,7 +79,11 @@ export default function QueryProducts() {
   return (
     <main className={styles.main}>
       <h1>Consultar Productos</h1>
-      <QueryProductsBar onSearch={handleSearch} onClear={handleClear} />
+      <QueryProductsBar
+        onSearch={handleSearch}
+        onClear={handleClear}
+        filteredData={filteredProducts}
+      />
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>

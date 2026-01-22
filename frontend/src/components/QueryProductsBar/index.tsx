@@ -3,15 +3,19 @@ import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
 import Select from "../Select";
+import ExportToExcelButton from "../ExportToExcelButton";
+import { type Product } from "../../services/api";
 
 interface QueryProductsBarProps {
   onSearch: (field: string, value: string) => void;
   onClear: () => void;
+  filteredData: Product[];
 }
 
 export default function QueryProductsBar({
   onSearch,
   onClear,
+  filteredData,
 }: QueryProductsBarProps) {
   const [searchField, setSearchField] = useState<string>("code");
   const [searchValue, setSearchValue] = useState<string>("");
@@ -76,6 +80,12 @@ export default function QueryProductsBar({
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el producto a buscar..."
+      />
+      <ExportToExcelButton
+        data={filteredData}
+        headers={["Código", "Descripción", "Marca", "Tipo", "Departamento", "Grupo", "Subgrupo"]}
+        keys={["code", "description", "brand", "type", "department", "group", "subgroup"]}
+        fileName="Productos.xlsx"
       />
     </div>
   );
