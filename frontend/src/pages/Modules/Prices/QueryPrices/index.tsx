@@ -99,7 +99,7 @@ export default function QueryPrices() {
     <>
       <main className={styles.main}>
         <h1>Consultar Precios</h1>
-        <QueryPricesBar onSearch={handleSearch} onClear={handleClear} />
+        <QueryPricesBar onSearch={handleSearch} onClear={handleClear} filteredData={filteredPrices} />
         <table className={styles.table}>
           <thead>
             <tr>

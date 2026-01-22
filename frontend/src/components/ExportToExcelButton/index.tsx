@@ -80,7 +80,7 @@ export default function ExportToExcelButton({
             if (cell.value) {
               const text = cell.value.toString();
               const colWidth = worksheet.getColumn(cell.col).width || 10;
-              const lines = Math.ceil(text.length / (colWidth * 1.2)); // Factor aproximado
+              const lines = Math.ceil(text.length / (colWidth * 2)); // Factor aproximado para mejor ajuste
               if (lines > maxLines) maxLines = lines;
             }
           });
@@ -92,15 +92,17 @@ export default function ExportToExcelButton({
 
       // Autoajustar columnas
       headers.forEach((_, colIndex) => {
-        let maxLength = 20; // Mínimo 20 para caber palabras cortas
+        const minWidth = 10;
+        let columnWidth = minWidth;
         worksheet.eachRow((row) => {
           const cell = row.getCell(colIndex + 1);
           const cellLength = cell.value ? cell.value.toString().length : 0;
-          if (cellLength > maxLength) {
-            maxLength = cellLength;
+          if (cellLength > columnWidth) {
+            columnWidth = cellLength;
           }
         });
-        worksheet.getColumn(colIndex + 1).width = maxLength;
+        columnWidth += 3;
+        worksheet.getColumn(colIndex + 1).width = columnWidth;
       });
 
       // Generar buffer y descargar
