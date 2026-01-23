@@ -99,7 +99,11 @@ export default function QueryPrices() {
     <>
       <main className={styles.main}>
         <h1>Consultar Precios</h1>
-        <QueryPricesBar onSearch={handleSearch} onClear={handleClear} filteredData={filteredPrices} />
+        <QueryPricesBar
+          onSearch={handleSearch}
+          onClear={handleClear}
+          filteredData={filteredPrices}
+        />
         <table className={styles.table}>
           <thead>
             <tr>
@@ -124,11 +128,24 @@ export default function QueryPrices() {
                 <td>{price.product_description}</td>
                 <td>{price.product_type}</td>
                 <td>{price.price}</td>
-                <td>{new Date(price.registration_date).toLocaleString()}</td>
-                <td>{new Date(price.effective_date).toLocaleString()}</td>
+                <td>
+                  {new Date(price.registration_date).toLocaleString("es-ES", {
+                    hour12: false,
+                    timeZone: "America/Caracas",
+                  })}
+                </td>
+                <td>
+                  {new Date(price.effective_date).toLocaleString("es-ES", {
+                    hour12: false,
+                    timeZone: "America/Caracas",
+                  })}
+                </td>
                 <td>
                   {price.expiration_date
-                    ? new Date(price.expiration_date).toLocaleString()
+                    ? new Date(price.expiration_date).toLocaleString("es-ES", {
+                        hour12: false,
+                        timeZone: "America/Caracas",
+                      })
                     : ""}
                 </td>
                 <td>{price.is_active ? "✅" : "❌"}</td>

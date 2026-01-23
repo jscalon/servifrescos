@@ -139,7 +139,11 @@ export default function QueryUsers() {
   return (
     <main className={styles.main}>
       <h1>Consultar Usuarios</h1>
-      <QueryUsersBar onSearch={handleSearch} onClear={handleClear} filteredData={filteredUsers} />
+      <QueryUsersBar
+        onSearch={handleSearch}
+        onClear={handleClear}
+        filteredData={filteredUsers}
+      />
       <table className={styles.table}>
         <thead>
           <tr>
@@ -168,12 +172,14 @@ export default function QueryUsers() {
               <td>
                 {new Date(user.date_joined).toLocaleString("es-ES", {
                   timeZone: "America/Caracas",
+                  hour12: false,
                 })}
               </td>
               <td>
                 {user.last_login
                   ? new Date(user.last_login).toLocaleString("es-ES", {
                       timeZone: "America/Caracas",
+                      hour12: false,
                     })
                   : "Nunca"}
               </td>
