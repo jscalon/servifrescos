@@ -113,7 +113,7 @@ export function ExcelIcon({
       <path
         d="M53 18H78V82H55"
         stroke="white"
-        stroke-width="4"
+        stroke-width="6"
         stroke-linejoin="round"
         fill="none"
       />
@@ -124,7 +124,7 @@ export function ExcelIcon({
         x2="68"
         y2="32"
         stroke="white"
-        stroke-width="3"
+        stroke-width="6"
         stroke-linecap="round"
       />
       <line
@@ -133,7 +133,7 @@ export function ExcelIcon({
         x2="68"
         y2="44"
         stroke="white"
-        stroke-width="3"
+        stroke-width="6"
         stroke-linecap="round"
       />
       <line
@@ -142,7 +142,7 @@ export function ExcelIcon({
         x2="68"
         y2="56"
         stroke="white"
-        stroke-width="3"
+        stroke-width="6"
         stroke-linecap="round"
       />
       <line
@@ -151,14 +151,14 @@ export function ExcelIcon({
         x2="68"
         y2="68"
         stroke="white"
-        stroke-width="3"
+        stroke-width="6"
         stroke-linecap="round"
       />
 
       <path
         d="M22 18L54 10V90L22 82Z"
         stroke="white"
-        stroke-width="4"
+        stroke-width="6"
         stroke-linejoin="round"
         fill="none"
       />
@@ -169,7 +169,7 @@ export function ExcelIcon({
         x2="46"
         y2="60"
         stroke="white"
-        stroke-width="5"
+        stroke-width="6"
         stroke-linecap="round"
       />
       <line
@@ -178,7 +178,7 @@ export function ExcelIcon({
         x2="30"
         y2="60"
         stroke="white"
-        stroke-width="5"
+        stroke-width="6"
         stroke-linecap="round"
       />
     </svg>
