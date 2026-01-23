@@ -139,7 +139,7 @@ export default function QueryUsers() {
   return (
     <main className={styles.main}>
       <h1>Consultar Usuarios</h1>
-      <QueryUsersBar onSearch={handleSearch} onClear={handleClear} />
+      <QueryUsersBar onSearch={handleSearch} onClear={handleClear} filteredData={filteredUsers} />
       <table className={styles.table}>
         <thead>
           <tr>

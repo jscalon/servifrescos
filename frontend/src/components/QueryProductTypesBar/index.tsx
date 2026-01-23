@@ -2,15 +2,19 @@ import styles from "./QueryProductTypesBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import ExportToExcelButton from "../ExportToExcelButton";
+import { type ProductType } from "../../services/api";
 
 interface QueryProductTypesBarProps {
   onSearch: (value: string) => void;
   onClear: () => void;
+  filteredData: ProductType[];
 }
 
 export default function QueryProductTypesBar({
   onSearch,
   onClear,
+  filteredData,
 }: QueryProductTypesBarProps) {
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -53,6 +57,12 @@ export default function QueryProductTypesBar({
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el nombre del tipo de producto..."
+      />
+      <ExportToExcelButton
+        data={filteredData}
+        headers={["Nombre"]}
+        keys={["name"]}
+        fileName="Tipos de Producto.xlsx"
       />
     </div>
   );

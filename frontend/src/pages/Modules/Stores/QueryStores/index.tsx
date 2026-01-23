@@ -72,6 +72,7 @@ export default function QueryStores() {
             setFilteredStores(filtered);
           }
         }}
+        filteredData={filteredStores}
       />
       {error && <span className={styles.error}>{error}</span>}
       <table className={styles.table}>

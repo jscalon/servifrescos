@@ -78,6 +78,7 @@ export default function QueryBrands() {
       <QueryBrandsBar
         onSearch={setSearchTerm}
         onClear={() => setSearchTerm("")}
+        filteredData={filteredBrands}
       />
       {error && <div className={styles.error}>{error}</div>}
       <table className={styles.table}>

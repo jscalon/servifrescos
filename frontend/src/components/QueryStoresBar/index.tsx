@@ -2,12 +2,18 @@ import styles from "./QueryStoresBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import ExportToExcelButton from "../ExportToExcelButton";
+import { type Store } from "../../services/api";
 
 interface QueryStoresBarProps {
   onSearch: (value: string) => void;
+  filteredData: Store[];
 }
 
-export default function QueryStoresBar({ onSearch }: QueryStoresBarProps) {
+export default function QueryStoresBar({
+  onSearch,
+  filteredData,
+}: QueryStoresBarProps) {
   const [search, setSearch] = useState<string>("");
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,6 +43,12 @@ export default function QueryStoresBar({ onSearch }: QueryStoresBarProps) {
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese la tienda a buscar..."
+      />
+      <ExportToExcelButton
+        data={filteredData}
+        headers={["Número", "Nombre", "Dirección"]}
+        keys={["number", "name", "address"]}
+        fileName="Tiendas.xlsx"
       />
     </div>
   );

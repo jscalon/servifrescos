@@ -2,15 +2,18 @@ import styles from "./QueryGroupsBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import ExportToExcelButton from "../ExportToExcelButton";
 
 interface QueryGroupsBarProps {
   onSearch: (value: string) => void;
   onClear: () => void;
+  filteredData: any[];
 }
 
 export default function QueryGroupsBar({
   onSearch,
   onClear,
+  filteredData,
 }: QueryGroupsBarProps) {
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -53,6 +56,15 @@ export default function QueryGroupsBar({
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el código, descripción o departamento del grupo..."
+      />
+      <ExportToExcelButton
+        data={filteredData.map((group) => ({
+          ...group,
+          department: group.department, // Mantener para compatibilidad, pero usar descripción si es posible
+        }))}
+        headers={["Código", "Descripción", "Departamento"]}
+        keys={["code", "description", "department"]}
+        fileName="Grupos.xlsx"
       />
     </div>
   );

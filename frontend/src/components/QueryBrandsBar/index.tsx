@@ -2,15 +2,19 @@ import styles from "./QueryBrandsBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import ExportToExcelButton from "../ExportToExcelButton";
+import { type Brand } from "../../services/api";
 
 interface QueryBrandsBarProps {
   onSearch: (value: string) => void;
   onClear: () => void;
+  filteredData: Brand[];
 }
 
 export default function QueryBrandsBar({
   onSearch,
   onClear,
+  filteredData,
 }: QueryBrandsBarProps) {
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -53,6 +57,12 @@ export default function QueryBrandsBar({
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el nombre de la marca..."
+      />
+      <ExportToExcelButton
+        data={filteredData}
+        headers={["Nombre"]}
+        keys={["name"]}
+        fileName="Marcas.xlsx"
       />
     </div>
   );

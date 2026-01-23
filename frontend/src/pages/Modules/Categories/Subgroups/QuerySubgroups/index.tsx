@@ -103,6 +103,17 @@ export default function QuerySubgroups() {
       <QuerySubgroupsBar
         onSearch={setSearchTerm}
         onClear={() => setSearchTerm("")}
+        filteredData={filteredSubgroups.map((subgroup) => {
+          const group = groups.find((g) => g.id === subgroup.group);
+          const dept = group
+            ? departments.find((d) => d.id === group.department)
+            : null;
+          return {
+            ...subgroup,
+            group: group ? group.description : "",
+            department: dept ? dept.description : "",
+          };
+        })}
       />
       {error && <div className={styles.error}>{error}</div>}
       <table className={styles.table}>

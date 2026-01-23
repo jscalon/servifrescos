@@ -2,15 +2,18 @@ import styles from "./QuerySubgroupsBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import ExportToExcelButton from "../ExportToExcelButton";
 
 interface QuerySubgroupsBarProps {
   onSearch: (value: string) => void;
   onClear: () => void;
+  filteredData: any[];
 }
 
 export default function QuerySubgroupsBar({
   onSearch,
   onClear,
+  filteredData,
 }: QuerySubgroupsBarProps) {
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -53,6 +56,12 @@ export default function QuerySubgroupsBar({
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el código, descripción, grupo o departamento del subgrupo..."
+      />
+      <ExportToExcelButton
+        data={filteredData}
+        headers={["Código", "Descripción", "Grupo", "Departamento"]}
+        keys={["code", "description", "group", "department"]}
+        fileName="Subgrupos.xlsx"
       />
     </div>
   );

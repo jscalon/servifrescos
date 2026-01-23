@@ -80,6 +80,7 @@ export default function QueryProductTypes() {
       <QueryProductTypesBar
         onSearch={setSearchTerm}
         onClear={() => setSearchTerm("")}
+        filteredData={filteredProductTypes}
       />
       {error && <div className={styles.error}>{error}</div>}
       <table className={styles.table}>

@@ -93,6 +93,13 @@ export default function QueryGroups() {
       <QueryGroupsBar
         onSearch={setSearchTerm}
         onClear={() => setSearchTerm("")}
+        filteredData={filteredGroups.map((group) => {
+          const dept = departments.find((d) => d.id === group.department);
+          return {
+            ...group,
+            department: dept ? dept.description : "",
+          };
+        })}
       />
       {error && <div className={styles.error}>{error}</div>}
       <table className={styles.table}>

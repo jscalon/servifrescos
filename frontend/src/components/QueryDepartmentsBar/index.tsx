@@ -2,15 +2,19 @@ import styles from "./QueryDepartmentsBar.module.css";
 import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState } from "react";
+import ExportToExcelButton from "../ExportToExcelButton";
+import { type Department } from "../../services/api";
 
 interface QueryDepartmentsBarProps {
   onSearch: (value: string) => void;
   onClear: () => void;
+  filteredData: Department[];
 }
 
 export default function QueryDepartmentsBar({
   onSearch,
   onClear,
+  filteredData,
 }: QueryDepartmentsBarProps) {
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -53,6 +57,12 @@ export default function QueryDepartmentsBar({
         onChange={handleValueChange}
         onKeyDown={handleKeyDown}
         placeholder="Ingrese el código o descripción del departamento..."
+      />
+      <ExportToExcelButton
+        data={filteredData}
+        headers={["Código", "Descripción"]}
+        keys={["code", "description"]}
+        fileName="Departamentos.xlsx"
       />
     </div>
   );

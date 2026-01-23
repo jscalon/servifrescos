@@ -82,6 +82,7 @@ export default function QueryDepartments() {
       <QueryDepartmentsBar
         onSearch={setSearchTerm}
         onClear={() => setSearchTerm("")}
+        filteredData={filteredDepartments}
       />
       {error && <div className={styles.error}>{error}</div>}
       <table className={styles.table}>

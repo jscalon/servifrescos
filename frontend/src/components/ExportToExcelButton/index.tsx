@@ -101,7 +101,7 @@ export default function ExportToExcelButton({
             columnWidth = cellLength;
           }
         });
-        columnWidth += 3;
+        columnWidth += 5;
         worksheet.getColumn(colIndex + 1).width = columnWidth;
       });
 
