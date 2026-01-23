@@ -2,6 +2,8 @@ import { useState } from "react";
 import * as ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 import styles from "./ExportToExcelButton.module.css";
+import Button from "../Button";
+import { ExcelIcon } from "../Icons";
 
 interface ExportToExcelButtonProps {
   data: Record<string, any>[];
@@ -121,13 +123,12 @@ export default function ExportToExcelButton({
   };
 
   return (
-    <button
+    <Button
       className={styles.exportButton}
       onClick={handleExport}
       disabled={isExporting}
-    >
-      {isExporting ? "Exportando..." : "Exportar a Excel"}
-      <span className={styles.icon}>📊</span>
-    </button>
+      text={isExporting ? "Exportando..." : "Exportar a Excel"}
+      icon={<ExcelIcon />}
+    />
   );
 }
