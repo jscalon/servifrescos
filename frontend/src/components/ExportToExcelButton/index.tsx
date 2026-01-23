@@ -80,7 +80,7 @@ export default function ExportToExcelButton({
             if (cell.value) {
               const text = cell.value.toString();
               const colWidth = worksheet.getColumn(cell.col).width || 10;
-              const lines = Math.ceil(text.length / (colWidth * 2)); // Factor aproximado para mejor ajuste
+              const lines = Math.ceil(text.length / (colWidth * 3)); // Factor ajustado para wrap
               if (lines > maxLines) maxLines = lines;
             }
           });
@@ -93,6 +93,7 @@ export default function ExportToExcelButton({
       // Autoajustar columnas
       headers.forEach((_, colIndex) => {
         const minWidth = 10;
+        const maxWidth = 40; // Ancho máximo para forzar wrap en textos largos
         let columnWidth = minWidth;
         worksheet.eachRow((row) => {
           const cell = row.getCell(colIndex + 1);
@@ -101,7 +102,7 @@ export default function ExportToExcelButton({
             columnWidth = cellLength;
           }
         });
-        columnWidth += 5;
+        columnWidth = Math.min(columnWidth + 5, maxWidth); // Buffer de 5, pero no superar maxWidth
         worksheet.getColumn(colIndex + 1).width = columnWidth;
       });
 
