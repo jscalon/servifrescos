@@ -50,5 +50,4 @@ services:
       - db_data:/var/opt/mssql/data
 
 volumes:
-  node_modules:
   db_data:
