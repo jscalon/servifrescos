@@ -6,6 +6,7 @@ services:
     ports:
       - "5173:5173"
     volumes:
+      - node_modules:/app/node_modules
       - ./frontend:/app
     environment:
       - NODE_ENV=development
@@ -47,7 +48,7 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - db_data:/var/opt/mssql/data
+      - ./db_data:/var/opt/mssql/data
 
 volumes:
-  db_data:
+  node_modules:
