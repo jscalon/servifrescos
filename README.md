@@ -21,7 +21,7 @@ Este proyecto utiliza una arquitectura de microservicios con separación clara e
 1. **Clonar el repositorio**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/JuanGimenez7/servifrescos
    cd servifrescos
    ```
 
@@ -52,15 +52,3 @@ Este proyecto utiliza una arquitectura de microservicios con separación clara e
 - Autenticación de usuarios
 - Base de datos SQL Server
 - Configuración Docker para desarrollo y producción
-
-## Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT.
