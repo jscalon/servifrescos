@@ -15,44 +15,27 @@ Este proyecto utiliza una arquitectura de microservicios con separación clara e
 ### Prerrequisitos
 
 - Docker y Docker Compose
-- Node.js (para desarrollo local del frontend)
-- Python 3.11+ (para desarrollo local del backend)
 
 ### Configuración Inicial
 
 1. **Clonar el repositorio**
+
    ```bash
    git clone <repository-url>
    cd servifrescos
    ```
 
 2. **Configurar variables de entorno**
+
    ```bash
-   cp .env.example .env
-   # Editar .env con tus configuraciones
+   cp backend/.env.example backend/.env
+   cp frontend/.env.example frontend/.env
+   # Editar los archivos .env con tus configuraciones
    ```
 
-3. **Levantar con Docker (Recomendado)**
+3. **Levantar con Docker**
    ```bash
-   cd docker
-   docker-compose up --build
-   ```
-
-4. **Desarrollo Local**
-
-   **Frontend:**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
-
-   **Backend:**
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   python manage.py migrate
-   python manage.py runserver
+   docker compose up -d
    ```
 
 ## Uso
@@ -69,21 +52,6 @@ Este proyecto utiliza una arquitectura de microservicios con separación clara e
 - Autenticación de usuarios
 - Base de datos SQL Server
 - Configuración Docker para desarrollo y producción
-
-## Desarrollo
-
-### Scripts Disponibles
-
-**Frontend:**
-- `npm run dev` - Inicia servidor de desarrollo
-- `npm run build` - Construye para producción
-- `npm run lint` - Ejecuta linter
-
-**Backend:**
-- `python manage.py runserver` - Inicia servidor de desarrollo
-- `python manage.py migrate` - Aplica migraciones de base de datos
-- `python manage.py makemigrations` - Crea nuevas migraciones
-- `python manage.py activate_prices` - Activa automáticamente los precios cuya fecha efectiva ha llegado (ejecutar periódicamente, ej. cada hora)
 
 ## Contribución
 
