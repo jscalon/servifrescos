@@ -13,7 +13,8 @@ SECRET_KEY = 'django-insecure-w&l#kxm@+h3vqi)t$4!-65o3pqn(=kv-q!$3*$2q@lz&x#8z@7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '172.20.12.33']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+                 '0.0.0.0', os.environ.get('IP_DEL_HOST')]
 
 
 # Database
@@ -44,7 +45,7 @@ TIME_ZONE = 'America/Caracas'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://172.20.12.33:5173"
+    os.environ.get("FRONTEND_URL")
 ]
 
 # Permitir todas las origins en desarrollo (opcional, menos seguro)
@@ -57,5 +58,4 @@ EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.environ.get(
-    'DEFAULT_FROM_EMAIL', 'noreply@protinalproagro.com.ve')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
