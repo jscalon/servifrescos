@@ -3,7 +3,6 @@ import Button from "../../../../components/Button";
 import FieldWrapper from "../../../../components/FieldWrapper";
 import InputText from "../../../../components/InputText";
 import InputEmail from "../../../../components/InputEmail";
-import InputPassword from "../../../../components/InputPassword";
 import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../components/SuccessModal";
@@ -38,8 +37,6 @@ interface UserFormData {
   lastName: string;
   isActive: boolean;
   permissions: string[];
-  password: string;
-  confirmPassword: string;
 }
 
 export default function ModifyUser() {
@@ -68,14 +65,11 @@ export default function ModifyUser() {
     lastName: "",
     isActive: true,
     permissions: [],
-    password: "",
-    confirmPassword: "",
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [searching, setSearching] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
   const [userFound, setUserFound] = useState<boolean>(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
@@ -108,23 +102,10 @@ export default function ModifyUser() {
     // Convertir email a minúsculas
     const processedValue = name === "email" ? value.toLowerCase() : value;
 
-    setFormData((prev) => {
-      const newData = {
-        ...prev,
-        [name]: processedValue,
-      };
-
-      // Validar contraseñas si se están cambiando
-      if (name === "password" || name === "confirmPassword") {
-        if (newData.password !== newData.confirmPassword) {
-          setPasswordError("Las contraseñas no coinciden");
-        } else {
-          setPasswordError("");
-        }
-      }
-
-      return newData;
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: processedValue,
+    }));
   };
 
   const handlePermissionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -169,8 +150,6 @@ export default function ModifyUser() {
           lastName: user.last_name,
           isActive: user.is_active,
           permissions: user.permissions || [],
-          password: "",
-          confirmPassword: "",
         });
         setOriginalEmail(user.email);
         setUserId(user.id);
@@ -196,16 +175,7 @@ export default function ModifyUser() {
       return;
     }
 
-    if (passwordError) {
-      return;
-    }
-
     if (emailError) {
-      return;
-    }
-
-    if (formData.email !== originalEmail && !formData.password) {
-      setError("Por favor ingrese una nueva contraseña si cambia el email");
       return;
     }
 
@@ -218,29 +188,13 @@ export default function ModifyUser() {
     setError("");
 
     try {
-      // Si el email cambió, necesitamos crear un nuevo usuario y eliminar el antiguo
-      if (formData.email !== originalEmail) {
-        // Crear nuevo usuario con el email actualizado
-        await usersAPI.create({
-          email: formData.email,
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          password: formData.password,
-          permissions: formData.permissions,
-          is_active: formData.isActive,
-        });
-        // Eliminar el usuario antiguo
-        await usersAPI.delete(userId!);
-      } else {
-        // Actualización normal sin cambiar email
-        await usersAPI.update(userId!, {
-          email: formData.email,
-          first_name: formData.firstName,
-          last_name: formData.lastName,
-          permissions: formData.permissions,
-          is_active: formData.isActive,
-        });
-      }
+      await usersAPI.update(userId!, {
+        email: formData.email,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        permissions: formData.permissions,
+        is_active: formData.isActive,
+      });
       setShowSuccessDialog(true);
 
       // Reiniciar formulario
@@ -253,11 +207,8 @@ export default function ModifyUser() {
         lastName: "",
         isActive: true,
         permissions: [],
-        password: "",
-        confirmPassword: "",
       });
       setEmailError("");
-      setPasswordError("");
       setUserFound(false);
     } catch (error) {
       console.error("Error modificando usuario:", error);
@@ -285,12 +236,9 @@ export default function ModifyUser() {
       lastName: "",
       isActive: true,
       permissions: [],
-      password: "",
-      confirmPassword: "",
     });
     setError("");
     setEmailError("");
-    setPasswordError("");
     setUserFound(false);
   };
 
@@ -363,38 +311,6 @@ export default function ModifyUser() {
                 />
               </FieldWrapper>
             </div>
-            {formData.email !== originalEmail && (
-              <>
-                <div className={styles.row}>
-                  <FieldWrapper label="Nueva Contraseña" id="password">
-                    <InputPassword
-                      id="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      error={!!passwordError}
-                      required
-                    />
-                  </FieldWrapper>
-                  <FieldWrapper
-                    label="Confirmar Nueva Contraseña"
-                    id="confirmPassword"
-                  >
-                    <InputPassword
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleInputChange}
-                      error={!!passwordError}
-                      required
-                    />
-                  </FieldWrapper>
-                </div>
-                {passwordError && (
-                  <div className={styles.passwordError}>{passwordError}</div>
-                )}
-              </>
-            )}
             <div className={styles.row}>
               <FieldWrapper label="Nombre" id="firstName">
                 <InputText

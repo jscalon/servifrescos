@@ -52,13 +52,6 @@ main > .form {
   color: var(--gray-5);
 }
 
-.passwordError {
-  color: red;
-  font-size: 14px;
-  text-align: center;
-  margin-top: -17px;
-}
-
 .form > .active {
   text-align: center;
   width: 200px;
