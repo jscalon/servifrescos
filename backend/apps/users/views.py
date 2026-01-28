@@ -73,8 +73,7 @@ class PasswordResetView(APIView):
 
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
-        frontend_url = os.environ.get(
-            'FRONTEND_URL', 'http://localhost:5173')
+        frontend_url = os.environ.get('FRONTEND_URL')
         reset_url = f"{frontend_url}/reset-password/{uid}/{token}"
 
         send_mail(

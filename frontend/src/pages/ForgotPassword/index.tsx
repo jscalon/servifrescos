@@ -43,7 +43,7 @@ export default function ForgotPassword() {
           <>
             <p style={{ color: "green" }}>{message}</p>
             <a
-              href={import.meta.env.EMAIL_URL}
+              href={import.meta.env.VITE_EMAIL_URL}
               rel="noopener noreferrer"
               className={styles.mailLink}
             >

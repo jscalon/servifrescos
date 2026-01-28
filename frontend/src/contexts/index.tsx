@@ -42,7 +42,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
   const login = async (email: string, password: string) => {
     try {
       const apiUrl =
-        import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+        import.meta.env.VITE_API_URL;
       const response = await fetch(`${apiUrl.replace("/api", "")}/api/login/`, {
         method: "POST",
         headers: {
@@ -116,7 +116,7 @@ export const useApi = () => {
   const { token } = useAuth();
 
   const apiFetch = async (url: string, options: RequestInit = {}) => {
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000/api";
+    const apiUrl = import.meta.env.VITE_API_URL;
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       ...(options.headers as Record<string, string>),
