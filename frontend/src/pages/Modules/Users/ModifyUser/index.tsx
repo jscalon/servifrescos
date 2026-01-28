@@ -57,7 +57,6 @@ export default function ModifyUser() {
   }
 
   const [currentEmail, setCurrentEmail] = useState<string>("");
-  const [originalEmail, setOriginalEmail] = useState<string>("");
   const [userId, setUserId] = useState<number | null>(null);
   const [formData, setFormData] = useState<UserFormData>({
     email: "",
@@ -151,7 +150,6 @@ export default function ModifyUser() {
           isActive: user.is_active,
           permissions: user.permissions || [],
         });
-        setOriginalEmail(user.email);
         setUserId(user.id);
         setUserFound(true);
         setError("");
@@ -199,7 +197,6 @@ export default function ModifyUser() {
 
       // Reiniciar formulario
       setCurrentEmail("");
-      setOriginalEmail("");
       setUserId(null);
       setFormData({
         email: "",
@@ -228,7 +225,6 @@ export default function ModifyUser() {
 
   const handleClear = () => {
     setCurrentEmail("");
-    setOriginalEmail("");
     setUserId(null);
     setFormData({
       email: "",
