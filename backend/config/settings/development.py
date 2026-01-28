@@ -55,10 +55,10 @@ CORS_ALLOWED_ORIGINS = [
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT'))
-if bool(os.environ.get('EMAIL_USE_SSL')):
-    EMAIL_USE_SSL = True
-else:
-    EMAIL_USE_TLS = True
+email_use_ssl = os.environ.get(
+    'EMAIL_USE_SSL', 'False').lower() in ('true', '1', 'yes')
+EMAIL_USE_SSL = email_use_ssl
+EMAIL_USE_TLS = not email_use_ssl
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
