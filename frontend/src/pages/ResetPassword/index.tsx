@@ -96,34 +96,38 @@ export default function ResetPassword() {
             <br /> Redirigiendo a Login...
           </p>
         )}
-        <InputPassword
-          id="newPassword"
-          name="newPassword"
-          placeholder="Nueva Contraseña"
-          value={newPassword}
-          onChange={handleNewPasswordChange}
-          classNameWrapper={styles.firstInput}
-        />
-        <InputPassword
-          id="confirmPassword"
-          name="confirmPassword"
-          placeholder="Confirmar Contraseña"
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-        />
-        {passwordMatchError && (
-          <div className={styles.passwordError}>{passwordMatchError}</div>
+        {!message && (
+          <>
+            <InputPassword
+              id="newPassword"
+              name="newPassword"
+              placeholder="Nueva Contraseña"
+              value={newPassword}
+              onChange={handleNewPasswordChange}
+              classNameWrapper={styles.firstInput}
+            />
+            <InputPassword
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirmar Contraseña"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+            />
+            {passwordMatchError && (
+              <div className={styles.passwordError}>{passwordMatchError}</div>
+            )}
+            {passwordErrors.map((error, index) => (
+              <div key={index} className={styles.passwordError}>
+                {error}
+              </div>
+            ))}
+            <Button
+              text={loading ? "Restableciendo..." : "Restablecer"}
+              className={styles.button}
+              disabled={loading}
+            />
+          </>
         )}
-        {passwordErrors.map((error, index) => (
-          <div key={index} className={styles.passwordError}>
-            {error}
-          </div>
-        ))}
-        <Button
-          text={loading ? "Restableciendo..." : "Restablecer"}
-          className={styles.button}
-          disabled={loading}
-        />
       </form>
     </main>
   );
