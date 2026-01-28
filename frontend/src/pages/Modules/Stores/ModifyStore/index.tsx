@@ -96,25 +96,12 @@ export default function ModifyStore() {
 
     try {
       const newNumber = parseInt(formData.number) || 0;
-      if (newNumber !== originalNumber) {
-        // Create new store
-        const dataToSend: Omit<Store, "id"> = {
-          number: newNumber,
-          name: formData.name,
-          address: formData.address,
-        };
-        await storesAPI.create(dataToSend);
-        // Delete old store
-        await storesAPI.delete(originalNumber);
-      } else {
-        // Update normal
-        const dataToSend: Omit<Store, 'id'> = {
-          number: newNumber,
-          name: formData.name,
-          address: formData.address,
-        };
-        await storesAPI.update(dataToSend.number, dataToSend);
-      }
+      const dataToSend: Omit<Store, "id"> = {
+        number: newNumber,
+        name: formData.name,
+        address: formData.address,
+      };
+      await storesAPI.update(originalNumber, dataToSend);
       setShowSuccessDialog(true);
       // Reset
       setSelectedStore("");

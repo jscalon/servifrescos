@@ -197,16 +197,7 @@ export default function ModifyProduct() {
     setError("");
 
     try {
-      // Si el código cambió, necesitamos crear un nuevo producto y eliminar el antiguo
-      if (formData.code !== productCode) {
-        // Crear nuevo producto con el código actualizado
-        await productsAPI.create(formData);
-        // Eliminar el producto antiguo
-        await productsAPI.delete(productCode);
-      } else {
-        // Actualización normal sin cambiar código
-        await productsAPI.update(productCode, formData);
-      }
+      await productsAPI.update(productCode, formData);
       setShowSuccessDialog(true);
 
       // Reiniciar formulario
