@@ -28,6 +28,23 @@ const translatePermission = (perm: string): string => {
   return translations[perm] || perm;
 };
 
+const validatePassword = (password: string): string[] => {
+  const errors: string[] = [];
+  if (password.length < 8) {
+    errors.push("Debe tener al menos 8 caracteres");
+  }
+  if (!/[A-Z]/.test(password)) {
+    errors.push("Debe contener al menos una letra mayúscula");
+  }
+  if (!/[a-z]/.test(password)) {
+    errors.push("Debe contener al menos una letra minúscula");
+  }
+  if (!/\d/.test(password)) {
+    errors.push("Debe contener al menos un número");
+  }
+  return errors;
+};
+
 interface CreateUserFormData {
   email: string;
   isActive: boolean;
@@ -67,7 +84,8 @@ export default function CreateUser() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const [emailError, setEmailError] = useState<string>("");
-  const [passwordError, setPasswordError] = useState<string>("");
+  const [passwordErrors, setPasswordErrors] = useState<string[]>([]);
+  const [passwordMatchError, setPasswordMatchError] = useState<string>("");
   const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState<boolean>(false);
   const [permissionOptions, setPermissionOptions] = useState<
@@ -99,10 +117,14 @@ export default function CreateUser() {
 
     if (name === "password" || name === "confirmPassword") {
       const updatedFormData = { ...formData, [name]: value };
+      if (name === "password") {
+        const errors = validatePassword(value);
+        setPasswordErrors(errors);
+      }
       if (updatedFormData.password !== updatedFormData.confirmPassword) {
-        setPasswordError("Las contraseñas no coinciden");
+        setPasswordMatchError("Las contraseñas no coinciden");
       } else {
-        setPasswordError("");
+        setPasswordMatchError("");
       }
     }
   };
@@ -128,7 +150,7 @@ export default function CreateUser() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (passwordError) {
+    if (passwordErrors.length > 0 || passwordMatchError) {
       return;
     }
 
@@ -161,7 +183,8 @@ export default function CreateUser() {
     });
     setError("");
     setEmailError("");
-    setPasswordError("");
+    setPasswordErrors([]);
+    setPasswordMatchError("");
   };
 
   const handleConfirmSave = async () => {
@@ -191,7 +214,8 @@ export default function CreateUser() {
         lastName: "",
       });
       setEmailError("");
-      setPasswordError("");
+      setPasswordErrors([]);
+      setPasswordMatchError("");
     } catch (error: any) {
       console.error("Error creando usuario:", error);
       if (error.response && error.response.data && error.response.data.email) {
@@ -237,7 +261,7 @@ export default function CreateUser() {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              error={!!passwordError}
+              error={passwordErrors.length > 0 || !!passwordMatchError}
               required
             />
           </FieldWrapper>
@@ -247,14 +271,19 @@ export default function CreateUser() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              error={!!passwordError}
+              error={passwordErrors.length > 0 || !!passwordMatchError}
               required
             />
           </FieldWrapper>
         </div>
-        {passwordError && (
-          <div className={styles.passwordError}>{passwordError}</div>
+        {passwordMatchError && (
+          <div className={styles.passwordError}>{passwordMatchError}</div>
         )}
+        {passwordErrors.map((error, index) => (
+          <div key={index} className={styles.passwordError}>
+            {error}
+          </div>
+        ))}
         <div className={styles.row}>
           <FieldWrapper label="Nombre" id="firstName">
             <InputText
