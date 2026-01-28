@@ -43,9 +43,9 @@ export default function ForgotPassword() {
           <>
             <p style={{ color: "green" }}>{message}</p>
             <a
-              href="https://webmail.protinalproagro.com.ve"
+              href={import.meta.env.EMAIL_URL}
               rel="noopener noreferrer"
-              className={styles.webmailLink}
+              className={styles.mailLink}
             >
               Ir al Correo Electrónico
             </a>
