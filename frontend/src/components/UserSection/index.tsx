@@ -9,11 +9,7 @@ export default function UserSection() {
   const location = useLocation();
   const navigate = useNavigate();
   const showUserSection =
-    isLoggedIn &&
-    !["/login", "/forgot-password", "/reset-password/"].includes(
-      location.pathname.slice(0, 16),
-    );
-
+    isLoggedIn && location.pathname.startsWith("/modules");
   const door = <DoorIcon />;
 
   return (
