@@ -25,7 +25,7 @@ const validatePassword = (password: string): string[] => {
 };
 
 export default function ChangePasswordRequired() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
   const [newPassword, setNewPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -98,16 +98,19 @@ export default function ChangePasswordRequired() {
     <main className={styles.main}>
       <form className={`card ${styles.form}`} onSubmit={handleSubmit}>
         <img src={logos} />
-        <h2 className={`${styles.title} h-dark`}>Cambiar Contraseña</h2>
+        <h2 className={`${styles.title} h-dark`}>
+          ¡Bienvenido/a, {user?.first_name}!
+        </h2>
         {success ? (
           <p className={styles.successMessage}>
-            ¡Cambio de contraseña exitoso!
+            ¡Establecimiento de contraseña exitoso!
             <br /> <br />
             Redirigiendo a la aplicación...
           </p>
         ) : (
           <>
             {error && <div className={styles.error}>{error}</div>}
+            <p> Establece tu contraseña</p>
             <InputPassword
               id="newPassword"
               name="newPassword"
@@ -136,7 +139,7 @@ export default function ChangePasswordRequired() {
               </div>
             ))}
             <Button
-              text={loading ? "Cambiando..." : "Cambiar"}
+              text={loading ? "Estableciendo..." : "Establecer"}
               type="submit"
               disabled={
                 loading || passwordErrors.length > 0 || !!passwordMatchError

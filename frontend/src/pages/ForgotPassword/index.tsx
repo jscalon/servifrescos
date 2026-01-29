@@ -37,7 +37,6 @@ export default function ForgotPassword() {
       <h1>Ficha de Productos</h1>
       <form className={`card`} onSubmit={handleSubmit}>
         <img src={logos} alt="logos" />
-        <h2 className={`${styles.title} h-dark`}>Olvidé mi Contraseña</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {message ? (
           <>
@@ -52,6 +51,7 @@ export default function ForgotPassword() {
           </>
         ) : (
           <>
+            <h2 className={`${styles.title} h-dark`}>Olvidé mi Contraseña</h2>
             <InputText
               id="email"
               name="email"

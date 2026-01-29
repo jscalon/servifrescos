@@ -88,16 +88,15 @@ export default function ResetPassword() {
     <main className={styles.main}>
       <form className={`card`} onSubmit={handleSubmit}>
         <img src={logos} alt="logos" className={styles.protinallogos} />
-        <h2 className={`${styles.title} h-dark`}>Restablecer Contraseña</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
-        {message && (
+        {message ? (
           <p style={{ color: "green" }}>
             ¡Contraseña restablecida exitosamente! <br />
             <br /> Redirigiendo a Login...
           </p>
-        )}
-        {!message && (
+        ) : (
           <>
+            <h2 className={`${styles.title} h-dark`}>Restablecer Contraseña</h2>
             <InputPassword
               id="newPassword"
               name="newPassword"
