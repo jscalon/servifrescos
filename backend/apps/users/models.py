@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None, **extra_fields):
+        extra_fields.setdefault('password_changed', False)
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
@@ -38,6 +39,8 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='Email')
     permissions = models.ManyToManyField(
         Permission, blank=True, verbose_name='Permisos')
+    password_changed = models.BooleanField(
+        default=False, verbose_name='Contraseña Cambiada')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']

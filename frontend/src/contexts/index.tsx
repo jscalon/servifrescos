@@ -14,7 +14,10 @@ interface AuthContextType {
   isLoading: boolean;
   user: User | null;
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (
+    email: string,
+    password: string,
+  ) => Promise<{ password_change_required?: boolean }>;
   logout: () => void;
 }
 
@@ -41,8 +44,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const login = async (email: string, password: string) => {
     try {
-      const apiUrl =
-        import.meta.env.VITE_API_URL;
+      const apiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(`${apiUrl.replace("/api", "")}/api/login/`, {
         method: "POST",
         headers: {
@@ -60,7 +62,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       }
 
       const data = await response.json();
-      const { access, first_name, last_name, permissions } = data;
+      const {
+        access,
+        first_name,
+        last_name,
+        permissions,
+        password_change_required,
+      } = data;
 
       const userData: User = {
         id: data.user_id,
@@ -76,11 +84,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
       localStorage.setItem("token", access);
       localStorage.setItem("user", JSON.stringify(userData));
+
+      return { password_change_required };
     } catch (error) {
       throw error;
     }
   };
-
   const logout = () => {
     setIsLoggedIn(false);
     setUser(null);
@@ -126,7 +135,7 @@ export const useApi = () => {
       headers["Authorization"] = `Bearer ${token}`;
     }
 
-    return fetch(`${apiUrl}${url}`, {
+    return fetch(`${apiUrl}/${url}`, {
       ...options,
       headers,
     });

@@ -21,8 +21,12 @@ export default function Login() {
     setError("");
 
     try {
-      await login(email, password);
-      navigate("/modules");
+      const result = await login(email, password);
+      if (result.password_change_required) {
+        navigate("/change-password-required");
+      } else {
+        navigate("/modules");
+      }
     } catch (err) {
       setError((err as Error).message);
     } finally {

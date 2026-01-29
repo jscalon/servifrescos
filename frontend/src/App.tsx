@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ChangePasswordRequired from "./pages/ChangePasswordRequired";
 import Modules from "./pages/Modules";
 import Products from "./pages/Modules/Products";
 import NotFound from "./pages/NotFound";
@@ -67,6 +68,14 @@ export default function App() {
           <Route
             path="/reset-password/:uid/:token"
             element={<ResetPassword />}
+          />
+          <Route
+            path="/change-password-required"
+            element={
+              <ProtectedRoute>
+                <ChangePasswordRequired />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/modules"

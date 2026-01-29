@@ -53,6 +53,7 @@ class LoginView(APIView):
                 'first_name': user.first_name,
                 'last_name': user.last_name,
                 'permissions': permissions_list,
+                'password_change_required': not user.password_changed,
             })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -107,3 +108,18 @@ class PasswordResetConfirmView(APIView):
         user.set_password(new_password)
         user.save()
         return Response({'message': 'Contraseña restablecida exitosamente'}, status=status.HTTP_200_OK)
+
+
+class ChangePasswordView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        new_password = request.data.get('new_password')
+        if not new_password:
+            return Response({'error': 'Nueva contraseña es requerida'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user.set_password(new_password)
+        user.password_changed = True
+        user.save()
+        return Response({'message': 'Contraseña cambiada exitosamente'}, status=status.HTTP_200_OK)

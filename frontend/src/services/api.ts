@@ -279,6 +279,8 @@ export const usersAPI = {
     api.patch(`/users/${id}/`, data),
   delete: (id: number): Promise<ApiResponse<void>> =>
     api.delete(`/users/${id}/`),
+  changePassword: (newPassword: string): Promise<ApiResponse<{ message: string }>> =>
+    api.post("/users/change-password/", { new_password: newPassword }),
 };
 
 export const permissionsAPI = {
