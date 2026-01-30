@@ -1,7 +1,7 @@
 import styles from "./QueryPrices.module.css";
 import QueryPricesBar from "../../../../components/QueryPricesBar";
 import { useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { pricesAPI, type Price } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
@@ -26,32 +26,18 @@ export default function QueryPrices() {
   const [filteredPrices, setFilteredPrices] = useState<Price[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
-
-  useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        setLoading(true);
-        const response = await pricesAPI.getAll();
-        setPrices(response.data);
-        setFilteredPrices(response.data);
-      } catch (error) {
-        console.error("Error fetching prices:", error);
-        setError("Error al cargar los precios");
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (!prices.length || location.state?.refresh) {
-      fetchPrices();
-    }
-  }, [location.state]);
-
-  const handleSearch = (filters: {
+  const [currentFilters, setCurrentFilters] = useState<{
     article: string;
     store: string;
     active: string;
-  }) => {
-    let filtered = prices;
+  }>({ article: "", store: "Todos", active: "Todos" });
+  const intervalRef = useRef<number | null>(null);
+
+  const applyFilters = (
+    pricesList: Price[],
+    filters: typeof currentFilters,
+  ) => {
+    let filtered = pricesList;
 
     if (filters.article.trim()) {
       filtered = filtered.filter(
@@ -73,7 +59,60 @@ export default function QueryPrices() {
     setFilteredPrices(filtered);
   };
 
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        setLoading(true);
+        const response = await pricesAPI.getAll();
+        setPrices(response.data);
+        applyFilters(response.data, currentFilters);
+      } catch (error) {
+        console.error("Error fetching prices:", error);
+        setError("Error al cargar los precios");
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (!prices.length || location.state?.refresh) {
+      fetchPrices();
+    }
+  }, [location.state, currentFilters]);
+
+  useEffect(() => {
+    const startPolling = () => {
+      intervalRef.current = setInterval(async () => {
+        if (!loading) {
+          try {
+            const response = await pricesAPI.getAll();
+            setPrices(response.data);
+            applyFilters(response.data, currentFilters);
+          } catch (error) {
+            console.error("Error fetching prices:", error);
+          }
+        }
+      }, 1000);
+    };
+
+    startPolling();
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [loading, currentFilters]);
+
+  const handleSearch = (filters: {
+    article: string;
+    store: string;
+    active: string;
+  }) => {
+    setCurrentFilters(filters);
+    applyFilters(prices, filters);
+  };
+
   const handleClear = () => {
+    setCurrentFilters({ article: "", store: "Todos", active: "Todos" });
     setFilteredPrices(prices);
   };
 
