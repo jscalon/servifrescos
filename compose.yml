@@ -49,7 +49,9 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ./db_data:/var/opt/mssql/data
+      - db_data:/var/opt/mssql/data
+
 
 volumes:
   node_modules:
+  db_data:
