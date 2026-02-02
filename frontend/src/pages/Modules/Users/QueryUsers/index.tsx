@@ -173,6 +173,11 @@ export default function QueryUsers() {
                 {new Date(user.date_joined).toLocaleString("es-ES", {
                   timeZone: "America/Caracas",
                   hour12: false,
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
                 })}
               </td>
               <td>
@@ -180,6 +185,11 @@ export default function QueryUsers() {
                   ? new Date(user.last_login).toLocaleString("es-ES", {
                       timeZone: "America/Caracas",
                       hour12: false,
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
                     })
                   : "Nunca"}
               </td>

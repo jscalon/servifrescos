@@ -171,12 +171,22 @@ export default function QueryPrices() {
                   {new Date(price.registration_date).toLocaleString("es-ES", {
                     hour12: false,
                     timeZone: "America/Caracas",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </td>
                 <td>
                   {new Date(price.effective_date).toLocaleString("es-ES", {
                     hour12: false,
                     timeZone: "America/Caracas",
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
                   })}
                 </td>
                 <td>
@@ -184,6 +194,11 @@ export default function QueryPrices() {
                     ? new Date(price.expiration_date).toLocaleString("es-ES", {
                         hour12: false,
                         timeZone: "America/Caracas",
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
                       })
                     : ""}
                 </td>
