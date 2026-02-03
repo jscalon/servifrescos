@@ -149,7 +149,9 @@ export default function QueryUsers() {
           <tr>
             <th>Nombre Completo</th>
             <th>Email</th>
-            <th>Permisos</th>
+            <th>Consulta</th>
+            <th>Gestión</th>
+            <th>Tiendas</th>
             <th>Fecha de Creación</th>
             <th>Fecha de Último Login</th>
             <th>Activo</th>
@@ -160,14 +162,41 @@ export default function QueryUsers() {
             <tr key={user.id}>
               <td>{`${user.first_name} ${user.last_name}`}</td>
               <td>{user.email}</td>
-              <td>
+              <td className={styles.permissions}>
                 {user.permissions
                   .map(
                     (perm) =>
                       permissionOptions.find((opt) => opt.value === perm)
                         ?.label || perm,
                   )
-                  .join(", ")}
+                  .filter((p) => p.startsWith("consultar"))
+                  .map((p) => (
+                    <li className={styles.li}>{p.slice(10)}</li>
+                  ))}
+              </td>
+              <td className={styles.permissions}>
+                {user.permissions
+                  .map(
+                    (perm) =>
+                      permissionOptions.find((opt) => opt.value === perm)
+                        ?.label || perm,
+                  )
+                  .filter((p) => p.startsWith("gestionar"))
+                  .map((p) => (
+                    <li className={styles.li}>{p.slice(10)}</li>
+                  ))}
+              </td>
+              <td className={styles.permissions}>
+                {user.permissions
+                  .map(
+                    (perm) =>
+                      permissionOptions.find((opt) => opt.value === perm)
+                        ?.label || perm,
+                  )
+                  .filter((p) => p.startsWith("tiendas..."))
+                  .map((p) => (
+                    <div>{p.slice(10)}</div>
+                  ))}
               </td>
               <td>
                 {new Date(user.date_joined).toLocaleString("es-ES", {

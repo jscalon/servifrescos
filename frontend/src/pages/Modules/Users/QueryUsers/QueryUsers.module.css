@@ -16,3 +16,19 @@
   text-align: center;
   color: var(--gray-5);
 }
+
+.permissions {
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.li {
+  list-style: none;
+}
+
+.li::before {
+  content: "•";
+  margin-right: 5px;
+  display: inline-block;
+  scale: 1.2;
+}
