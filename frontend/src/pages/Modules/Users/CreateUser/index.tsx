@@ -8,8 +8,8 @@ import BackButton from "../../../../components/BackButton";
 import ConfirmationModal from "../../../../components/ConfirmationModal";
 import SuccessModal from "../../../../components/SuccessModal";
 import { useState, useEffect } from "react";
-import { usersAPI, permissionsAPI } from "../../../../services/api";
-import type { UserCreate, Permission } from "../../../../services/api";
+import { usersAPI, permissionsAPI, storesAPI } from "../../../../services/api";
+import type { UserCreate, Permission, Store } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
 const translatePermission = (perm: string): string => {
@@ -49,6 +49,7 @@ interface CreateUserFormData {
   email: string;
   isActive: boolean;
   permissions: string[];
+  stores: number[];
   password: string;
   confirmPassword: string;
   firstName: string;
@@ -76,6 +77,7 @@ export default function CreateUser() {
     email: "",
     isActive: true,
     permissions: [],
+    stores: [],
     password: "",
     confirmPassword: "",
     firstName: "",
@@ -91,6 +93,7 @@ export default function CreateUser() {
   const [permissionOptions, setPermissionOptions] = useState<
     { value: string; label: string }[]
   >([]);
+  const [availableStores, setAvailableStores] = useState<Store[]>([]);
 
   useEffect(() => {
     const loadPermissions = async () => {
@@ -105,7 +108,18 @@ export default function CreateUser() {
         console.error("Error loading permissions:", error);
       }
     };
+
+    const loadStores = async () => {
+      try {
+        const response = await storesAPI.getAll();
+        setAvailableStores(response.data);
+      } catch (error) {
+        console.error("Error loading stores:", error);
+      }
+    };
+
     loadPermissions();
+    loadStores();
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -136,6 +150,18 @@ export default function CreateUser() {
       permissions: checked
         ? [...prev.permissions, name]
         : prev.permissions.filter((p) => p !== name),
+    }));
+  };
+
+  const handleStoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    const storeId = parseInt(value);
+
+    setFormData((prev) => ({
+      ...prev,
+      stores: checked
+        ? [...prev.stores, storeId]
+        : prev.stores.filter((id) => id !== storeId),
     }));
   };
 
@@ -176,6 +202,7 @@ export default function CreateUser() {
       email: "",
       isActive: true,
       permissions: [],
+      stores: [],
       password: "",
       confirmPassword: "",
       firstName: "",
@@ -199,6 +226,7 @@ export default function CreateUser() {
         last_name: formData.lastName,
         password: formData.password,
         permissions: formData.permissions,
+        stores: formData.stores,
         is_active: formData.isActive,
       };
       await usersAPI.create(dataToSend);
@@ -208,6 +236,7 @@ export default function CreateUser() {
         email: "",
         isActive: true,
         permissions: [],
+        stores: [],
         password: "",
         confirmPassword: "",
         firstName: "",
@@ -235,6 +264,14 @@ export default function CreateUser() {
   const handleAcceptSuccess = () => {
     setShowSuccessDialog(false);
   };
+
+  // Separar permisos de consulta y gestión
+  const viewPermissions = permissionOptions.filter((p) =>
+    p.label.startsWith("consultar"),
+  );
+  const managePermissions = permissionOptions.filter((p) =>
+    p.label.startsWith("gestionar"),
+  );
 
   return (
     <main>
@@ -317,10 +354,10 @@ export default function CreateUser() {
             onChange={handleIsActiveChange}
           />
         </FieldWrapper>
-        <FieldWrapper label="Permisos" id="permissions">
+        <FieldWrapper label="Permisos de Consulta" id="permissions-view">
           <div className={styles.permissions}>
             <div className={styles.permissionsColumn}>
-              {permissionOptions.slice(0, 5).map((option) => (
+              {viewPermissions.map((option) => (
                 <label key={option.value} className={styles.checkboxLabel}>
                   <input
                     type="checkbox"
@@ -332,8 +369,12 @@ export default function CreateUser() {
                 </label>
               ))}
             </div>
+          </div>
+        </FieldWrapper>
+        <FieldWrapper label="Permisos de Gestión" id="permissions-manage">
+          <div className={styles.permissions}>
             <div className={styles.permissionsColumn}>
-              {permissionOptions.slice(5, 10).map((option) => (
+              {managePermissions.map((option) => (
                 <label key={option.value} className={styles.checkboxLabel}>
                   <input
                     type="checkbox"
@@ -342,6 +383,24 @@ export default function CreateUser() {
                     onChange={handlePermissionChange}
                   />
                   {option.label}
+                </label>
+              ))}
+            </div>
+          </div>
+        </FieldWrapper>
+        <FieldWrapper label="Tiendas Asignadas" id="stores">
+          <div className={styles.permissions}>
+            <div className={styles.permissionsColumn}>
+              {availableStores.map((store) => (
+                <label key={store.id} className={styles.checkboxLabel}>
+                  <input
+                    type="checkbox"
+                    name={`store-${store.id}`}
+                    value={store.id}
+                    checked={formData.stores.includes(store.id)}
+                    onChange={handleStoreChange}
+                  />
+                  {store.number} - {store.name}
                 </label>
               ))}
             </div>

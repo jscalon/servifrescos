@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User, Permission
 from .serializers import UserSerializer, LoginSerializer, PermissionSerializer
+from apps.stores.serializers import StoreSerializer
 
 
 class UserListCreateView(generics.ListCreateAPIView):
@@ -31,6 +32,53 @@ class PermissionListView(generics.ListAPIView):
     queryset = Permission.objects.all()
     serializer_class = PermissionSerializer
     permission_classes = [IsAuthenticated]
+
+
+class UserStoreAssignView(APIView):
+    """Asignar tiendas a un usuario específico (requiere manage_user)"""
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, user_id):
+        if not request.user.has_perm('users.manage_user'):
+            return Response(
+                {'error': 'No tienes permisos para gestionar usuarios'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        try:
+            user = User.objects.get(pk=user_id)
+        except User.DoesNotExist:
+            return Response(
+                {'error': 'Usuario no encontrado'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        store_ids = request.data.get('stores', [])
+        if not isinstance(store_ids, list):
+            return Response(
+                {'error': 'stores debe ser una lista de IDs'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        from apps.stores.models import Store
+        stores = Store.objects.filter(id__in=store_ids)
+        user.stores.set(stores)
+
+        return Response({
+            'message': 'Tiendas asignadas correctamente',
+            'stores': list(user.stores.values('id', 'number', 'name'))
+        })
+
+
+class MyStoresView(APIView):
+    """Obtener las tiendas asignadas al usuario autenticado"""
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        stores = user.stores.all()
+        serializer = StoreSerializer(stores, many=True)
+        return Response(serializer.data)
 
 
 class LoginView(APIView):

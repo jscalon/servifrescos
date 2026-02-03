@@ -3,8 +3,9 @@ import InputText from "../InputText";
 import BackButton from "../BackButton";
 import { useState, useEffect } from "react";
 import Select from "../Select";
-import { storesAPI, type Store, type Price } from "../../services/api";
+import { myStoresAPI, type Store, type Price } from "../../services/api";
 import ExportToExcelButton from "../ExportToExcelButton";
+import { usePermissions } from "../../contexts";
 
 interface QueryPricesBarProps {
   onSearch: (filters: {
@@ -21,26 +22,50 @@ export default function QueryPricesBar({
   onClear,
   filteredData,
 }: QueryPricesBarProps) {
+  const { hasPermission } = usePermissions();
   const [selectedStore, setSelectedStore] = useState<string>("Todos");
-  const [searchArticle, setsearchArticle] = useState<string>("");
+  const [searchArticle, setSearchArticle] = useState<string>("");
   const [selectedActive, setSelectedActive] = useState<string>("Todos");
   const [stores, setStores] = useState<Store[]>([]);
+  const [storesLoaded, setStoresLoaded] = useState<boolean>(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchStores = async () => {
       try {
-        const res = await storesAPI.getAll();
-        setStores(res.data);
+        // Si tiene permisos de precios, obtener sus tiendas asignadas
+        if (hasPermission("view_price") || hasPermission("manage_price")) {
+          const res = await myStoresAPI.getMyStores();
+          if (isMounted) {
+            setStores(res.data);
+            setStoresLoaded(true);
+          }
+        } else {
+          if (isMounted) {
+            setStores([]);
+            setStoresLoaded(true);
+          }
+        }
       } catch (error) {
-        // Error al cargar las tiendas
+        console.error("Error loading stores:", error);
+        if (isMounted) {
+          setStores([]);
+          setStoresLoaded(true);
+        }
       }
     };
+
     fetchStores();
-  }, []);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [hasPermission]);
 
   const handleArticleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const article = e.target.value.toUpperCase();
-    setsearchArticle(article);
+    setSearchArticle(article);
     triggerSearch(article, selectedStore, selectedActive);
   };
 
@@ -65,7 +90,7 @@ export default function QueryPricesBar({
   };
 
   const handleClear = () => {
-    setsearchArticle("");
+    setSearchArticle("");
     setSelectedStore("Todos");
     setSelectedActive("Todos");
     onClear();
@@ -79,6 +104,11 @@ export default function QueryPricesBar({
     }
   };
 
+  // Verificar si el usuario tiene acceso al módulo de precios
+  if (!hasPermission("view_price") && !hasPermission("manage_price")) {
+    return null; // No mostrar nada si no tiene permisos
+  }
+
   return (
     <div className={styles.queryPricesBar}>
       <BackButton to="/modules/prices" />
@@ -91,11 +121,12 @@ export default function QueryPricesBar({
         onChange={handleStoreChange}
       >
         <option value="Todos">Todos</option>
-        {stores.map((s) => (
-          <option key={s.number} value={s.name}>
-            {s.name}
-          </option>
-        ))}
+        {storesLoaded &&
+          stores.map((s) => (
+            <option key={`store-${s.id}`} value={s.name}>
+              {s.name}
+            </option>
+          ))}
       </Select>
       <span className={styles.span}>Artículo:</span>
       <InputText
@@ -122,10 +153,37 @@ export default function QueryPricesBar({
       <ExportToExcelButton
         data={filteredData.map((price) => ({
           ...price,
-          registration_date: price.registration_date ? new Date(price.registration_date).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '',
-          effective_date: price.effective_date ? new Date(price.effective_date).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '',
-          expiration_date: price.expiration_date ? new Date(price.expiration_date).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '',
-          is_active: price.is_active ? 'Sí' : 'No',
+          registration_date: price.registration_date
+            ? new Date(price.registration_date).toLocaleString("es-ES", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })
+            : "",
+          effective_date: price.effective_date
+            ? new Date(price.effective_date).toLocaleString("es-ES", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })
+            : "",
+          expiration_date: price.expiration_date
+            ? new Date(price.expiration_date).toLocaleString("es-ES", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })
+            : "",
+          is_active: price.is_active ? "Sí" : "No",
         }))}
         headers={[
           "Código",

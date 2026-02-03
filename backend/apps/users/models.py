@@ -2,6 +2,28 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
+class UserStore(models.Model):
+    """Modelo intermedio para relación usuario-tienda"""
+    user = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        related_name='user_stores'
+    )
+    store = models.ForeignKey(
+        'stores.Store',
+        on_delete=models.CASCADE,
+        related_name='user_stores'
+    )
+    assigned_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'UserStores'
+        unique_together = ['user', 'store']
+
+    def __str__(self):
+        return f"{self.user.email} - {self.store.name}"
+
+
 class UserManager(BaseUserManager):
     def create_user(self, email, first_name, last_name, password=None, **extra_fields):
         extra_fields.setdefault('password_changed', False)
@@ -39,6 +61,12 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, verbose_name='Email')
     permissions = models.ManyToManyField(
         Permission, blank=True, verbose_name='Permisos')
+    stores = models.ManyToManyField(
+        'stores.Store',
+        through='UserStore',
+        blank=True,
+        verbose_name='Tiendas'
+    )
     password_changed = models.BooleanField(
         default=False, verbose_name='Contraseña Cambiada')
 

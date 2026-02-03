@@ -1,7 +1,6 @@
 import axios, { type AxiosResponse } from "axios";
 
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL;
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -139,6 +138,7 @@ export interface User {
   last_name: string;
   email: string;
   permissions: string[];
+  stores: { id: number; number: number; name: string }[];
   is_active: boolean;
   date_joined: string;
   last_login: string | null;
@@ -151,6 +151,7 @@ export interface UserCreate {
   email: string;
   password: string;
   permissions: string[];
+  stores: number[];
   is_active: boolean;
 }
 
@@ -279,8 +280,23 @@ export const usersAPI = {
     api.patch(`/users/${id}/`, data),
   delete: (id: number): Promise<ApiResponse<void>> =>
     api.delete(`/users/${id}/`),
-  changePassword: (newPassword: string): Promise<ApiResponse<{ message: string }>> =>
+  changePassword: (
+    newPassword: string,
+  ): Promise<ApiResponse<{ message: string }>> =>
     api.post("/users/change-password/", { new_password: newPassword }),
+  updateStores: (
+    userId: number,
+    stores: number[],
+  ): Promise<
+    ApiResponse<{
+      message: string;
+      stores: { id: number; number: number; name: string }[];
+    }>
+  > => api.put(`/users/${userId}/stores/`, { stores }),
+};
+
+export const myStoresAPI = {
+  getMyStores: (): Promise<ApiResponse<Store[]>> => api.get("/my/stores/"),
 };
 
 export const permissionsAPI = {

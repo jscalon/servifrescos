@@ -61,7 +61,7 @@ export default function QueryUsers() {
         // Load users
         const userResponse = await usersAPI.getAll();
         const sortedUsers = userResponse.data.sort(
-          (a, b) =>
+          (a: User, b: User) =>
             new Date(b.date_joined).getTime() -
             new Date(a.date_joined).getTime(),
         );
@@ -187,16 +187,15 @@ export default function QueryUsers() {
                   ))}
               </td>
               <td className={styles.permissions}>
-                {user.permissions
-                  .map(
-                    (perm) =>
-                      permissionOptions.find((opt) => opt.value === perm)
-                        ?.label || perm,
-                  )
-                  .filter((p) => p.startsWith("tiendas..."))
-                  .map((p) => (
-                    <div>{p.slice(10)}</div>
-                  ))}
+                {user.stores && user.stores.length > 0 ? (
+                  user.stores.map((store) => (
+                    <div key={store.id} className={styles.storeTag}>
+                      {store.number} - {store.name}
+                    </div>
+                  ))
+                ) : (
+                  <span className={styles.noStores}>Sin tiendas asignadas</span>
+                )}
               </td>
               <td>
                 {new Date(user.date_joined).toLocaleString("es-ES", {

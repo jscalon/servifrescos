@@ -17,6 +17,41 @@ class PriceViewSet(viewsets.ModelViewSet):
     ordering = ['-registration_date']
     permission_classes = [IsAuthenticated]
 
+    def get_queryset(self):
+        """Filtrar precios por las tiendas asignadas al usuario"""
+        queryset = super().get_queryset()
+        user = self.request.user
+
+        # Obtener permisos del usuario
+        user_permissions = list(
+            user.permissions.values_list('name', flat=True))
+
+        # Si el usuario tiene view_price o manage_price, filtrar por tiendas asignadas
+        if 'view_price' in user_permissions or 'manage_price' in user_permissions:
+            # El usuario solo puede ver precios de tiendas asignadas
+            queryset = queryset.filter(store__in=user.stores.all())
+
+        return queryset
+
+    def perform_create(self, serializer):
+        """Validar que el usuario pueda crear precios en la tienda seleccionada"""
+        user = self.request.user
+        store_id = serializer.validated_data.get('store').id
+
+        # Verificar que el usuario tenga permisos de precios
+        user_permissions = list(
+            user.permissions.values_list('name', flat=True))
+
+        if 'manage_price' not in user_permissions:
+            raise PermissionError('No tienes permisos para crear precios')
+
+        # Verificar que la tienda esté asignada al usuario
+        if not user.stores.filter(id=store_id).exists():
+            raise PermissionError('No tienes acceso a esta tienda')
+
+        # Asignar el usuario que crea el precio
+        serializer.save(created_by=user)
+
     @action(detail=False, methods=['get'])
     def active_prices(self, request):
         """Obtener precios activos por tienda"""
@@ -44,7 +79,3 @@ class PriceViewSet(viewsets.ModelViewSet):
         prices = Price.objects.filter(product_id=product_id, store_id=store_id)
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)
-
-    def perform_create(self, serializer):
-        # Asignar el usuario que crea el precio
-        serializer.save(created_by=self.request.user)

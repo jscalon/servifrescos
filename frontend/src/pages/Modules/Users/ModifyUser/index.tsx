@@ -10,8 +10,10 @@ import { useState, useEffect } from "react";
 import {
   usersAPI,
   permissionsAPI,
+  storesAPI,
   type User,
   type Permission,
+  type Store,
 } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
@@ -37,6 +39,7 @@ interface UserFormData {
   lastName: string;
   isActive: boolean;
   permissions: string[];
+  stores: number[];
 }
 
 export default function ModifyUser() {
@@ -64,6 +67,7 @@ export default function ModifyUser() {
     lastName: "",
     isActive: true,
     permissions: [],
+    stores: [],
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [searching, setSearching] = useState<boolean>(false);
@@ -75,6 +79,7 @@ export default function ModifyUser() {
   const [permissionOptions, setPermissionOptions] = useState<
     { value: string; label: string }[]
   >([]);
+  const [availableStores, setAvailableStores] = useState<Store[]>([]);
 
   useEffect(() => {
     const loadPermissions = async () => {
@@ -89,7 +94,18 @@ export default function ModifyUser() {
         console.error("Error loading permissions:", error);
       }
     };
+
+    const loadStores = async () => {
+      try {
+        const response = await storesAPI.getAll();
+        setAvailableStores(response.data);
+      } catch (error) {
+        console.error("Error loading stores:", error);
+      }
+    };
+
     loadPermissions();
+    loadStores();
   }, []);
 
   const handleCurrentEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +130,18 @@ export default function ModifyUser() {
       permissions: checked
         ? [...prev.permissions, name]
         : prev.permissions.filter((p) => p !== name),
+    }));
+  };
+
+  const handleStoreChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = e.target;
+    const storeId = parseInt(value);
+
+    setFormData((prev) => ({
+      ...prev,
+      stores: checked
+        ? [...prev.stores, storeId]
+        : prev.stores.filter((id) => id !== storeId),
     }));
   };
 
@@ -149,6 +177,7 @@ export default function ModifyUser() {
           lastName: user.last_name,
           isActive: user.is_active,
           permissions: user.permissions || [],
+          stores: user.stores?.map((s) => s.id) || [],
         });
         setUserId(user.id);
         setUserFound(true);
@@ -191,6 +220,7 @@ export default function ModifyUser() {
         first_name: formData.firstName,
         last_name: formData.lastName,
         permissions: formData.permissions,
+        stores: formData.stores,
         is_active: formData.isActive,
       });
       setShowSuccessDialog(true);
@@ -204,6 +234,7 @@ export default function ModifyUser() {
         lastName: "",
         isActive: true,
         permissions: [],
+        stores: [],
       });
       setEmailError("");
       setUserFound(false);
@@ -232,6 +263,7 @@ export default function ModifyUser() {
       lastName: "",
       isActive: true,
       permissions: [],
+      stores: [],
     });
     setError("");
     setEmailError("");
@@ -262,6 +294,14 @@ export default function ModifyUser() {
       searchUser();
     }
   };
+
+  // Separar permisos de consulta y gestión
+  const viewPermissions = permissionOptions.filter((p) =>
+    p.label.startsWith("consultar"),
+  );
+  const managePermissions = permissionOptions.filter((p) =>
+    p.label.startsWith("gestionar"),
+  );
 
   return (
     <main>
@@ -338,10 +378,10 @@ export default function ModifyUser() {
                 onChange={handleIsActiveChange}
               />
             </FieldWrapper>
-            <FieldWrapper label="Permisos" id="permissions">
+            <FieldWrapper label="Permisos de Consulta" id="permissions-view">
               <div className={styles.permissions}>
                 <div className={styles.permissionsColumn}>
-                  {permissionOptions.slice(0, 5).map((option) => (
+                  {viewPermissions.map((option) => (
                     <label key={option.value} className={styles.checkboxLabel}>
                       <input
                         type="checkbox"
@@ -353,8 +393,12 @@ export default function ModifyUser() {
                     </label>
                   ))}
                 </div>
+              </div>
+            </FieldWrapper>
+            <FieldWrapper label="Permisos de Gestión" id="permissions-manage">
+              <div className={styles.permissions}>
                 <div className={styles.permissionsColumn}>
-                  {permissionOptions.slice(5, 10).map((option) => (
+                  {managePermissions.map((option) => (
                     <label key={option.value} className={styles.checkboxLabel}>
                       <input
                         type="checkbox"
@@ -363,6 +407,24 @@ export default function ModifyUser() {
                         onChange={handlePermissionChange}
                       />
                       {option.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </FieldWrapper>
+            <FieldWrapper label="Tiendas Asignadas" id="stores">
+              <div className={styles.permissions}>
+                <div className={styles.permissionsColumn}>
+                  {availableStores.map((store) => (
+                    <label key={store.id} className={styles.checkboxLabel}>
+                      <input
+                        type="checkbox"
+                        name={`store-${store.id}`}
+                        value={store.id}
+                        checked={formData.stores.includes(store.id)}
+                        onChange={handleStoreChange}
+                      />
+                      {store.number} - {store.name}
                     </label>
                   ))}
                 </div>

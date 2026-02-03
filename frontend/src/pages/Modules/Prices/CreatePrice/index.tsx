@@ -11,7 +11,7 @@ import SuccessModal from "../../../../components/SuccessModal";
 import { useState, useEffect } from "react";
 import {
   productsAPI,
-  storesAPI,
+  myStoresAPI,
   pricesAPI,
   type Store,
 } from "../../../../services/api";
@@ -67,10 +67,11 @@ export default function CreatePrice() {
   useEffect(() => {
     const fetchStores = async () => {
       try {
-        const res = await storesAPI.getAll();
+        const res = await myStoresAPI.getMyStores();
         setStores(res.data);
       } catch (error) {
-        // Error al cargar las tiendas
+        console.error("Error loading stores:", error);
+        setStores([]);
       }
     };
     fetchStores();
@@ -169,7 +170,13 @@ export default function CreatePrice() {
       setShowSuccessDialog(true);
       handleReset();
     } catch (error: any) {
-      setError("Error al crear el precio");
+      if (error.response?.data?.detail) {
+        setError(error.response.data.detail);
+      } else {
+        setError(
+          "Error al crear el precio. Verifica que tengas acceso a esta tienda.",
+        );
+      }
     } finally {
       setLoading(false);
     }
