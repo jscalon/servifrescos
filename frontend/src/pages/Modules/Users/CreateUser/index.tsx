@@ -14,18 +14,32 @@ import { usePermissions } from "../../../../contexts";
 
 const translatePermission = (perm: string): string => {
   const translations: Record<string, string> = {
-    view_product: "consultar productos",
-    manage_product: "gestionar productos",
-    view_price: "consultar precios",
-    manage_price: "gestionar precios",
-    view_category: "consultar categorías",
-    manage_category: "gestionar categorías",
-    view_store: "consultar tiendas",
-    manage_store: "gestionar tiendas",
-    view_user: "consultar usuarios",
-    manage_user: "gestionar usuarios",
+    view_product: "Productos",
+    manage_product: "Productos",
+    view_price: "Precios",
+    manage_price: "Precios",
+    view_category: "Categorías",
+    manage_category: "Categorías",
+    view_store: "Tiendas",
+    manage_store: "Tiendas",
+    view_user: "Usuarios",
+    manage_user: "Usuarios",
   };
   return translations[perm] || perm;
+};
+
+// Orden de permisos: Productos, Precios, Categorías, Tiendas, Usuarios
+const permissionOrder: Record<string, number> = {
+  view_product: 1,
+  manage_product: 1,
+  view_price: 2,
+  manage_price: 2,
+  view_category: 3,
+  manage_category: 3,
+  view_store: 4,
+  manage_store: 4,
+  view_user: 5,
+  manage_user: 5,
 };
 
 const validatePassword = (password: string): string[] => {
@@ -265,13 +279,13 @@ export default function CreateUser() {
     setShowSuccessDialog(false);
   };
 
-  // Separar permisos de consulta y gestión
-  const viewPermissions = permissionOptions.filter((p) =>
-    p.label.startsWith("consultar"),
-  );
-  const managePermissions = permissionOptions.filter((p) =>
-    p.label.startsWith("gestionar"),
-  );
+  // Separar permisos de consulta y gestión con orden específico
+  const viewPermissions = permissionOptions
+    .filter((p) => p.value.startsWith("view_"))
+    .sort((a, b) => permissionOrder[a.value] - permissionOrder[b.value]);
+  const managePermissions = permissionOptions
+    .filter((p) => p.value.startsWith("manage_"))
+    .sort((a, b) => permissionOrder[a.value] - permissionOrder[b.value]);
 
   return (
     <main>
@@ -354,55 +368,60 @@ export default function CreateUser() {
             onChange={handleIsActiveChange}
           />
         </FieldWrapper>
-        <FieldWrapper label="Permisos de Consulta" id="permissions-view">
-          <div className={styles.permissions}>
-            <div className={styles.permissionsColumn}>
-              {viewPermissions.map((option) => (
-                <label key={option.value} className={styles.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    name={option.value}
-                    checked={formData.permissions.includes(option.value)}
-                    onChange={handlePermissionChange}
-                  />
-                  {option.label}
-                </label>
-              ))}
+        <h3 className="h-dark">Permisos</h3>
+        <div className={styles.rowPemissions}>
+          <FieldWrapper label="Consulta" id="permissions-view">
+            <div className={styles.permissions}>
+              <div className={styles.permissionsColumn}>
+                {viewPermissions.map((option) => (
+                  <label key={option.value} className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      name={option.value}
+                      checked={formData.permissions.includes(option.value)}
+                      onChange={handlePermissionChange}
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
-        </FieldWrapper>
-        <FieldWrapper label="Permisos de Gestión" id="permissions-manage">
-          <div className={styles.permissions}>
-            <div className={styles.permissionsColumn}>
-              {managePermissions.map((option) => (
-                <label key={option.value} className={styles.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    name={option.value}
-                    checked={formData.permissions.includes(option.value)}
-                    onChange={handlePermissionChange}
-                  />
-                  {option.label}
-                </label>
-              ))}
+          </FieldWrapper>
+          <FieldWrapper label="Gestión" id="permissions-manage">
+            <div className={styles.permissions}>
+              <div className={styles.permissionsColumn}>
+                {managePermissions.map((option) => (
+                  <label key={option.value} className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      name={option.value}
+                      checked={formData.permissions.includes(option.value)}
+                      onChange={handlePermissionChange}
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </div>
             </div>
-          </div>
-        </FieldWrapper>
-        <FieldWrapper label="Tiendas Asignadas" id="stores">
+          </FieldWrapper>
+        </div>
+        <FieldWrapper label="Tiendas" id="stores" className={styles.stores}>
           <div className={styles.permissions}>
             <div className={styles.permissionsColumn}>
-              {availableStores.map((store) => (
-                <label key={store.id} className={styles.checkboxLabel}>
-                  <input
-                    type="checkbox"
-                    name={`store-${store.id}`}
-                    value={store.id}
-                    checked={formData.stores.includes(store.id)}
-                    onChange={handleStoreChange}
-                  />
-                  {store.number} - {store.name}
-                </label>
-              ))}
+              {availableStores
+                .sort((a, b) => a.number - b.number)
+                .map((store) => (
+                  <label key={store.id} className={styles.checkboxLabel}>
+                    <input
+                      type="checkbox"
+                      name={`store-${store.id}`}
+                      value={store.id}
+                      checked={formData.stores.includes(store.id)}
+                      onChange={handleStoreChange}
+                    />
+                    {store.number} - {store.name}
+                  </label>
+                ))}
             </div>
           </div>
         </FieldWrapper>

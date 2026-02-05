@@ -29,6 +29,11 @@ main > .form {
   flex: 1;
 }
 
+.rowPemissions {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 .rowButtons {
   align-self: center;
 }
@@ -42,6 +47,10 @@ main > .form {
   flex: 1;
   display: flex;
   flex-direction: column;
+}
+
+.stores {
+  align-self: center;
 }
 
 .checkboxLabel {

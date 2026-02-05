@@ -122,11 +122,13 @@ export default function QueryPricesBar({
       >
         <option value="Todos">Todos</option>
         {storesLoaded &&
-          stores.map((s) => (
-            <option key={`store-${s.id}`} value={s.name}>
-              {s.name}
-            </option>
-          ))}
+          stores
+            .sort((a, b) => a.number - b.number)
+            .map((s) => (
+              <option key={`store-${s.id}`} value={s.name}>
+                {s.name}
+              </option>
+            ))}
       </Select>
       <span className={styles.span}>Artículo:</span>
       <InputText

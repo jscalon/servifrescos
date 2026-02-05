@@ -246,11 +246,13 @@ export default function CreatePrice() {
               disabled={productFound}
             >
               <option value="">(seleccionar)</option>
-              {stores.map((s) => (
-                <option key={s.number} value={s.name}>
-                  {s.name}
-                </option>
-              ))}
+              {stores
+                .sort((a, b) => a.number - b.number)
+                .map((s) => (
+                  <option key={s.number} value={s.name}>
+                    {s.name}
+                  </option>
+                ))}
             </Select>
           </FieldWrapper>
           <FieldWrapper

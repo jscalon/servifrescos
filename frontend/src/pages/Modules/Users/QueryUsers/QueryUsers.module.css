@@ -12,14 +12,13 @@
   font-weight: 500;
 }
 
-.noUsers {
-  text-align: center;
-  color: var(--gray-5);
-}
-
 .permissions {
   text-align: left;
   text-transform: capitalize;
+}
+
+.stores {
+  text-align: left;
 }
 
 .li {

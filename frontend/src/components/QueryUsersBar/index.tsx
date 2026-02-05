@@ -105,7 +105,7 @@ export default function QueryUsersBar({
         value={permissions}
         onChange={handlePermissionsChange}
         onKeyDown={handleKeyDown}
-        placeholder="Permisos..."
+        placeholder="Consulta, Gestión o Tiendas..."
       />
       <span className={styles.span}>Activo:</span>
       <Select
@@ -124,12 +124,30 @@ export default function QueryUsersBar({
           nombre_completo: `${user.first_name} ${user.last_name}`,
           email: user.email,
           permisos: user.permissions.map(translatePermission).join(", "),
-          fecha_creacion: user.date_joined ? new Date(user.date_joined).toLocaleString('es-ES') : '',
-          ultimo_login: user.last_login ? new Date(user.last_login).toLocaleString('es-ES') : 'Nunca',
-          activo: user.is_active ? 'Sí' : 'No',
+          fecha_creacion: user.date_joined
+            ? new Date(user.date_joined).toLocaleString("es-ES")
+            : "",
+          ultimo_login: user.last_login
+            ? new Date(user.last_login).toLocaleString("es-ES")
+            : "Nunca",
+          activo: user.is_active ? "Sí" : "No",
         }))}
-        headers={["Nombre Completo", "Email", "Permisos", "Fecha de Creación", "Fecha de Último Login", "Activo"]}
-        keys={["nombre_completo", "email", "permisos", "fecha_creacion", "ultimo_login", "activo"]}
+        headers={[
+          "Nombre Completo",
+          "Email",
+          "Permisos",
+          "Fecha de Creación",
+          "Fecha de Último Login",
+          "Activo",
+        ]}
+        keys={[
+          "nombre_completo",
+          "email",
+          "permisos",
+          "fecha_creacion",
+          "ultimo_login",
+          "activo",
+        ]}
         fileName="Usuarios.xlsx"
       />
     </div>

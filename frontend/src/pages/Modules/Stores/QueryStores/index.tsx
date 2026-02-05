@@ -84,7 +84,9 @@ export default function QueryStores() {
           </tr>
         </thead>
         <tbody>
-          {filteredStores.map((store) => (
+          {filteredStores
+            .sort((a, b) => a.number - b.number)
+            .map((store) => (
             <tr key={store.number}>
               <td>{store.number}</td>
               <td>{store.name}</td>

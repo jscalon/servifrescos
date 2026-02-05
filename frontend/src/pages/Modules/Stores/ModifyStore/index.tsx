@@ -177,11 +177,13 @@ export default function ModifyStore() {
             onChange={(e) => setSelectedStore(e.target.value)}
           >
             <option value="">Seleccionar tienda</option>
-            {stores.map((store) => (
-              <option key={store.number} value={store.number.toString()}>
-                {store.number} - {store.name}
-              </option>
-            ))}
+            {stores
+              .sort((a, b) => a.number - b.number)
+              .map((store) => (
+                <option key={store.number} value={store.number.toString()}>
+                  {store.number} - {store.name}
+                </option>
+              ))}
           </Select>
         </FieldWrapper>
         <div className={styles.row}>

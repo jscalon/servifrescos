@@ -168,38 +168,65 @@ export default function QueryPrices() {
                 <td>{price.product_type}</td>
                 <td>{price.price}</td>
                 <td>
-                  {new Date(price.registration_date).toLocaleString("es-ES", {
-                    hour12: false,
-                    timeZone: "America/Caracas",
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {[
+                    new Date(price.registration_date).toLocaleString("es-ES", {
+                      timeZone: "America/Caracas",
+                      hour12: false,
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    }),
+                    <br />,
+                    new Date(price.registration_date).toLocaleString("es-ES", {
+                      timeZone: "America/Caracas",
+                      hour12: false,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }),
+                  ]}
                 </td>
                 <td>
-                  {new Date(price.effective_date).toLocaleString("es-ES", {
-                    hour12: false,
-                    timeZone: "America/Caracas",
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
+                  {[
+                    new Date(price.effective_date).toLocaleString("es-ES", {
+                      timeZone: "America/Caracas",
+                      hour12: false,
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    }),
+                    <br />,
+                    new Date(price.effective_date).toLocaleString("es-ES", {
+                      timeZone: "America/Caracas",
+                      hour12: false,
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }),
+                  ]}
                 </td>
                 <td>
                   {price.expiration_date
-                    ? new Date(price.expiration_date).toLocaleString("es-ES", {
-                        hour12: false,
-                        timeZone: "America/Caracas",
-                        day: "2-digit",
-                        month: "2-digit",
-                        year: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })
+                    ? [
+                        new Date(price.expiration_date).toLocaleString(
+                          "es-ES",
+                          {
+                            timeZone: "America/Caracas",
+                            hour12: false,
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          },
+                        ),
+                        <br />,
+                        new Date(price.expiration_date).toLocaleString(
+                          "es-ES",
+                          {
+                            timeZone: "America/Caracas",
+                            hour12: false,
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          },
+                        ),
+                      ]
                     : ""}
                 </td>
                 <td>{price.is_active ? "✅" : "❌"}</td>

@@ -11,18 +11,32 @@ import { usePermissions } from "../../../../contexts";
 
 const translatePermission = (perm: string): string => {
   const translations: Record<string, string> = {
-    view_product: "consultar productos",
-    manage_product: "gestionar productos",
-    view_price: "consultar precios",
-    manage_price: "gestionar precios",
-    view_category: "consultar categorías",
-    manage_category: "gestionar categorías",
-    view_store: "consultar tiendas",
-    manage_store: "gestionar tiendas",
-    view_user: "consultar usuarios",
-    manage_user: "gestionar usuarios",
+    view_product: "productos",
+    manage_product: "productos",
+    view_price: "precios",
+    manage_price: "precios",
+    view_category: "categorías",
+    manage_category: "categorías",
+    view_store: "tiendas",
+    manage_store: "tiendas",
+    view_user: "usuarios",
+    manage_user: "usuarios",
   };
   return translations[perm] || perm;
+};
+
+// Orden de permisos: Productos, Precios, Categorías, Tiendas, Usuarios
+const permissionOrder: Record<string, number> = {
+  view_product: 1,
+  manage_product: 1,
+  view_price: 2,
+  manage_price: 2,
+  view_category: 3,
+  manage_category: 3,
+  view_store: 4,
+  manage_store: 4,
+  view_user: 5,
+  manage_user: 5,
 };
 
 export default function QueryUsers() {
@@ -77,6 +91,20 @@ export default function QueryUsers() {
     loadData();
   }, []);
 
+  // Obtener permisos de consulta ordenados
+  const getViewPermissions = () => {
+    return permissionOptions
+      .filter((p) => p.value.startsWith("view_"))
+      .sort((a, b) => permissionOrder[a.value] - permissionOrder[b.value]);
+  };
+
+  // Obtener permisos de gestión ordenados
+  const getManagePermissions = () => {
+    return permissionOptions
+      .filter((p) => p.value.startsWith("manage_"))
+      .sort((a, b) => permissionOrder[a.value] - permissionOrder[b.value]);
+  };
+
   const handleSearch = (filters: {
     nameEmail: string;
     permissions: string;
@@ -97,13 +125,26 @@ export default function QueryUsers() {
 
     if (filters.permissions.trim()) {
       const permissionsLower = filters.permissions.toLowerCase();
-      filtered = filtered.filter((user) =>
-        user.permissions.some((perm) => {
-          const label =
-            permissionOptions.find((opt) => opt.value === perm)?.label || perm;
-          return label.toLowerCase().includes(permissionsLower);
-        }),
-      );
+      filtered = filtered.filter((user) => {
+        // Buscar en permisos de consulta
+        const viewPerms = getViewPermissions()
+          .filter((opt) => user.permissions.includes(opt.value))
+          .map((opt) => opt.label.toLowerCase());
+        
+        // Buscar en permisos de gestión
+        const managePerms = getManagePermissions()
+          .filter((opt) => user.permissions.includes(opt.value))
+          .map((opt) => opt.label.toLowerCase());
+        
+        // Buscar en tiendas
+        const storesText = user.stores
+          ?.map((s) => `${s.number} - ${s.name}`.toLowerCase())
+          .join(" ") || "";
+        
+        const allContent = [...viewPerms, ...managePerms, storesText].join(" ");
+        
+        return allContent.includes(permissionsLower);
+      });
     }
 
     if (filters.active !== "Todos") {
@@ -152,78 +193,93 @@ export default function QueryUsers() {
             <th>Consulta</th>
             <th>Gestión</th>
             <th>Tiendas</th>
-            <th>Fecha de Creación</th>
-            <th>Fecha de Último Login</th>
+            <th>Fecha de Creacion</th>
+            <th>Fecha de Ultimo Login</th>
             <th>Activo</th>
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user) => (
-            <tr key={user.id}>
-              <td>{`${user.first_name} ${user.last_name}`}</td>
-              <td>{user.email}</td>
-              <td className={styles.permissions}>
-                {user.permissions
-                  .map(
-                    (perm) =>
-                      permissionOptions.find((opt) => opt.value === perm)
-                        ?.label || perm,
-                  )
-                  .filter((p) => p.startsWith("consultar"))
-                  .map((p) => (
-                    <li className={styles.li}>{p.slice(10)}</li>
-                  ))}
-              </td>
-              <td className={styles.permissions}>
-                {user.permissions
-                  .map(
-                    (perm) =>
-                      permissionOptions.find((opt) => opt.value === perm)
-                        ?.label || perm,
-                  )
-                  .filter((p) => p.startsWith("gestionar"))
-                  .map((p) => (
-                    <li className={styles.li}>{p.slice(10)}</li>
-                  ))}
-              </td>
-              <td className={styles.permissions}>
-                {user.stores && user.stores.length > 0 ? (
-                  user.stores.map((store) => (
-                    <div key={store.id} className={styles.storeTag}>
-                      {store.number} - {store.name}
-                    </div>
-                  ))
-                ) : (
-                  <span className={styles.noStores}>Sin tiendas asignadas</span>
-                )}
-              </td>
-              <td>
-                {new Date(user.date_joined).toLocaleString("es-ES", {
-                  timeZone: "America/Caracas",
-                  hour12: false,
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </td>
-              <td>
-                {user.last_login
-                  ? new Date(user.last_login).toLocaleString("es-ES", {
+          {filteredUsers.map((user) => {
+            const viewPermsOrdered = getViewPermissions();
+            const managePermsOrdered = getManagePermissions();
+            return (
+              <tr key={user.id}>
+                <td>{`${user.first_name} ${user.last_name}`}</td>
+                <td>
+                  {user.email.split("@")[0]}
+                  <br />@{user.email.split("@")[1]}
+                </td>
+                <td className={styles.permissions}>
+                  {viewPermsOrdered
+                    .filter((opt) => user.permissions.includes(opt.value))
+                    .map((opt) => (
+                      <li key={opt.value} className={styles.li}>
+                        {opt.label}
+                      </li>
+                    ))}
+                </td>
+                <td className={styles.permissions}>
+                  {managePermsOrdered
+                    .filter((opt) => user.permissions.includes(opt.value))
+                    .map((opt) => (
+                      <li key={opt.value} className={styles.li}>
+                        {opt.label}
+                      </li>
+                    ))}
+                </td>
+                <td className={styles.stores}>
+                  {user.stores &&
+                    user.stores.length > 0 &&
+                    user.stores
+                      .sort((a, b) => a.number - b.number)
+                      .map((store) => (
+                        <div key={store.id} className={styles.storeTag}>
+                          {store.number} - {store.name}
+                        </div>
+                      ))}
+                </td>
+                <td>
+                  {[
+                    new Date(user.date_joined).toLocaleString("es-ES", {
                       timeZone: "America/Caracas",
                       hour12: false,
                       day: "2-digit",
                       month: "2-digit",
                       year: "numeric",
+                    }),
+                    <br />,
+                    new Date(user.date_joined).toLocaleString("es-ES", {
+                      timeZone: "America/Caracas",
+                      hour12: false,
                       hour: "2-digit",
                       minute: "2-digit",
-                    })
-                  : "Nunca"}
-              </td>
-              <td>{user.is_active ? "✅" : "❌"}</td>
-            </tr>
-          ))}
+                    }),
+                  ]}
+                </td>
+                <td>
+                  {user.last_login
+                    ? [
+                        new Date(user.last_login).toLocaleString("es-ES", {
+                          timeZone: "America/Caracas",
+                          hour12: false,
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        }),
+                        <br />,
+                        new Date(user.last_login).toLocaleString("es-ES", {
+                          timeZone: "America/Caracas",
+                          hour12: false,
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }),
+                      ]
+                    : "Nunca"}
+                </td>
+                <td>{user.is_active ? "✅" : "❌"}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       {filteredUsers.length === 0 && (
