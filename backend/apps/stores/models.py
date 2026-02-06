@@ -7,7 +7,7 @@ class Store(models.Model):
     address = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.number} - {self.name}"
+        return f"{self.number}. {self.name}"
 
     class Meta:
         db_table = 'Stores'

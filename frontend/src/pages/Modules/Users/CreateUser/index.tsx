@@ -419,7 +419,7 @@ export default function CreateUser() {
                       checked={formData.stores.includes(store.id)}
                       onChange={handleStoreChange}
                     />
-                    {store.number} - {store.name}
+                    {store.name}
                   </label>
                 ))}
             </div>

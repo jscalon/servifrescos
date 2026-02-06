@@ -193,8 +193,8 @@ export default function QueryUsers() {
             <th>Consulta</th>
             <th>Gestión</th>
             <th>Tiendas</th>
-            <th>Fecha de Creacion</th>
-            <th>Fecha de Ultimo Login</th>
+            <th>Fecha de Creación</th>
+            <th>Fecha de Último Login</th>
             <th>Activo</th>
           </tr>
         </thead>
@@ -227,14 +227,14 @@ export default function QueryUsers() {
                       </li>
                     ))}
                 </td>
-                <td className={styles.stores}>
+                <td className={styles.permissions}>
                   {user.stores &&
                     user.stores.length > 0 &&
                     user.stores
                       .sort((a, b) => a.number - b.number)
                       .map((store) => (
-                        <div key={store.id} className={styles.storeTag}>
-                          {store.number} - {store.name}
+                        <div key={store.id} className={styles.li}>
+                          {store.name.toLowerCase()}
                         </div>
                       ))}
                 </td>

@@ -181,7 +181,7 @@ export default function ModifyStore() {
               .sort((a, b) => a.number - b.number)
               .map((store) => (
                 <option key={store.number} value={store.number.toString()}>
-                  {store.number} - {store.name}
+                  {store.number}. {store.name}
                 </option>
               ))}
           </Select>

@@ -449,7 +449,7 @@ export default function ModifyUser() {
                           checked={formData.stores.includes(store.id)}
                           onChange={handleStoreChange}
                         />
-                        {store.number} - {store.name}
+                        {store.name}
                       </label>
                     ))}
                 </div>

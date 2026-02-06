@@ -11,8 +11,12 @@
   background: var(--gray-D);
 }
 
-.queryUsersBar > .select,
 .queryUsersBar > .input {
+  min-width: 0;
+  flex: 2;
+}
+
+.queryUsersBar > .select {
   min-width: 0;
   flex: 1;
 }

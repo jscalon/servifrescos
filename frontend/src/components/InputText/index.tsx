@@ -38,6 +38,7 @@ export default function InputText({
       disabled={disabled}
       onChange={onChange}
       onKeyDown={onKeyDown}
+      autoComplete="off"
     />
   );
 }
