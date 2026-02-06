@@ -170,11 +170,23 @@ export default function CreatePrice() {
       setShowSuccessDialog(true);
       handleReset();
     } catch (error: any) {
-      if (error.response?.data?.detail) {
+      // Verificar si hay errores específicos por campo
+      if (error.response?.data?.price) {
+        // Error específico del campo precio
+        const priceError = error.response.data.price;
+        setError(Array.isArray(priceError) ? priceError[0] : priceError);
+      } else if (error.response?.data?.detail) {
+        // Error general
         setError(error.response.data.detail);
+      } else if (typeof error.response?.data === "object") {
+        // Errores de múltiples campos - tomar el primer error
+        const firstError = Object.values(error.response.data)[0];
+        setError(
+          Array.isArray(firstError) ? firstError[0] : String(firstError),
+        );
       } else {
         setError(
-          "Error al crear el precio. Verifica que tengas acceso a esta tienda.",
+          "Error al crear el precio. Verifica que los datos sean correctos.",
         );
       }
     } finally {
@@ -310,6 +322,7 @@ export default function CreatePrice() {
                   value={formData.price}
                   onChange={handleInputChange}
                   required
+                  step="0.01"
                 />
               </FieldWrapper>
               <FieldWrapper label="Fecha de efectividad" id="effective_date">

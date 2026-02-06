@@ -67,7 +67,7 @@ export default function CreateStore() {
     setError("");
 
     try {
-      const dataToSend: Omit<Store, 'id'> = {
+      const dataToSend: Omit<Store, "id"> = {
         number: parseInt(formData.number) || 0,
         name: formData.name,
         address: formData.address,
@@ -83,7 +83,15 @@ export default function CreateStore() {
       console.error("Error creando tienda:", error);
 
       if (error.response?.status === 400 && error.response?.data?.number) {
-        setError("Error creando tienda: Ya existe una tienda con ese número.");
+        const numberError = error.response.data.number;
+        setError(Array.isArray(numberError) ? numberError[0] : numberError);
+      } else if (error.response?.data?.detail) {
+        setError(error.response.data.detail);
+      } else if (typeof error.response?.data === "object") {
+        const firstError = Object.values(error.response.data)[0];
+        setError(
+          Array.isArray(firstError) ? firstError[0] : String(firstError),
+        );
       } else {
         setError("Error al crear la tienda. Inténtalo de nuevo.");
       }
@@ -141,6 +149,8 @@ export default function CreateStore() {
               name="number"
               value={formData.number}
               onChange={handleInputChange}
+              min="1"
+              step="1"
             />
           </FieldWrapper>
           <FieldWrapper label="Nombre" id="name">

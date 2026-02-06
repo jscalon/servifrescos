@@ -12,6 +12,16 @@ class PriceSerializer(serializers.ModelSerializer):
     status = serializers.CharField(read_only=True)
     created_by_username = serializers.CharField(
         source='created_by.email', read_only=True)
+    price = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        max_value=99999999.99,
+        required=True,
+        error_messages={
+            'max_decimal_places': 'El precio debe tener como máximo 2 decimales.',
+            'invalid': 'El precio debe ser un número válido.',
+        }
+    )
 
     class Meta:
         model = Price

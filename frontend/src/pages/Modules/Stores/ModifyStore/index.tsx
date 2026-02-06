@@ -114,8 +114,14 @@ export default function ModifyStore() {
     } catch (error: any) {
       console.error("Error modificando tienda:", error);
       if (error.response?.status === 400 && error.response?.data?.number) {
+        const numberError = error.response.data.number;
+        setError(Array.isArray(numberError) ? numberError[0] : numberError);
+      } else if (error.response?.data?.detail) {
+        setError(error.response.data.detail);
+      } else if (typeof error.response?.data === "object") {
+        const firstError = Object.values(error.response.data)[0];
         setError(
-          "Error modificando tienda: Ya existe una tienda con ese número.",
+          Array.isArray(firstError) ? firstError[0] : String(firstError),
         );
       } else {
         setError("Error al modificar la tienda. Inténtalo de nuevo.");
@@ -193,6 +199,8 @@ export default function ModifyStore() {
               name="number"
               value={formData.number}
               onChange={handleInputChange}
+              min="1"
+              step="1"
             />
           </FieldWrapper>
           <FieldWrapper label="Nombre" id="name">
