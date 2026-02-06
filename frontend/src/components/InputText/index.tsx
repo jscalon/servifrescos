@@ -11,6 +11,7 @@ interface InputTextProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   className?: string;
+  autoComplete?: string;
 }
 
 export default function InputText({
@@ -24,6 +25,7 @@ export default function InputText({
   onChange,
   onKeyDown,
   className = "",
+  autoComplete = "off"
 }: InputTextProps) {
   return (
     <input
@@ -38,7 +40,7 @@ export default function InputText({
       disabled={disabled}
       onChange={onChange}
       onKeyDown={onKeyDown}
-      autoComplete="off"
+      autoComplete={autoComplete}
     />
   );
 }

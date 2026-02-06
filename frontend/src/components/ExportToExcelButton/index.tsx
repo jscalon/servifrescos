@@ -94,7 +94,7 @@ export default function ExportToExcelButton({
 
       // Autoajustar columnas
       headers.forEach((_, colIndex) => {
-        const minWidth = 10;
+        const minWidth = 5;
         const maxWidth = 40; // Ancho máximo para forzar wrap en textos largos
         let columnWidth = minWidth;
         worksheet.eachRow((row) => {

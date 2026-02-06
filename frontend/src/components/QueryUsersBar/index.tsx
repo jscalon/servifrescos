@@ -6,22 +6,6 @@ import Select from "../Select";
 import ExportToExcelButton from "../ExportToExcelButton";
 import { type User } from "../../services/api";
 
-const translatePermission = (perm: string): string => {
-  const translations: Record<string, string> = {
-    view_product: "consultar productos",
-    manage_product: "gestionar productos",
-    view_price: "consultar precios",
-    manage_price: "gestionar precios",
-    view_category: "consultar categorías",
-    manage_category: "gestionar categorías",
-    view_store: "consultar tiendas",
-    manage_store: "gestionar tiendas",
-    view_user: "consultar usuarios",
-    manage_user: "gestionar usuarios",
-  };
-  return translations[perm] || perm;
-};
-
 interface QueryUsersBarProps {
   onSearch: (filters: {
     nameEmail: string;
@@ -120,22 +104,59 @@ export default function QueryUsersBar({
         <option>❌</option>
       </Select>
       <ExportToExcelButton
-        data={filteredData.map((user) => ({
-          nombre_completo: `${user.first_name} ${user.last_name}`,
-          email: user.email,
-          permisos: user.permissions.map(translatePermission).join(", "),
-          fecha_creacion: user.date_joined
-            ? new Date(user.date_joined).toLocaleString("es-ES")
-            : "",
-          ultimo_login: user.last_login
-            ? new Date(user.last_login).toLocaleString("es-ES")
-            : "Nunca",
-          activo: user.is_active ? "Sí" : "No",
-        }))}
+        data={filteredData.map((user) => {
+          // Permisos de consulta ordenados
+          const viewPerms = [
+            { value: "view_product", label: "Productos" },
+            { value: "view_price", label: "Precios" },
+            { value: "view_category", label: "Categorías" },
+            { value: "view_store", label: "Tiendas" },
+            { value: "view_user", label: "Usuarios" },
+          ]
+            .filter((p) => user.permissions.includes(p.value))
+            .map((p) => p.label)
+            .join(", ");
+
+          // Permisos de gestión ordenados
+          const managePerms = [
+            { value: "manage_product", label: "Productos" },
+            { value: "manage_price", label: "Precios" },
+            { value: "manage_category", label: "Categorías" },
+            { value: "manage_store", label: "Tiendas" },
+            { value: "manage_user", label: "Usuarios" },
+          ]
+            .filter((p) => user.permissions.includes(p.value))
+            .map((p) => p.label)
+            .join(", ");
+
+          // Tiendas ordenadas por número
+          const storesText =
+            user.stores
+              ?.sort((a, b) => a.number - b.number)
+              .map((s) => s.name)
+              .join(", ") || "";
+
+          return {
+            nombre_completo: `${user.first_name} ${user.last_name}`,
+            email: user.email,
+            consulta: viewPerms,
+            gestion: managePerms,
+            tiendas: storesText,
+            fecha_creacion: user.date_joined
+              ? new Date(user.date_joined).toLocaleString("es-ES")
+              : "",
+            ultimo_login: user.last_login
+              ? new Date(user.last_login).toLocaleString("es-ES")
+              : "Nunca",
+            activo: user.is_active ? "Sí" : "No",
+          };
+        })}
         headers={[
           "Nombre Completo",
           "Email",
-          "Permisos",
+          "Consulta",
+          "Gestión",
+          "Tiendas",
           "Fecha de Creación",
           "Fecha de Último Login",
           "Activo",
@@ -143,7 +164,9 @@ export default function QueryUsersBar({
         keys={[
           "nombre_completo",
           "email",
-          "permisos",
+          "consulta",
+          "gestion",
+          "tiendas",
           "fecha_creacion",
           "ultimo_login",
           "activo",

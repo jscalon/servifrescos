@@ -56,6 +56,7 @@ export default function Login() {
           className={styles.inputText}
           value={email}
           onChange={handleEmailChange}
+          autoComplete="on"
         />
         <InputPassword
           id="password"
