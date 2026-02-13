@@ -5,7 +5,7 @@
 1. Abrir aplicativo **Docker Desktop.** Una vez que el motor de Docker corra (usualmente tarda menos de 1 minuto), se puede cerrar la ventana.
 2. Abrir una terminal en la carpeta raíz del proyecto.
 3. Ejecutar:
-   ```bash
+   ```
    docker compose up -d
    ```
 4. Esperar 2-3 minutos a que todo cargue completamente.
@@ -30,6 +30,6 @@
 
 1. Abrir una terminal en la carpeta raíz del proyecto.
 2. Ejecutar:
-   ```bash
+   ```
    docker compose down
    ```
