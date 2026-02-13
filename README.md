@@ -30,28 +30,6 @@ Este proyecto utiliza una arquitectura de microservicios con separación clara e
 - **Backend**: Python + Django REST Framework
 - **Base de datos**: SQL Server
 
-### Arquitectura de Datos
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    Base de Datos Central                    │
-│                    (BD de Gestión)                          │
-└─────────────────────────┬───────────────────────────────────┘
-                          │
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Backend (Django REST)                    │
-└─────────────────────────┬───────────────────────────────────┘
-                          │
-          ┌───────────────┼───────────────┐
-          ▼               ▼               ▼
-┌─────────────┐   ┌─────────────┐   ┌─────────────┐
-│ Tienda 1    │   │ Tienda 2    │   │ Tienda N    │
-│ BD Local    │   │ BD Local    │   │ BD Local    │
-│ (SQL Server)│   │ (SQL Server)│   │ (SQL Server)│
-└─────────────┘   └─────────────┘   └─────────────┘
-```
-
 **Características:**
 
 - Cada tienda tiene una **base de datos SQL Server local e independiente**
