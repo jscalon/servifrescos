@@ -158,9 +158,10 @@ Este comando crea los permisos iniciales del sistema.
 3. **Levantar con Docker**
 
 - Abrir Docker Desktop para que corra el Docker Engine
+- Luego, correr el siguiente comando desde la raíz del proyecto:
 
 ```bash
-docker compose up -d
+    docker compose up -d
 ```
 
 ### Configuración de Entornos
@@ -183,7 +184,7 @@ El proyecto soporta múltiples entornos:
 | `EMAIL_HOST_PASSWORD` | Contraseña del servidor SMTP          | -                             |
 | `DEFAULT_FROM_EMAIL`  | Correo remitente por defecto          | `noreply@gmail.com`           |
 | `FRONTEND_URL`        | URL del frontend                      | `http://<IP_DEL_HOST>:5173`   |
-| `IP_DEL_HOST`         | IP del host donde corre la aplicación | -                             |
+| `IP_DEL_HOST`         | IP del host donde corre la aplicación | `172.20.12.33`                |
 
 #### Frontend (`.env`)
 
@@ -197,6 +198,7 @@ El proyecto soporta múltiples entornos:
 
 ```
 servifrescos/
+├── compose.yml        # Orquestación de contenedores
 ├── backend/                    # Backend Django REST Framework
 │   ├── apps/                  # Aplicaciones del proyecto
 │   │   ├── products/         # Módulo de productos
@@ -210,15 +212,14 @@ servifrescos/
 │   │   └── wsgi.py           # Configuración WSGI
 │   ├── requirements.txt      # Dependencias Python
 │   └── Dockerfile            # Imagen Docker del backend
-├── frontend/                   # Frontend React + TypeScript
-│   ├── src/                   # Código fuente
-│   │   ├── components/       # Componentes reutilizables
-│   │   ├── pages/            # Páginas de la aplicación
-│   │   ├── contexts/         # Contextos de React
-│   │   └── assets/           # Recursos estáticos
-│   ├── package.json          # Dependencias Node
-│   └── Dockerfile            # Imagen Docker del frontend
-└── docker-compose.yml        # Orquestación de contenedores
+└── frontend/                   # Frontend React + TypeScript
+    ├── src/                   # Código fuente
+    │   ├── components/       # Componentes reutilizables
+    │   ├── pages/            # Páginas de la aplicación
+    │   ├── contexts/         # Contextos de React
+    │   └── assets/           # Recursos estáticos
+    ├── package.json          # Dependencias Node
+    └── Dockerfile            # Imagen Docker del frontend
 ```
 
 ### API Reference
@@ -230,7 +231,7 @@ Todos los endpoints de la API están disponibles en `http://localhost:8000/api/`
 | Módulo         | Endpoint base      | Descripción                                                          |
 | -------------- | ------------------ | -------------------------------------------------------------------- |
 | **Productos**  | `/api/products/`   | CRUD de productos                                                    |
-| **Precios**    | `/api/prices/`     | Gestión de precios por tienda                                        |
+| **Precios**    | `/api/prices/`     | CRUD de precios                                       |
 | **Tiendas**    | `/api/stores/`     | CRUD de tiendas                                                      |
 | **Usuarios**   | `/api/users/`      | CRUD de usuarios                                                     |
 | **Categorías** | `/api/categories/` | CRUD de categorías (marcas, tipos, departamentos, grupos, subgrupos) |
