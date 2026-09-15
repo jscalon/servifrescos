@@ -9,7 +9,10 @@ from .serializers import PriceSerializer
 
 
 class PriceViewSet(viewsets.ModelViewSet):
-    queryset = Price.objects.all()
+    # El serializador expone campos de product, product.type, store y created_by;
+    # sin select_related cada precio dispara una consulta por relacion.
+    queryset = Price.objects.select_related(
+        'product', 'product__type', 'store', 'created_by')
     serializer_class = PriceSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ['product', 'store', 'is_active', 'effective_date']
@@ -56,10 +59,9 @@ class PriceViewSet(viewsets.ModelViewSet):
     def active_prices(self, request):
         """Obtener precios activos por tienda"""
         store_id = request.query_params.get('store')
+        prices = self.get_queryset().filter(is_active=True)
         if store_id:
-            prices = Price.objects.filter(store_id=store_id, is_active=True)
-        else:
-            prices = Price.objects.filter(is_active=True)
+            prices = prices.filter(store_id=store_id)
 
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)
@@ -76,6 +78,7 @@ class PriceViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        prices = Price.objects.filter(product_id=product_id, store_id=store_id)
+        prices = self.get_queryset().filter(
+            product_id=product_id, store_id=store_id)
         serializer = self.get_serializer(prices, many=True)
         return Response(serializer.data)

@@ -5,6 +5,10 @@ import { useState, useEffect, useRef } from "react";
 import { pricesAPI, type Price } from "../../../../services/api";
 import { usePermissions } from "../../../../contexts";
 
+// Refresco periodico de la lista: los precios programados se activan por minuto,
+// por lo que no hace falta consultar con mas frecuencia.
+const POLLING_INTERVAL_MS = 30000;
+
 export default function QueryPrices() {
   const { hasPermission } = usePermissions();
 
@@ -32,6 +36,7 @@ export default function QueryPrices() {
     active: string;
   }>({ article: "", store: "Todos", active: "Todos" });
   const intervalRef = useRef<number | null>(null);
+  const isFetchingRef = useRef<boolean>(false);
 
   const applyFilters = (
     pricesList: Price[],
@@ -81,16 +86,20 @@ export default function QueryPrices() {
   useEffect(() => {
     const startPolling = () => {
       intervalRef.current = setInterval(async () => {
-        if (!loading) {
+        // isFetchingRef evita encolar peticiones cuando la anterior sigue en curso
+        if (!loading && !isFetchingRef.current) {
+          isFetchingRef.current = true;
           try {
             const response = await pricesAPI.getAll();
             setPrices(response.data);
             applyFilters(response.data, currentFilters);
           } catch (error) {
             console.error("Error fetching prices:", error);
+          } finally {
+            isFetchingRef.current = false;
           }
         }
-      }, 1000);
+      }, POLLING_INTERVAL_MS);
     };
 
     startPolling();
